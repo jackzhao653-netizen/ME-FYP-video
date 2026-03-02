@@ -4,6 +4,7 @@ import type { AssetItem, AssetKind, PromptEntry, PromptMap } from './types';
 
 const POLL_MS = 3000;
 const GROUPS: Array<{ kind: AssetKind; title: string }> = [
+  { kind: 'vandi', title: 'Vandi Profile' },
   { kind: 'videos', title: 'Videos' },
   { kind: 'images', title: 'Images' },
   { kind: 'svgs', title: 'SVGs' },
@@ -23,7 +24,7 @@ type NetworkInfo = {
   url: string | null;
 };
 
-type TabKey = AssetKind | 'upload' | 'flipbook';
+type TabKey = AssetKind | 'upload' | 'flipbook' | 'vandi-interactive';
 
 type FlipbookScene = {
   key: string;
@@ -194,11 +195,10 @@ function App() {
                   key={group.kind}
                   type="button"
                   onClick={() => setActiveTab(group.kind)}
-                  className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
-                    isActive
-                      ? 'border border-cyanpulse/70 bg-cyan-500/15 text-cyanpulse shadow-[0_0_18px_rgba(34,211,238,0.22)]'
-                      : 'border border-slate-700 text-slate-300 hover:border-cyanpulse/40 hover:text-cyan-200'
-                  }`}
+                  className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${isActive
+                    ? 'border border-cyanpulse/70 bg-cyan-500/15 text-cyanpulse shadow-[0_0_18px_rgba(34,211,238,0.22)]'
+                    : 'border border-slate-700 text-slate-300 hover:border-cyanpulse/40 hover:text-cyan-200'
+                    }`}
                 >
                   {group.title}
                 </button>
@@ -207,24 +207,32 @@ function App() {
             <button
               type="button"
               onClick={() => setActiveTab('upload')}
-              className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
-                activeTab === 'upload'
-                  ? 'border border-emerald-300/70 bg-emerald-500/15 text-emerald-200 shadow-[0_0_18px_rgba(52,211,153,0.2)]'
-                  : 'border border-slate-700 text-slate-300 hover:border-emerald-300/40 hover:text-emerald-200'
-              }`}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${activeTab === 'upload'
+                ? 'border border-emerald-300/70 bg-emerald-500/15 text-emerald-200 shadow-[0_0_18px_rgba(52,211,153,0.2)]'
+                : 'border border-slate-700 text-slate-300 hover:border-emerald-300/40 hover:text-emerald-200'
+                }`}
             >
               Upload
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('flipbook')}
-              className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
-                activeTab === 'flipbook'
-                  ? 'border border-amber-300/70 bg-amber-500/15 text-amber-200 shadow-[0_0_18px_rgba(251,191,36,0.2)]'
-                  : 'border border-slate-700 text-slate-300 hover:border-amber-300/40 hover:text-amber-200'
-              }`}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${activeTab === 'flipbook'
+                ? 'border border-amber-300/70 bg-amber-500/15 text-amber-200 shadow-[0_0_18px_rgba(251,191,36,0.2)]'
+                : 'border border-slate-700 text-slate-300 hover:border-amber-300/40 hover:text-amber-200'
+                }`}
             >
               Audio Flipbook
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('vandi-interactive')}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${activeTab === 'vandi-interactive'
+                ? 'border border-violet-300/70 bg-violet-500/15 text-violet-200 shadow-[0_0_18px_rgba(167,139,250,0.2)]'
+                : 'border border-slate-700 text-slate-300 hover:border-violet-300/40 hover:text-violet-200'
+                }`}
+            >
+              Vandi
             </button>
           </div>
         </nav>
@@ -245,6 +253,8 @@ function App() {
           />
         ) : activeTab === 'flipbook' ? (
           <AudioFlipbook scenes={FLIPBOOK_SCENES} />
+        ) : activeTab === 'vandi-interactive' ? (
+          <VandiExpressionViewer />
         ) : (
           <section>
             <div className="mb-4 flex items-center justify-between">
@@ -281,6 +291,149 @@ function App() {
   );
 }
 
+const VANDI_EXPRESSIONS: Array<{ key: string; label: string; file: string; color: string }> = [
+  { key: 'default', label: 'Default', file: 'vandi_front.svg', color: 'cyan' },
+  { key: 'happy', label: 'Happy', file: 'vandi_front_happy.svg', color: 'emerald' },
+  { key: 'sad', label: 'Sad', file: 'vandi_front_sad.svg', color: 'blue' },
+  { key: 'angry', label: 'Angry', file: 'vandi_front_angry.svg', color: 'red' },
+  { key: 'surprised', label: 'Surprised', file: 'vandi_front_surprised.svg', color: 'amber' },
+  { key: 'listen', label: 'Listening', file: 'vandi_front_listen.svg', color: 'violet' },
+  { key: 'sleepy', label: 'Sleepy', file: 'vandi_front_sleepy.svg', color: 'indigo' }
+];
+
+const VANDI_BUTTONS = VANDI_EXPRESSIONS.filter((e) => e.key !== 'default');
+
+function VandiExpressionViewer() {
+  const [activeExpression, setActiveExpression] = useState('default');
+  const [svgMarkup, setSvgMarkup] = useState<Record<string, string>>({});
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const loadAll = async () => {
+      const entries: Record<string, string> = {};
+      await Promise.all(
+        VANDI_EXPRESSIONS.map(async (expr) => {
+          try {
+            const res = await fetch(`/api/asset/${encodeURIComponent('../vandi profile/' + expr.file)}`);
+            if (res.ok) {
+              const text = await res.text();
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(text, 'image/svg+xml');
+              const headGroup = doc.getElementById('head-group');
+              if (headGroup) {
+                Array.from(headGroup.children).forEach(child => {
+                  const isStatic =
+                    (child.tagName === 'rect' && ['-80', '-70', '-67'].includes(child.getAttribute('x') || '')) ||
+                    (child.tagName === 'path' && (child.getAttribute('d') || '').startsWith('M -50 -50'));
+                  if (isStatic) {
+                    child.classList.add('vandi-static-part');
+                  } else {
+                    child.classList.add('vandi-dynamic-part');
+                  }
+                });
+              }
+              entries[expr.key] = new XMLSerializer().serializeToString(doc);
+            }
+          } catch {
+            // skip
+          }
+        })
+      );
+      setSvgMarkup(entries);
+    };
+    loadAll();
+  }, []);
+
+  // Auto-return to idle after 3 seconds
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (activeExpression !== 'default') {
+      timerRef.current = setTimeout(() => setActiveExpression('default'), 3000);
+    }
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [activeExpression]);
+
+  const allLoaded = Object.keys(svgMarkup).length === VANDI_EXPRESSIONS.length;
+
+  const btnColors: Record<string, { active: string; idle: string }> = {
+    emerald: { active: 'border-emerald-300/70 bg-emerald-500/15 text-emerald-200 shadow-[0_0_18px_rgba(52,211,153,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-emerald-300/40 hover:text-emerald-200' },
+    blue: { active: 'border-blue-300/70 bg-blue-500/15 text-blue-200 shadow-[0_0_18px_rgba(96,165,250,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-blue-300/40 hover:text-blue-200' },
+    red: { active: 'border-red-300/70 bg-red-500/15 text-red-200 shadow-[0_0_18px_rgba(252,165,165,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-red-300/40 hover:text-red-200' },
+    amber: { active: 'border-amber-300/70 bg-amber-500/15 text-amber-200 shadow-[0_0_18px_rgba(251,191,36,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-amber-300/40 hover:text-amber-200' },
+    violet: { active: 'border-violet-300/70 bg-violet-500/15 text-violet-200 shadow-[0_0_18px_rgba(167,139,250,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-violet-300/40 hover:text-violet-200' },
+    indigo: { active: 'border-indigo-300/70 bg-indigo-500/15 text-indigo-200 shadow-[0_0_18px_rgba(129,140,248,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-indigo-300/40 hover:text-indigo-200' }
+  };
+
+  return (
+    <section className="rounded-2xl border border-violet-300/25 bg-slate-900/60 p-5 shadow-xl shadow-violet-500/10">
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-violet-200">Vandi Expression Viewer</h2>
+        <p className="mt-1 text-sm text-slate-300">Click an expression — Vandi will react, then return to idle.</p>
+      </div>
+
+      <div className="flex items-start gap-5">
+        <style>{`
+          .vandi-base-layer .vandi-dynamic-part { display: none !important; }
+          .vandi-dynamic-layer .vandi-static-part { display: none !important; }
+        `}</style>
+
+        {/* SVG display area — no background */}
+        <div className="relative flex-1 overflow-hidden rounded-xl" style={{ height: '45vh' }}>
+          {!allLoaded && (
+            <div className="flex h-full items-center justify-center text-sm text-slate-400">Loading expressions...</div>
+          )}
+
+          {/* Permanent Base Layer */}
+          {allLoaded && (
+            <div
+              className="absolute inset-0 flex items-center justify-center p-4 [&_svg]:max-h-full [&_svg]:max-w-full vandi-base-layer"
+              dangerouslySetInnerHTML={{ __html: svgMarkup['default'] ?? '' }}
+            />
+          )}
+
+          {/* Switching Dynamic Layers with 'Blink' effect */}
+          {VANDI_EXPRESSIONS.map((expr) => {
+            const isActive = expr.key === activeExpression;
+            return (
+              <div
+                key={expr.key}
+                className="absolute inset-0 flex items-center justify-center p-4 [&_svg]:max-h-full [&_svg]:max-w-full vandi-dynamic-layer"
+                style={{
+                  opacity: isActive ? 1 : 0,
+                  transform: `scaleY(${isActive ? 1 : 0})`,
+                  transition: isActive ? 'transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0s' : 'transform 0.1s ease-in, opacity 0s 0.1s',
+                  pointerEvents: isActive ? 'auto' : 'none',
+                  zIndex: isActive ? 10 : 0,
+                  transformOrigin: '50% 45%' // Center it roughly on the eyes
+                }}
+                dangerouslySetInnerHTML={{ __html: svgMarkup[expr.key] ?? '' }}
+              />
+            );
+          })}
+        </div>
+
+        {/* Expression trigger buttons — side grid */}
+        <div className="grid w-36 shrink-0 grid-cols-1 gap-2">
+          {VANDI_BUTTONS.map((expr) => {
+            const isActive = expr.key === activeExpression;
+            const colors = btnColors[expr.color] ?? btnColors.emerald;
+            return (
+              <button
+                key={expr.key}
+                type="button"
+                onClick={() => setActiveExpression(expr.key)}
+                className={`w-full rounded-lg border px-3 py-2.5 text-sm font-semibold transition ${isActive ? colors.active : colors.idle}`}
+              >
+                {expr.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
   const [currentScene, setCurrentScene] = useState(0);
   const [secondsPerScene, setSecondsPerScene] = useState(4);
@@ -296,7 +449,7 @@ function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
       audioRef.current.src = `/api/asset/${encodeURIComponent(active.audioPath)}`;
       audioRef.current.load();
       if (isPlaying) {
-        audioRef.current.play().catch(() => {});
+        audioRef.current.play().catch(() => { });
       }
     }
   }, [currentScene, active.audioPath]);
@@ -346,7 +499,7 @@ function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
         audioRef.current.src = active.audioPath
           ? `/api/asset/${encodeURIComponent(active.audioPath)}`
           : '';
-        audioRef.current.play().catch(() => {});
+        audioRef.current.play().catch(() => { });
       } else {
         audioRef.current.pause();
       }
@@ -429,9 +582,8 @@ function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
               key={scene.key}
               type="button"
               onClick={() => jumpTo(index)}
-              className={`overflow-hidden rounded-lg border text-left transition ${
-                isActive ? 'border-amber-300 shadow-[0_0_0_1px_rgba(251,191,36,0.5)]' : 'border-slate-700 hover:border-amber-300/50'
-              }`}
+              className={`overflow-hidden rounded-lg border text-left transition ${isActive ? 'border-amber-300 shadow-[0_0_0_1px_rgba(251,191,36,0.5)]' : 'border-slate-700 hover:border-amber-300/50'
+                }`}
             >
               <img
                 src={`/api/asset/${encodeURIComponent(scene.relativePath)}`}
@@ -495,9 +647,8 @@ function AssetCard({
           onExpand();
         }
       }}
-      className={`cursor-zoom-in overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/60 p-4 shadow-xl shadow-cyan-900/20 ${
-        prominent ? 'mx-auto w-full max-w-5xl' : ''
-      } ${asset.kind === 'svgs' ? 'svg-card-hover' : ''}`}
+      className={`cursor-zoom-in overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/60 p-4 shadow-xl shadow-cyan-900/20 ${prominent ? 'mx-auto w-full max-w-5xl' : ''
+        } ${asset.kind === 'svgs' ? 'svg-card-hover' : ''}`}
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
@@ -721,9 +872,8 @@ function UploadPanel({ onUploaded }: { onUploaded: (fileName: string) => Promise
         }}
         onDragLeave={() => setIsDragging(false)}
         onDrop={onDrop}
-        className={`rounded-xl border-2 border-dashed p-8 text-center transition ${
-          isDragging ? 'border-emerald-300 bg-emerald-300/10' : 'border-slate-600 bg-slate-950/40'
-        }`}
+        className={`rounded-xl border-2 border-dashed p-8 text-center transition ${isDragging ? 'border-emerald-300 bg-emerald-300/10' : 'border-slate-600 bg-slate-950/40'
+          }`}
       >
         <p className="text-sm text-slate-200">Drag and drop a file here</p>
         <p className="mt-2 text-xs text-slate-400">or</p>
@@ -813,7 +963,7 @@ function renderExpandedAsset(asset: AssetItem) {
     return <img src={asset.url} alt={asset.fileName} className="mx-auto max-h-[78vh] w-full rounded-lg object-contain" />;
   }
 
-  if (asset.kind === 'svgs') {
+  if (asset.kind === 'svgs' || asset.kind === 'vandi') {
     return <InlineSvg src={asset.url} large className="svg-lightbox-svg" />;
   }
 
@@ -848,10 +998,14 @@ function renderPreview(asset: AssetItem, prominent?: boolean) {
     return <InlineSvg src={src} className="svg-preview-shell" />;
   }
 
+  if (asset.kind === 'vandi') {
+    return <InlineSvg src={src} className="svg-preview-shell" tall />;
+  }
+
   return <AudioPreview src={src} />;
 }
 
-function InlineSvg({ src, large = false, className = '' }: { src: string; large?: boolean; className?: string }) {
+function InlineSvg({ src, large = false, tall = false, className = '' }: { src: string; large?: boolean; tall?: boolean; className?: string }) {
   const [markup, setMarkup] = useState('');
 
   useEffect(() => {
@@ -865,11 +1019,12 @@ function InlineSvg({ src, large = false, className = '' }: { src: string; large?
     return <div className={`flex h-48 items-center justify-center rounded-lg bg-slate-950/80 text-sm text-slate-400 ${className}`}>Loading SVG...</div>;
   }
 
+  const heightClass = large ? 'min-h-[68vh]' : tall ? 'h-96' : 'h-48';
+
   return (
     <div
-      className={`flex items-center justify-center rounded-lg bg-slate-950/80 p-3 [&_svg]:max-h-full [&_svg]:max-w-full ${
-        large ? 'min-h-[68vh]' : 'h-48'
-      } ${className}`}
+      className={`flex items-center justify-center rounded-lg bg-slate-950/80 p-3 [&_svg]:max-h-full [&_svg]:max-w-full ${heightClass
+        } ${className}`}
       dangerouslySetInnerHTML={{ __html: markup }}
     />
   );

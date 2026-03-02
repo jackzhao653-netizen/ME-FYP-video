@@ -1,4 +1,4 @@
-export type AssetKind = 'videos' | 'images' | 'svgs' | 'audio' | 'voiceovers';
+export type AssetKind = 'videos' | 'images' | 'svgs' | 'audio' | 'voiceovers' | 'vandi';
 
 export interface AssetItem {
   kind: AssetKind;

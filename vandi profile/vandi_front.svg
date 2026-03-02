@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <!-- Gradients & Glows -->
+    <filter id="cyanGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    
+    <!-- Surface Materials -->
+    <linearGradient id="headGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#35363c"/>
+      <stop offset="100%" stop-color="#18191d"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a1e"/>
+      <stop offset="100%" stop-color="#0a0a0c"/>
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8a8d9b"/>
+      <stop offset="100%" stop-color="#4a4c54"/>
+    </linearGradient>
+  </defs>
+
+  <!-- HEAD FRONT VIEW -->
+  <!-- Centered in canvas -->
+  <g id="head-group" transform="translate(250, 250)">
+    
+    <!-- ANTENNAS (Top of the head) -->
+    <!-- Left Antenna (Pointing inwards) -->
+    <g id="antenna-left" transform="translate(-30, -75) rotate(-110)">
+      <rect x="0" y="-3" width="60" height="6" rx="3" fill="url(#metalGrad)" />
+      <circle cx="62" cy="0" r="8" fill="#00e5ff" filter="url(#cyanGlow)" />
+    </g>
+    
+    <!-- Right Antenna (Pointing inwards) -->
+    <!-- Mirrored from the left antenna -->
+    <g id="antenna-right" transform="translate(30, -75) rotate(-70)">
+      <rect x="0" y="-3" width="60" height="6" rx="3" fill="url(#metalGrad)" />
+      <circle cx="62" cy="0" r="8" fill="#00e5ff" filter="url(#cyanGlow)" />
+    </g>
+
+    <!-- Head Base (Main Box, symmetrical) -->
+    <!-- Narrower width to match face screen better -->
+    <rect x="-80" y="-75" width="160" height="150" rx="45" fill="url(#headGrad)" stroke="#111" stroke-width="3" />
+    
+    <!-- RADAR EARS (Both Sides) -->
+    <!-- Straight-on flat perspective -->
+    <!-- Left Radar Ear (Attached completely to the new narrower head base x=-80) -->
+    <g id="radar-ear-left" transform="translate(-80, -5)">
+      <!-- Radar Mount base (Trapezoid, narrower at the point it meets the head) -->
+      <path d="M 0 -22 L -10 -28 L -10 28 L 0 22 Z" fill="#222328" stroke="#111" stroke-width="2" />
+      
+      <!-- The sideways disc seen directly on edge (shorter) -->
+      <rect x="-16" y="-35" width="6" height="70" rx="3" fill="url(#metalGrad)" stroke="#111" stroke-width="2" />
+      
+      <!-- Center node glowing line because viewed from the side -->
+      <rect x="-18" y="-15" width="4" height="30" rx="2" fill="#00e5ff" filter="url(#cyanGlow)" />
+      
+      <!-- Subtle wave sticking out sideways -->
+      <path d="M -24 -15 Q -30 0 -24 15" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" opacity="0.6"/>
+    </g>
+
+    <!-- Right Radar Ear (Mirrored, attached to right side x=80) -->
+    <g id="radar-ear-right" transform="translate(80, -5)">
+      <!-- Radar Mount base (Trapezoid, narrower at the point it meets the head) -->
+      <path d="M 0 -22 L 10 -28 L 10 28 L 0 22 Z" fill="#222328" stroke="#111" stroke-width="2" />
+      
+      <!-- The sideways disc seen directly on edge (shorter) -->
+      <rect x="10" y="-35" width="6" height="70" rx="3" fill="url(#metalGrad)" stroke="#111" stroke-width="2" />
+      
+      <!-- Center node glowing line because viewed from the side -->
+      <rect x="14" y="-15" width="4" height="30" rx="2" fill="#00e5ff" filter="url(#cyanGlow)" />
+      
+      <!-- Subtle wave sticking out sideways -->
+      <path d="M 24 -15 Q 30 0 24 15" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" opacity="0.6"/>
+    </g>
+
+    <!-- Front Face / Screen Wrapper -->
+    <rect x="-70" y="-60" width="140" height="120" rx="35" fill="#15161a" stroke="#888c94" stroke-width="5" />
+    
+    <!-- Screen itself -->
+    <rect x="-67" y="-57" width="134" height="114" rx="32" fill="url(#screenGrad)" />
+    
+    <!-- Screen Reflection -->
+    <path d="M -50 -50 Q 0 -40 50 -50 Q 55 -30 50 -10 Q 0 -20 -50 -10 Z" fill="#ffffff" opacity="0.04" />
+
+    <!-- Eyes Container (Centered & slightly rectangular for 'idle' look) -->
+    <!-- Shifted down from -10 to -5 so they are lower on the face -->
+    <g id="eyes" data-state="idle" transform="translate(0, -5)">
+      <g>
+        <!-- Intermittent blinking (scaleY down to 0 and back up fast, mostly held at 1) -->
+        <animateTransform attributeName="transform" type="scale" values="1,1; 1,0.1; 1,1; 1,1; 1,1" keyTimes="0; 0.05; 0.1; 0.5; 1" dur="4s" repeatCount="indefinite" />
+        <!-- Left eye -->
+        <g transform="translate(-22, 0)">
+          <rect id="eye-left" x="-15" y="-16" width="30" height="32" rx="8" fill="#00e5ff" filter="url(#cyanGlow)" />
+        </g>
+        
+        <!-- Right eye -->
+        <g transform="translate(22, 0)">
+          <rect id="eye-right" x="-15" y="-16" width="30" height="32" rx="8" fill="#00e5ff" filter="url(#cyanGlow)" />
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

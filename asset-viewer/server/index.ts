@@ -9,13 +9,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const ASSET_ROOT = path.resolve(ROOT_DIR, '../fyp-assets');
+const VANDI_ROOT = path.resolve(ROOT_DIR, '../vandi profile');
 const PROMPTS_DIR = path.join(ASSET_ROOT, 'prompts');
 const PROMPTS_FILE = path.join(PROMPTS_DIR, 'prompts.json');
 
 const PORT = 3457;
 const HOST = '0.0.0.0';
 
-type AssetKind = 'videos' | 'images' | 'svgs' | 'audio' | 'voiceovers';
+type AssetKind = 'videos' | 'images' | 'svgs' | 'audio' | 'voiceovers' | 'vandi';
 
 interface AssetItem {
   kind: AssetKind;
@@ -40,6 +41,7 @@ app.use(cors());
 app.use(express.json({ limit: '5mb' }));
 
 const mappings: Array<{ folder: string; kind: AssetKind; extensions: string[] }> = [
+  { folder: '../vandi profile', kind: 'vandi', extensions: ['.svg'] },
   { folder: 'videos', kind: 'videos', extensions: ['.mp4'] },
   { folder: 'images', kind: 'images', extensions: ['.png', '.jpg', '.jpeg'] },
   { folder: 'svg', kind: 'svgs', extensions: ['.svg'] },
@@ -61,7 +63,12 @@ const uploadTargetByExtension: Record<string, string> = {
 
 const isInsideAssets = (candidate: string): boolean => {
   const normalized = path.resolve(candidate);
-  return normalized.startsWith(`${ASSET_ROOT}${path.sep}`) || normalized === ASSET_ROOT;
+  return (
+    normalized.startsWith(`${ASSET_ROOT}${path.sep}`) ||
+    normalized === ASSET_ROOT ||
+    normalized.startsWith(`${VANDI_ROOT}${path.sep}`) ||
+    normalized === VANDI_ROOT
+  );
 };
 
 async function ensurePromptsFile(): Promise<void> {
