@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <defs>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5BB5E8"/>
+      <stop offset="100%" stop-color="#3A7CA5"/>
+    </linearGradient>
+    <linearGradient id="headGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2C5F7C"/>
+      <stop offset="100%" stop-color="#1A3F52"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="100" cy="262" rx="44" ry="10" fill="#1A3F52" opacity="0.25"/>
+
+  <!-- Base -->
+  <rect x="72" y="242" width="56" height="22" rx="11" fill="#2C5F7C"/>
+  <rect x="76" y="246" width="48" height="14" rx="7" fill="#3A7CA5"/>
+
+  <!-- Body -->
+  <rect x="58" y="138" width="84" height="104" rx="16" fill="#3A7CA5"/>
+  <rect x="62" y="142" width="76" height="96" rx="13" fill="url(#bodyGrad)"/>
+  <rect x="78" y="172" width="44" height="28" rx="5" fill="#2C5F7C" opacity="0.35"/>
+  <circle cx="100" cy="186" r="7" fill="#3A7CA5" opacity="0.6"/>
+  <rect x="83" y="208" width="34" height="3" rx="1.5" fill="#2C5F7C" opacity="0.4"/>
+  <rect x="83" y="216" width="34" height="3" rx="1.5" fill="#2C5F7C" opacity="0.4"/>
+
+  <!-- Left arm — neutral/resting -->
+  <rect x="34" y="158" width="22" height="52" rx="11" fill="#3A7CA5"/>
+  <rect x="36" y="160" width="18" height="48" rx="9" fill="#4A9FD8"/>
+  <circle cx="45" cy="215" r="11" fill="#3A7CA5"/>
+  <circle cx="45" cy="215" r="8" fill="#5BB5E8"/>
+
+  <!-- Right arm — raised and waving up -->
+  <rect x="148" y="78" width="22" height="56" rx="11" fill="#3A7CA5" transform="rotate(-48 159 78)"/>
+  <rect x="150" y="80" width="18" height="52" rx="9" fill="#4A9FD8" transform="rotate(-48 159 78)"/>
+  <circle cx="177" cy="92" r="11" fill="#3A7CA5"/>
+  <circle cx="177" cy="92" r="8" fill="#5BB5E8"/>
+
+  <!-- Wave motion arcs -->
+  <path d="M 183 82 Q 189 76 195 82" stroke="#00E5FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.55" filter="url(#glow)"/>
+  <path d="M 185 90 Q 192 83 199 90" stroke="#00E5FF" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.33" filter="url(#glow)"/>
+
+  <!-- Head casing -->
+  <rect x="48" y="38" width="104" height="112" rx="22" fill="url(#headGrad)"/>
+  <rect x="53" y="43" width="94" height="102" rx="17" fill="#1E4A5F"/>
+  <rect x="58" y="48" width="84" height="92" rx="13" fill="#091E2B"/>
+  <rect x="60" y="50" width="80" height="88" rx="11" fill="#0A2535"/>
+
+  <!-- Eyes: Waving — friendly upward arcs (same as happy but a bit smaller) -->
+  <path d="M 70 88 Q 81 77 92 88" stroke="#00E5FF" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M 108 88 Q 119 77 130 88" stroke="#00E5FF" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+
+  <!-- Antenna -->
+  <line x1="100" y1="38" x2="100" y2="18" stroke="#3A7CA5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="13" r="6" fill="#4A9FD8"/>
+  <circle cx="100" cy="13" r="3" fill="#A0E0FF" opacity="0.8"/>
+</svg>

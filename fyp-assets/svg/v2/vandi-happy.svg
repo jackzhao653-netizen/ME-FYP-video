@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240">
+  <defs>
+    <linearGradient id="bodyGradientHappy" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5BA3E8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3D7AB8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="eyeGradientHappy" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E8F4F8;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="pupilGlowHappy" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#4ECDC4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2C9A93;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Shadow -->
+  <ellipse cx="100" cy="225" rx="60" ry="8" fill="#000000" opacity="0.15"/>
+  
+  <!-- Body base (slightly bouncy) -->
+  <path d="M 100 198 L 70 178 L 70 120 Q 70 80 100 80 Q 130 80 130 120 L 130 178 Z" 
+        fill="url(#bodyGradientHappy)" stroke="#2C5F8D" stroke-width="2"/>
+  
+  <!-- Body top/head dome -->
+  <ellipse cx="100" cy="80" rx="45" ry="50" fill="url(#bodyGradientHappy)" stroke="#2C5F8D" stroke-width="2"/>
+  
+  <!-- Antenna (with excited glow) -->
+  <line x1="100" y1="30" x2="100" y2="45" stroke="#FF6B35" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="27" r="5" fill="#FF6B35"/>
+  <circle cx="100" cy="27" r="3" fill="#FFD93D"/>
+  <circle cx="100" cy="27" r="8" fill="#FFD93D" opacity="0.3"/>
+  
+  <!-- Left eye (wide and bright) -->
+  <circle cx="80" cy="73" r="20" fill="url(#eyeGradientHappy)" stroke="#2C5F8D" stroke-width="2"/>
+  <circle cx="80" cy="73" r="14" fill="url(#pupilGlowHappy)"/>
+  <circle cx="80" cy="73" r="9" fill="#1A5F5A"/>
+  <circle cx="84" cy="70" r="4" fill="#FFFFFF" opacity="0.95"/>
+  <circle cx="78" cy="76" r="2" fill="#FFFFFF" opacity="0.7"/>
+  
+  <!-- Right eye (wide and bright) -->
+  <circle cx="120" cy="73" r="20" fill="url(#eyeGradientHappy)" stroke="#2C5F8D" stroke-width="2"/>
+  <circle cx="120" cy="73" r="14" fill="url(#pupilGlowHappy)"/>
+  <circle cx="120" cy="73" r="9" fill="#1A5F5A"/>
+  <circle cx="124" cy="70" r="4" fill="#FFFFFF" opacity="0.95"/>
+  <circle cx="118" cy="76" r="2" fill="#FFFFFF" opacity="0.7"/>
+  
+  <!-- Sparkles around head -->
+  <path d="M 50 70 L 52 75 L 47 75 Z M 50 80 L 47 75 L 52 75 Z" fill="#FFD93D" opacity="0.8"/>
+  <path d="M 150 70 L 152 75 L 147 75 Z M 150 80 L 147 75 L 152 75 Z" fill="#FFD93D" opacity="0.8"/>
+  <circle cx="60" cy="90" r="2" fill="#4ECDC4" opacity="0.8"/>
+  <circle cx="140" cy="90" r="2" fill="#4ECDC4" opacity="0.8"/>
+  
+  <!-- Chest panel (glowing) -->
+  <rect x="85" y="130" width="30" height="35" rx="3" fill="#2C5F8D" opacity="0.3"/>
+  <circle cx="100" cy="147" r="6" fill="#4ECDC4" opacity="0.9"/>
+  <circle cx="100" cy="147" r="9" fill="#4ECDC4" opacity="0.3"/>
+  
+  <!-- Side panels/details -->
+  <rect x="68" y="140" width="4" height="20" rx="2" fill="#FF6B35" opacity="0.9"/>
+  <rect x="128" y="140" width="4" height="20" rx="2" fill="#FF6B35" opacity="0.9"/>
+  
+  <!-- Bottom base -->
+  <rect x="75" y="193" width="50" height="10" rx="3" fill="#2C5F8D"/>
+</svg>

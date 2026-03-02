@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/><stop offset="50%" stop-color="#1e293b"/><stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="bodySheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"/><stop offset="40%" stop-color="#ffffff" stop-opacity="0.04"/><stop offset="100%" stop-color="#000000" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="faceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#050e1a"/>
+    </linearGradient>
+    <radialGradient id="eyeGrad" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#e0f9ff"/><stop offset="30%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0891b2"/>
+    </radialGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.8"/><stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.9"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="legGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/><stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="eyeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bodyShadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="sparkGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="accentGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <ellipse cx="200" cy="460" rx="85" ry="10" fill="#000" opacity="0.18"/>
+  <!-- Sparkles -->
+  <g id="sparkles" filter="url(#sparkGlow)">
+    <path d="M70,140 L73,133 L80,130 L73,127 L70,120 L67,127 L60,130 L67,133Z" fill="#fbbf24" opacity="0.9"/>
+    <path d="M340,160 L342,155 L347,153 L342,151 L340,146 L338,151 L333,153 L338,155Z" fill="#fbbf24" opacity="0.85"/>
+    <circle cx="55" cy="200" r="4" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="350" cy="220" r="5" fill="#fbbf24" opacity="0.75"/>
+    <circle cx="75" cy="280" r="3" fill="#fbbf24" opacity="0.6"/>
+  </g>
+  <!-- Base -->
+  <g id="base">
+    <rect x="120" y="420" width="160" height="30" rx="15" fill="url(#baseGrad)"/>
+    <rect x="120" y="420" width="160" height="30" rx="15" fill="none" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.25"/>
+    <rect x="140" y="422" width="120" height="4" rx="2" fill="#06b6d4" opacity="0.2"/>
+  </g>
+  <!-- Legs (bounced up) -->
+  <g id="legs" transform="translate(0,-15)">
+    <rect x="150" y="380" width="28" height="50" rx="8" fill="url(#legGrad)"/>
+    <rect x="150" y="380" width="28" height="50" rx="8" fill="url(#bodySheen)"/>
+    <rect x="222" y="380" width="28" height="50" rx="8" fill="url(#legGrad)"/>
+    <rect x="222" y="380" width="28" height="50" rx="8" fill="url(#bodySheen)"/>
+  </g>
+  <!-- Body (bounced up) -->
+  <g id="body" filter="url(#bodyShadow)" transform="translate(0,-18)">
+    <rect x="110" y="180" width="180" height="210" rx="40" fill="url(#bodyGrad)"/>
+    <rect x="110" y="180" width="180" height="210" rx="40" fill="url(#bodySheen)"/>
+    <rect x="112" y="240" width="6" height="70" rx="3" fill="url(#accentGrad)" opacity="0.8"/>
+    <rect x="282" y="240" width="6" height="70" rx="3" fill="url(#accentGrad)" opacity="0.8"/>
+  </g>
+  <!-- Head (bounced up) -->
+  <g id="head" filter="url(#bodyShadow)" transform="translate(0,-18)">
+    <rect x="100" y="100" width="200" height="160" rx="50" fill="url(#bodyGrad)"/>
+    <rect x="100" y="100" width="200" height="160" rx="50" fill="url(#bodySheen)"/>
+    <path d="M 150 105 Q 200 93 250 105" stroke="#fff" stroke-width="1.5" stroke-opacity="0.15" fill="none"/>
+    <rect x="125" y="130" width="150" height="100" rx="30" fill="url(#faceGrad)"/>
+    <rect x="125" y="130" width="150" height="100" rx="30" fill="none" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.4"/>
+  </g>
+  <!-- Eyes (wider, brighter for excitement) -->
+  <g id="eyes" transform="translate(0,-18)">
+    <g filter="url(#eyeGlow)">
+      <rect x="143" y="162" width="44" height="28" rx="7" fill="url(#eyeGrad)"/>
+      <rect x="143" y="162" width="44" height="8" rx="4" fill="#050e1a" opacity="0.15"/>
+      <ellipse cx="156" cy="170" rx="6" ry="4" fill="#fff" opacity="0.6"/>
+    </g>
+    <g filter="url(#eyeGlow)">
+      <rect x="213" y="162" width="44" height="28" rx="7" fill="url(#eyeGrad)"/>
+      <rect x="213" y="162" width="44" height="8" rx="4" fill="#050e1a" opacity="0.15"/>
+      <ellipse cx="226" cy="170" rx="6" ry="4" fill="#fff" opacity="0.6"/>
+    </g>
+  </g>
+  <!-- Ears -->
+  <g id="ears" transform="translate(0,-18)">
+    <circle cx="100" cy="180" r="18" fill="url(#bodyGrad)"/>
+    <circle cx="100" cy="180" r="12" fill="#0f172a"/>
+    <circle cx="100" cy="180" r="8" fill="url(#accentGrad)" opacity="0.85" filter="url(#accentGlow)"/>
+    <circle cx="300" cy="180" r="18" fill="url(#bodyGrad)"/>
+    <circle cx="300" cy="180" r="12" fill="#0f172a"/>
+    <circle cx="300" cy="180" r="8" fill="url(#accentGrad)" opacity="0.85" filter="url(#accentGlow)"/>
+  </g>
+</svg>

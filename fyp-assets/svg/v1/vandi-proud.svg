@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/><stop offset="50%" stop-color="#1e293b"/><stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="bodySheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="#000000" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="faceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a2538"/><stop offset="100%" stop-color="#0f1928"/>
+    </linearGradient>
+    <radialGradient id="eyeGrad" cx="50%" cy="55%" r="50%">
+      <stop offset="0%" stop-color="#a5f3fc"/><stop offset="40%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0891b2"/>
+    </radialGradient>
+    <filter id="eyeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bodyShadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <linearGradient id="fuelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.7"/><stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.9"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0.5"/>
+    </linearGradient>
+    <radialGradient id="antennaOrb" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#fde68a"/><stop offset="50%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#b45309"/>
+    </radialGradient>
+    <filter id="orbGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="wheelGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#374151"/><stop offset="70%" stop-color="#1f2937"/><stop offset="100%" stop-color="#111827"/>
+    </radialGradient>
+    <filter id="eyeHalo" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="chassisGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/><stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- STAR near antenna (proud achievement) -->
+  <g id="star-accent" filter="url(#starGlow)">
+    <g transform="translate(258, 108)">
+      <path d="M0,-14 L3.3,-4.3 L14,-4.3 L5.7,1.6 L8.7,11.4 L0,5.5 L-8.7,11.4 L-5.7,1.6 L-14,-4.3 L-3.3,-4.3 Z" 
+            fill="#f59e0b" opacity="0.95"/>
+    </g>
+    <!-- Small accent stars -->
+    <g transform="translate(278, 90)">
+      <path d="M0,-7 L1.6,-2 L7,-2 L2.7,1 L4.3,6 L0,3 L-4.3,6 L-2.7,1 L-7,-2 L-1.6,-2 Z" 
+            fill="#fde68a" opacity="0.7"/>
+    </g>
+  </g>
+
+  <!-- WHEELS -->
+  <g id="wheels">
+    <g transform="translate(88, 390)">
+      <ellipse cx="2" cy="36" rx="32" ry="10" fill="#000000" opacity="0.3"/>
+      <circle cx="0" cy="0" r="32" fill="url(#wheelGrad)"/>
+      <circle cx="0" cy="0" r="32" fill="none" stroke="#06b6d4" stroke-width="3" stroke-opacity="0.7"/>
+      <circle cx="0" cy="0" r="12" fill="#1e293b"/><circle cx="0" cy="0" r="9" fill="#0f172a"/>
+      <circle cx="0" cy="0" r="5" fill="#06b6d4" opacity="0.8"/>
+      <line x1="-32" y1="0" x2="32" y2="0" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="0" y1="-32" x2="0" y2="32" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="-22" y1="-22" x2="22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+      <line x1="22" y1="-22" x2="-22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+    </g>
+    <g transform="translate(312, 390)">
+      <ellipse cx="2" cy="36" rx="32" ry="10" fill="#000000" opacity="0.3"/>
+      <circle cx="0" cy="0" r="32" fill="url(#wheelGrad)"/>
+      <circle cx="0" cy="0" r="32" fill="none" stroke="#06b6d4" stroke-width="3" stroke-opacity="0.7"/>
+      <circle cx="0" cy="0" r="12" fill="#1e293b"/><circle cx="0" cy="0" r="9" fill="#0f172a"/>
+      <circle cx="0" cy="0" r="5" fill="#06b6d4" opacity="0.8"/>
+      <line x1="-32" y1="0" x2="32" y2="0" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="0" y1="-32" x2="0" y2="32" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="-22" y1="-22" x2="22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+      <line x1="22" y1="-22" x2="-22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+    </g>
+    <g transform="translate(118, 420)" opacity="0.6">
+      <circle cx="0" cy="0" r="20" fill="url(#wheelGrad)"/>
+      <circle cx="0" cy="0" r="20" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.5"/>
+      <circle cx="0" cy="0" r="7" fill="#0f172a"/>
+    </g>
+    <g transform="translate(282, 420)" opacity="0.6">
+      <circle cx="0" cy="0" r="20" fill="url(#wheelGrad)"/>
+      <circle cx="0" cy="0" r="20" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.5"/>
+      <circle cx="0" cy="0" r="7" fill="#0f172a"/>
+    </g>
+  </g>
+
+  <!-- CHASSIS -->
+  <g id="chassis">
+    <path d="M 75 380 Q 75 400 96 410 L 304 410 Q 325 400 325 380 L 325 350 Q 325 340 314 340 L 86 340 Q 75 340 75 350 Z"
+          fill="url(#chassisGrad)" filter="url(#bodyShadow)"/>
+    <rect x="82" y="370" width="30" height="8" rx="4" fill="#1e293b"/>
+    <rect x="288" y="370" width="30" height="8" rx="4" fill="#1e293b"/>
+  </g>
+
+  <!-- BODY — slightly wider (proud puffed up), upright -->
+  <g id="body" filter="url(#bodyShadow)">
+    <!-- Slightly wider body for proud puffed-up look -->
+    <rect x="74" y="170" width="252" height="198" rx="44" ry="44" fill="url(#bodyGrad)"/>
+    <rect x="74" y="170" width="252" height="198" rx="44" ry="44" fill="url(#bodySheen)"/>
+    <!-- Warm gold highlight on top-left -->
+    <path d="M 116 173 Q 200 167 284 173" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.2" fill="none"/>
+
+    <g id="fuel-glow">
+      <rect x="78" y="220" width="28" height="80" rx="14" fill="url(#fuelGrad)" opacity="0.8"/>
+      <rect x="80" y="222" width="24" height="76" rx="12" fill="none" stroke="#8b5cf6" stroke-width="1.2" stroke-opacity="0.65"/>
+      <rect x="78" y="220" width="28" height="80" rx="14" fill="#8b5cf6" opacity="0.18" filter="url(#eyeGlow)"/>
+      <rect x="294" y="220" width="28" height="80" rx="14" fill="url(#fuelGrad)" opacity="0.8"/>
+      <rect x="296" y="222" width="24" height="76" rx="12" fill="none" stroke="#8b5cf6" stroke-width="1.2" stroke-opacity="0.65"/>
+      <rect x="294" y="220" width="28" height="80" rx="14" fill="#8b5cf6" opacity="0.18" filter="url(#eyeGlow)"/>
+    </g>
+
+    <rect x="108" y="185" width="184" height="160" rx="30" ry="30" fill="url(#faceGrad)"/>
+    <rect x="108" y="185" width="184" height="160" rx="30" ry="30" fill="none" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.4"/>
+    <!-- Subtle gold glow on face panel -->
+    <rect x="108" y="185" width="184" height="60" rx="30" ry="30" fill="#f59e0b" opacity="0.04"/>
+
+    <!-- EYES — half-closed (confident/smug) -->
+    <g id="eyes">
+      <ellipse cx="163" cy="252" rx="26" ry="18" fill="#22d3ee" opacity="0.12" filter="url(#eyeHalo)"/>
+      <ellipse cx="237" cy="252" rx="26" ry="18" fill="#22d3ee" opacity="0.12" filter="url(#eyeHalo)"/>
+      <!-- Left eye with heavy lid -->
+      <rect x="135" y="228" width="56" height="46" rx="14" fill="#050e1a"/>
+      <!-- Eye base -->
+      <rect x="139" y="232" width="48" height="38" rx="11" fill="url(#eyeGrad)" filter="url(#eyeGlow)"/>
+      <!-- Heavy top lid covers top 45% -->
+      <rect x="135" y="228" width="56" height="22" rx="14" fill="#1a2538"/>
+      <!-- Lid bottom edge smooth -->
+      <rect x="139" y="248" width="48" height="2" rx="1" fill="#050e1a" opacity="0.5"/>
+      <ellipse cx="153" cy="255" rx="6" ry="3.5" fill="#ffffff" opacity="0.45"/>
+      <!-- Right eye with heavy lid -->
+      <rect x="209" y="228" width="56" height="46" rx="14" fill="#050e1a"/>
+      <rect x="213" y="232" width="48" height="38" rx="11" fill="url(#eyeGrad)" filter="url(#eyeGlow)"/>
+      <rect x="209" y="228" width="56" height="22" rx="14" fill="#1a2538"/>
+      <rect x="213" y="248" width="48" height="2" rx="1" fill="#050e1a" opacity="0.5"/>
+      <ellipse cx="227" cy="255" rx="6" ry="3.5" fill="#ffffff" opacity="0.45"/>
+    </g>
+
+    <!-- MOUTH — small confident smirk -->
+    <g id="mouth">
+      <rect x="158" y="300" width="84" height="28" rx="10" fill="#0a1525"/>
+      <rect x="158" y="300" width="84" height="28" rx="10" fill="none" stroke="#06b6d4" stroke-width="0.8" stroke-opacity="0.25"/>
+      <!-- Smirk: slight upward curve right side -->
+      <path d="M 166 316 Q 186 310 200 312 Q 214 314 232 310" fill="none" stroke="#22d3ee" stroke-width="2" stroke-opacity="0.55" stroke-linecap="round"/>
+      <line x1="166" y1="322" x2="232" y2="322" stroke="#06b6d4" stroke-width="1.2" stroke-opacity="0.3" stroke-linecap="round"/>
+    </g>
+
+    <!-- ANTENNA — gold/warm orb (achievement unlocked) -->
+    <g id="antenna">
+      <line x1="200" y1="170" x2="200" y2="120" stroke="#2d3f55" stroke-width="5" stroke-linecap="round"/>
+      <line x1="200" y1="170" x2="200" y2="120" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.5"/>
+      <ellipse cx="200" cy="170" rx="8" ry="5" fill="#374151"/>
+      <circle cx="200" cy="110" r="24" fill="#f59e0b" opacity="0.1" filter="url(#orbGlow)"/>
+      <circle cx="200" cy="110" r="16" fill="url(#antennaOrb)" filter="url(#orbGlow)"/>
+      <ellipse cx="194" cy="104" rx="5" ry="4" fill="#ffffff" opacity="0.5"/>
+    </g>
+  </g>
+
+  <ellipse cx="200" cy="448" rx="105" ry="14" fill="#000000" opacity="0.22"/>
+</svg>

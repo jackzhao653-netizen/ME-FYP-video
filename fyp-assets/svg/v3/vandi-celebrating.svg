@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <!-- Vandi - Celebrating Pose -->
+  
+  <!-- Base/Wheels -->
+  <ellipse cx="100" cy="260" rx="45" ry="15" fill="#2C5F7C" opacity="0.3"/>
+  <rect x="70" y="240" width="60" height="25" rx="12" fill="#3A7CA5"/>
+  
+  <!-- Body - slightly bouncy -->
+  <rect x="60" y="138" width="80" height="100" rx="15" fill="#4A9FD8"/>
+  <rect x="65" y="143" width="70" height="90" rx="12" fill="#5BB5E8"/>
+  
+  <!-- Body Details -->
+  <circle cx="100" cy="178" r="8" fill="#5BB5E8" opacity="0.8"/>
+  <rect x="85" y="198" width="30" height="3" rx="1.5" fill="#5BB5E8" opacity="0.6"/>
+  <rect x="85" y="208" width="30" height="3" rx="1.5" fill="#5BB5E8" opacity="0.6"/>
+  
+  <!-- Arms - both raised in celebration -->
+  <rect x="25" y="120" width="20" height="55" rx="10" fill="#4A9FD8" transform="rotate(-50 35 120)"/>
+  <circle cx="25" cy="165" r="12" fill="#5BB5E8"/>
+  
+  <rect x="155" y="120" width="20" height="55" rx="10" fill="#4A9FD8" transform="rotate(50 165 120)"/>
+  <circle cx="175" cy="165" r="12" fill="#5BB5E8"/>
+  
+  <!-- Head/Screen -->
+  <rect x="50" y="38" width="100" height="110" rx="20" fill="#2C5F7C"/>
+  <rect x="55" y="43" width="90" height="100" rx="15" fill="#1E4A5F"/>
+  
+  <!-- Screen Display -->
+  <rect x="60" y="48" width="80" height="90" rx="12" fill="#0A2F3F"/>
+  
+  <!-- Eyes - Excited (very wide and sparkly) -->
+  <ellipse cx="80" cy="80" rx="15" ry="19" fill="#5BB5E8"/>
+  <ellipse cx="80" cy="80" rx="11" ry="15" fill="#FFFFFF"/>
+  <circle cx="82" cy="78" r="7" fill="#0A2F3F"/>
+  <circle cx="85" cy="75" r="3.5" fill="#FFFFFF"/>
+  <circle cx="78" cy="82" r="2" fill="#FFFFFF" opacity="0.7"/>
+  
+  <ellipse cx="120" cy="80" rx="15" ry="19" fill="#5BB5E8"/>
+  <ellipse cx="120" cy="80" rx="11" ry="15" fill="#FFFFFF"/>
+  <circle cx="122" cy="78" r="7" fill="#0A2F3F"/>
+  <circle cx="125" cy="75" r="3.5" fill="#FFFFFF"/>
+  <circle cx="118" cy="82" r="2" fill="#FFFFFF" opacity="0.7"/>
+  
+  <!-- Celebration sparkles and confetti -->
+  <circle cx="40" cy="60" r="3" fill="#5BB5E8"/>
+  <circle cx="160" cy="55" r="3" fill="#5BB5E8"/>
+  <circle cx="50" cy="85" r="2" fill="#5BB5E8" opacity="0.7"/>
+  <circle cx="150" cy="90" r="2" fill="#5BB5E8" opacity="0.7"/>
+  <rect x="45" y="70" width="4" height="4" fill="#5BB5E8" opacity="0.6" transform="rotate(45 47 72)"/>
+  <rect x="155" y="75" width="4" height="4" fill="#5BB5E8" opacity="0.6" transform="rotate(45 157 77)"/>
+  <circle cx="35" cy="100" r="2.5" fill="#3A7CA5" opacity="0.5"/>
+  <circle cx="165" cy="105" r="2.5" fill="#3A7CA5" opacity="0.5"/>
+  
+  <!-- Antenna - bouncing -->
+  <line x1="100" y1="38" x2="100" y2="15" stroke="#3A7CA5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="10" r="7" fill="#5BB5E8"/>
+  <circle cx="100" cy="10" r="4" fill="#FFFFFF"/>
+</svg>

@@ -1,0 +1,262 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <!-- Body gradient: dark slate with subtle highlight -->
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <!-- Body highlight sheen -->
+    <linearGradient id="bodySheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.15"/>
+    </linearGradient>
+    <!-- Face panel gradient (slightly lighter) -->
+    <linearGradient id="faceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a2538"/>
+      <stop offset="100%" stop-color="#0f1928"/>
+    </linearGradient>
+    <!-- Eye glow gradient -->
+    <radialGradient id="eyeGradL" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#a5f3fc"/>
+      <stop offset="40%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </radialGradient>
+    <radialGradient id="eyeGradR" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#a5f3fc"/>
+      <stop offset="40%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </radialGradient>
+    <!-- Eye outer glow filter -->
+    <filter id="eyeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Soft shadow filter -->
+    <filter id="shadow" x="-20%" y="-10%" width="140%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <!-- Body ambient shadow -->
+    <filter id="bodyShadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <!-- Fuel cell glow gradient -->
+    <linearGradient id="fuelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.4"/>
+    </linearGradient>
+    <!-- Antenna orb gradient -->
+    <radialGradient id="antennaOrb" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#a5f3fc"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0e7490"/>
+    </radialGradient>
+    <!-- Antenna orb glow filter -->
+    <filter id="orbGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Wheel gradient -->
+    <radialGradient id="wheelGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#374151"/>
+      <stop offset="70%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </radialGradient>
+    <!-- Wheel rim gradient -->
+    <linearGradient id="wheelRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0891b2" stop-opacity="0.6"/>
+    </linearGradient>
+    <!-- Eye glow halo (behind eye) -->
+    <filter id="eyeHalo" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Chassis gradient -->
+    <linearGradient id="chassisGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ==================== WHEELS ==================== -->
+  <g id="wheels">
+    <!-- Left front wheel -->
+    <g transform="translate(88, 390)">
+      <!-- Wheel shadow -->
+      <ellipse cx="2" cy="36" rx="32" ry="10" fill="#000000" opacity="0.3"/>
+      <!-- Wheel body -->
+      <circle cx="0" cy="0" r="32" fill="url(#wheelGrad)"/>
+      <!-- Rim ring -->
+      <circle cx="0" cy="0" r="32" fill="none" stroke="url(#wheelRim)" stroke-width="3"/>
+      <!-- Hub -->
+      <circle cx="0" cy="0" r="12" fill="#1e293b"/>
+      <circle cx="0" cy="0" r="9" fill="#0f172a"/>
+      <circle cx="0" cy="0" r="5" fill="#06b6d4" opacity="0.8"/>
+      <!-- Roller cross-hatch lines (omni wheel pattern) -->
+      <line x1="-32" y1="0" x2="32" y2="0" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="0" y1="-32" x2="0" y2="32" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="-22" y1="-22" x2="22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+      <line x1="22" y1="-22" x2="-22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+      <!-- Roller bumps around circumference -->
+      <circle cx="32" cy="0" r="4" fill="#2d3f55"/>
+      <circle cx="-32" cy="0" r="4" fill="#2d3f55"/>
+      <circle cx="0" cy="32" r="4" fill="#2d3f55"/>
+      <circle cx="0" cy="-32" r="4" fill="#2d3f55"/>
+      <circle cx="22.6" cy="22.6" r="3.5" fill="#2d3f55"/>
+      <circle cx="-22.6" cy="22.6" r="3.5" fill="#2d3f55"/>
+      <circle cx="22.6" cy="-22.6" r="3.5" fill="#2d3f55"/>
+      <circle cx="-22.6" cy="-22.6" r="3.5" fill="#2d3f55"/>
+    </g>
+    <!-- Right front wheel -->
+    <g transform="translate(312, 390)">
+      <ellipse cx="2" cy="36" rx="32" ry="10" fill="#000000" opacity="0.3"/>
+      <circle cx="0" cy="0" r="32" fill="url(#wheelGrad)"/>
+      <circle cx="0" cy="0" r="32" fill="none" stroke="url(#wheelRim)" stroke-width="3"/>
+      <circle cx="0" cy="0" r="12" fill="#1e293b"/>
+      <circle cx="0" cy="0" r="9" fill="#0f172a"/>
+      <circle cx="0" cy="0" r="5" fill="#06b6d4" opacity="0.8"/>
+      <line x1="-32" y1="0" x2="32" y2="0" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="0" y1="-32" x2="0" y2="32" stroke="#374151" stroke-width="1.5" opacity="0.7"/>
+      <line x1="-22" y1="-22" x2="22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+      <line x1="22" y1="-22" x2="-22" y2="22" stroke="#374151" stroke-width="1" opacity="0.5"/>
+      <circle cx="32" cy="0" r="4" fill="#2d3f55"/>
+      <circle cx="-32" cy="0" r="4" fill="#2d3f55"/>
+      <circle cx="0" cy="32" r="4" fill="#2d3f55"/>
+      <circle cx="0" cy="-32" r="4" fill="#2d3f55"/>
+      <circle cx="22.6" cy="22.6" r="3.5" fill="#2d3f55"/>
+      <circle cx="-22.6" cy="22.6" r="3.5" fill="#2d3f55"/>
+      <circle cx="22.6" cy="-22.6" r="3.5" fill="#2d3f55"/>
+      <circle cx="-22.6" cy="-22.6" r="3.5" fill="#2d3f55"/>
+    </g>
+    <!-- Rear wheels (smaller, partially hidden) -->
+    <g transform="translate(118, 420)" opacity="0.6">
+      <circle cx="0" cy="0" r="20" fill="url(#wheelGrad)"/>
+      <circle cx="0" cy="0" r="20" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.5"/>
+      <circle cx="0" cy="0" r="7" fill="#0f172a"/>
+    </g>
+    <g transform="translate(282, 420)" opacity="0.6">
+      <circle cx="0" cy="0" r="20" fill="url(#wheelGrad)"/>
+      <circle cx="0" cy="0" r="20" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.5"/>
+      <circle cx="0" cy="0" r="7" fill="#0f172a"/>
+    </g>
+  </g>
+
+  <!-- ==================== CHASSIS / BASE ==================== -->
+  <g id="chassis">
+    <!-- Chassis platform (connects wheels) -->
+    <path d="M 80 380 Q 80 400 100 410 L 300 410 Q 320 400 320 380 L 320 350 Q 320 340 310 340 L 90 340 Q 80 340 80 350 Z"
+          fill="url(#chassisGrad)" filter="url(#bodyShadow)"/>
+    <!-- Chassis highlight -->
+    <path d="M 90 342 Q 90 345 100 345 L 300 345 Q 310 345 310 342"
+          fill="none" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.15"/>
+    <!-- Axle connectors -->
+    <rect x="85" y="370" width="30" height="8" rx="4" fill="#1e293b"/>
+    <rect x="285" y="370" width="30" height="8" rx="4" fill="#1e293b"/>
+  </g>
+
+  <!-- ==================== BODY ==================== -->
+  <g id="body" filter="url(#bodyShadow)">
+    <!-- Main body shape: rounded rectangle, slightly wider than tall -->
+    <rect x="80" y="170" width="240" height="200" rx="42" ry="42" fill="url(#bodyGrad)"/>
+    <!-- Body sheen overlay -->
+    <rect x="80" y="170" width="240" height="200" rx="42" ry="42" fill="url(#bodySheen)"/>
+    <!-- Left edge highlight -->
+    <path d="M 82 210 Q 80 240 82 270" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.12" fill="none" stroke-linecap="round"/>
+    <!-- Top edge highlight -->
+    <path d="M 118 172 Q 200 168 282 172" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.14" fill="none"/>
+
+    <!-- ==================== FUEL GLOW SIDE PANELS ==================== -->
+    <g id="fuel-glow">
+      <!-- Left panel -->
+      <rect x="84" y="220" width="28" height="80" rx="14" fill="url(#fuelGrad)" opacity="0.7"/>
+      <rect x="86" y="222" width="24" height="76" rx="12" fill="none" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.6"/>
+      <!-- Left panel glow -->
+      <rect x="84" y="220" width="28" height="80" rx="14" fill="#8b5cf6" opacity="0.15" filter="url(#eyeGlow)"/>
+      <!-- Fuel flow lines (animated feel) -->
+      <line x1="98" y1="232" x2="98" y2="285" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="4,6"/>
+      <!-- Right panel -->
+      <rect x="288" y="220" width="28" height="80" rx="14" fill="url(#fuelGrad)" opacity="0.7"/>
+      <rect x="290" y="222" width="24" height="76" rx="12" fill="none" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.6"/>
+      <rect x="288" y="220" width="28" height="80" rx="14" fill="#8b5cf6" opacity="0.15" filter="url(#eyeGlow)"/>
+      <line x1="302" y1="232" x2="302" y2="285" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="4,6"/>
+    </g>
+
+    <!-- ==================== FACE PANEL ==================== -->
+    <rect x="112" y="185" width="176" height="160" rx="28" ry="28" fill="url(#faceGrad)"/>
+    <!-- Face panel border glow -->
+    <rect x="112" y="185" width="176" height="160" rx="28" ry="28" 
+          fill="none" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.35"/>
+  </g>
+
+  <!-- ==================== EYES ==================== -->
+  <g id="eyes">
+    <!-- Left eye glow halo -->
+    <ellipse cx="163" cy="248" rx="26" ry="22" fill="#22d3ee" opacity="0.15" filter="url(#eyeHalo)"/>
+    <!-- Right eye glow halo -->
+    <ellipse cx="237" cy="248" rx="26" ry="22" fill="#22d3ee" opacity="0.15" filter="url(#eyeHalo)"/>
+
+    <!-- Left eye socket -->
+    <rect x="135" y="224" width="56" height="46" rx="14" fill="#050e1a"/>
+    <!-- Left eye LED -->
+    <rect x="139" y="228" width="48" height="38" rx="11" fill="url(#eyeGradL)" filter="url(#eyeGlow)"/>
+    <!-- Left eye top shading (lid effect) -->
+    <rect x="139" y="228" width="48" height="14" rx="11" fill="#050e1a" opacity="0.3"/>
+    <!-- Left eye highlight (reflection) -->
+    <ellipse cx="153" cy="238" rx="7" ry="5" fill="#ffffff" opacity="0.55"/>
+    <ellipse cx="172" cy="244" rx="3" ry="2" fill="#ffffff" opacity="0.3"/>
+
+    <!-- Right eye socket -->
+    <rect x="209" y="224" width="56" height="46" rx="14" fill="#050e1a"/>
+    <!-- Right eye LED -->
+    <rect x="213" y="228" width="48" height="38" rx="11" fill="url(#eyeGradR)" filter="url(#eyeGlow)"/>
+    <!-- Right eye shading -->
+    <rect x="213" y="228" width="48" height="14" rx="11" fill="#050e1a" opacity="0.3"/>
+    <!-- Right eye highlight -->
+    <ellipse cx="227" cy="238" rx="7" ry="5" fill="#ffffff" opacity="0.55"/>
+    <ellipse cx="246" cy="244" rx="3" ry="2" fill="#ffffff" opacity="0.3"/>
+  </g>
+
+  <!-- ==================== MOUTH ==================== -->
+  <g id="mouth">
+    <!-- Speaker grille area -->
+    <rect x="154" y="298" width="92" height="32" rx="10" fill="#0a1525"/>
+    <rect x="154" y="298" width="92" height="32" rx="10" fill="none" stroke="#06b6d4" stroke-width="0.8" stroke-opacity="0.25"/>
+    <!-- Grille lines (subtle horizontal) -->
+    <line x1="162" y1="308" x2="238" y2="308" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.4" stroke-linecap="round"/>
+    <line x1="162" y1="316" x2="238" y2="316" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.4" stroke-linecap="round"/>
+    <line x1="162" y1="324" x2="238" y2="324" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.3" stroke-linecap="round"/>
+  </g>
+
+  <!-- ==================== ANTENNA ==================== -->
+  <g id="antenna">
+    <!-- Antenna stem -->
+    <line x1="200" y1="170" x2="200" y2="120" stroke="#2d3f55" stroke-width="5" stroke-linecap="round"/>
+    <line x1="200" y1="170" x2="200" y2="120" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.5"/>
+    <!-- Small base ring -->
+    <ellipse cx="200" cy="170" rx="8" ry="5" fill="#374151"/>
+    <ellipse cx="200" cy="170" rx="8" ry="5" fill="none" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Antenna orb glow halo -->
+    <circle cx="200" cy="110" r="22" fill="#22d3ee" opacity="0.12" filter="url(#eyeHalo)"/>
+    <!-- Antenna orb -->
+    <circle cx="200" cy="110" r="16" fill="url(#antennaOrb)" filter="url(#orbGlow)"/>
+    <!-- Orb highlight -->
+    <ellipse cx="194" cy="104" rx="5" ry="4" fill="#ffffff" opacity="0.45"/>
+    <!-- Orb inner circuit hint -->
+    <circle cx="200" cy="110" r="8" fill="none" stroke="#0e7490" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+
+  <!-- Ground shadow -->
+  <ellipse cx="200" cy="448" rx="100" ry="14" fill="#000000" opacity="0.2"/>
+</svg>

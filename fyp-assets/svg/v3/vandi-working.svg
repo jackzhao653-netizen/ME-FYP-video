@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <!-- Vandi - Working Pose -->
+  
+  <!-- Base/Wheels -->
+  <ellipse cx="100" cy="260" rx="45" ry="15" fill="#2C5F7C" opacity="0.3"/>
+  <rect x="70" y="240" width="60" height="25" rx="12" fill="#3A7CA5"/>
+  
+  <!-- Body -->
+  <rect x="60" y="140" width="80" height="100" rx="15" fill="#4A9FD8"/>
+  <rect x="65" y="145" width="70" height="90" rx="12" fill="#5BB5E8"/>
+  
+  <!-- Body Details - with activity indicators -->
+  <circle cx="100" cy="180" r="8" fill="#5BB5E8" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="85" y="200" width="30" height="3" rx="1.5" fill="#5BB5E8" opacity="0.6"/>
+  <rect x="85" y="210" width="30" height="3" rx="1.5" fill="#5BB5E8" opacity="0.6"/>
+  <rect x="85" y="220" width="20" height="3" rx="1.5" fill="#5BB5E8" opacity="0.4"/>
+  
+  <!-- Arms - positioned like typing -->
+  <rect x="35" y="170" width="20" height="45" rx="10" fill="#4A9FD8" transform="rotate(15 45 170)"/>
+  <circle cx="52" cy="218" r="12" fill="#5BB5E8"/>
+  
+  <rect x="145" y="170" width="20" height="45" rx="10" fill="#4A9FD8" transform="rotate(-15 155 170)"/>
+  <circle cx="148" cy="218" r="12" fill="#5BB5E8"/>
+  
+  <!-- Head/Screen - slightly tilted forward -->
+  <rect x="50" y="42" width="100" height="110" rx="20" fill="#2C5F7C" transform="rotate(3 100 97)"/>
+  <rect x="55" y="47" width="90" height="100" rx="15" fill="#1E4A5F" transform="rotate(3 100 97)"/>
+  
+  <!-- Screen Display -->
+  <rect x="60" y="52" width="80" height="90" rx="12" fill="#0A2F3F" transform="rotate(3 100 97)"/>
+  
+  <!-- Eyes - Focused -->
+  <g transform="rotate(3 100 97)">
+    <ellipse cx="80" cy="87" rx="11" ry="14" fill="#5BB5E8"/>
+    <ellipse cx="80" cy="87" rx="7" ry="10" fill="#FFFFFF"/>
+    <circle cx="81" cy="89" r="5" fill="#0A2F3F"/>
+    <circle cx="82" cy="87" r="2" fill="#FFFFFF" opacity="0.8"/>
+    
+    <ellipse cx="120" cy="87" rx="11" ry="14" fill="#5BB5E8"/>
+    <ellipse cx="120" cy="87" rx="7" ry="10" fill="#FFFFFF"/>
+    <circle cx="121" cy="89" r="5" fill="#0A2F3F"/>
+    <circle cx="122" cy="87" r="2" fill="#FFFFFF" opacity="0.8"/>
+    
+    <!-- Code/data lines on screen -->
+    <rect x="68" y="105" width="25" height="2" rx="1" fill="#5BB5E8" opacity="0.4"/>
+    <rect x="68" y="110" width="35" height="2" rx="1" fill="#5BB5E8" opacity="0.4"/>
+    <rect x="68" y="115" width="20" height="2" rx="1" fill="#5BB5E8" opacity="0.4"/>
+    <rect x="68" y="120" width="30" height="2" rx="1" fill="#5BB5E8" opacity="0.4"/>
+  </g>
+  
+  <!-- Antenna -->
+  <line x1="100" y1="42" x2="100" y2="20" stroke="#3A7CA5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="15" r="6" fill="#5BB5E8"/>
+  <circle cx="100" cy="15" r="3" fill="#FFFFFF" opacity="0.6"/>
+</svg>

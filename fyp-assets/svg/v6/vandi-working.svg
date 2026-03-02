@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <defs>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5BB5E8"/>
+      <stop offset="100%" stop-color="#3A7CA5"/>
+    </linearGradient>
+    <linearGradient id="headGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2C5F7C"/>
+      <stop offset="100%" stop-color="#1A3F52"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="100" cy="262" rx="44" ry="10" fill="#1A3F52" opacity="0.25"/>
+
+  <!-- Base -->
+  <rect x="72" y="242" width="56" height="22" rx="11" fill="#2C5F7C"/>
+  <rect x="76" y="246" width="48" height="14" rx="7" fill="#3A7CA5"/>
+
+  <!-- Body -->
+  <rect x="58" y="138" width="84" height="104" rx="16" fill="#3A7CA5"/>
+  <rect x="62" y="142" width="76" height="96" rx="13" fill="url(#bodyGrad)"/>
+  <rect x="78" y="172" width="44" height="28" rx="5" fill="#2C5F7C" opacity="0.35"/>
+  <circle cx="100" cy="186" r="7" fill="#3A7CA5" opacity="0.6"/>
+  <rect x="83" y="208" width="34" height="3" rx="1.5" fill="#2C5F7C" opacity="0.4"/>
+  <rect x="83" y="216" width="34" height="3" rx="1.5" fill="#2C5F7C" opacity="0.4"/>
+
+  <!-- Left arm — angled forward (typing) -->
+  <rect x="38" y="165" width="22" height="52" rx="11" fill="#3A7CA5" transform="rotate(25 49 165)"/>
+  <rect x="40" y="167" width="18" height="48" rx="9" fill="#4A9FD8" transform="rotate(25 49 165)"/>
+  <circle cx="62" cy="220" r="11" fill="#3A7CA5"/>
+  <circle cx="62" cy="220" r="8" fill="#5BB5E8"/>
+
+  <!-- Right arm — angled forward (typing) -->
+  <rect x="140" y="165" width="22" height="52" rx="11" fill="#3A7CA5" transform="rotate(-25 151 165)"/>
+  <rect x="142" y="167" width="18" height="48" rx="9" fill="#4A9FD8" transform="rotate(-25 151 165)"/>
+  <circle cx="138" cy="220" r="11" fill="#3A7CA5"/>
+  <circle cx="138" cy="220" r="8" fill="#5BB5E8"/>
+
+  <!-- Laptop/keyboard suggestion -->
+  <rect x="70" y="225" width="60" height="3" rx="1.5" fill="#2C5F7C" opacity="0.5"/>
+  <rect x="75" y="228" width="50" height="2" rx="1" fill="#2C5F7C" opacity="0.4"/>
+
+  <!-- Head casing — slight forward tilt (focused) -->
+  <g transform="rotate(3 100 95)">
+    <rect x="48" y="38" width="104" height="112" rx="22" fill="url(#headGrad)"/>
+    <rect x="53" y="43" width="94" height="102" rx="17" fill="#1E4A5F"/>
+    <rect x="58" y="48" width="84" height="92" rx="13" fill="#091E2B"/>
+    <rect x="60" y="50" width="80" height="88" rx="11" fill="#0A2535"/>
+
+    <!-- Eyes: Exact design from Details03.jpg - circular with inner highlight, focused -->
+    <circle cx="81" cy="86" r="10" fill="#00E5FF" filter="url(#glow)"/>
+    <circle cx="81" cy="83" r="3" fill="#A0E0FF" opacity="0.9"/>
+    <circle cx="119" cy="86" r="10" fill="#00E5FF" filter="url(#glow)"/>
+    <circle cx="119" cy="83" r="3" fill="#A0E0FF" opacity="0.9"/>
+
+    <!-- Focus lines (concentration) -->
+    <line x1="68" y1="86" x2="62" y2="86" stroke="#00E5FF" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+    <line x1="132" y1="86" x2="138" y2="86" stroke="#00E5FF" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Antenna -->
+  <line x1="100" y1="38" x2="100" y2="18" stroke="#3A7CA5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="13" r="6" fill="#4A9FD8"/>
+  <circle cx="100" cy="13" r="3" fill="#A0E0FF" opacity="0.8"/>
+</svg>

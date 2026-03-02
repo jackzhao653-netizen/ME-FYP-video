@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="260" rx="45" ry="15" fill="#2C5F7C" opacity="0.3"/>
+  <!-- Base -->
+  <rect x="70" y="240" width="60" height="25" rx="12" fill="#3A7CA5"/>
+  <!-- Body -->
+  <rect x="60" y="140" width="80" height="100" rx="15" fill="#4A9FD8"/>
+  <rect x="65" y="145" width="70" height="90" rx="12" fill="#5BB5E8"/>
+  <circle cx="100" cy="180" r="8" fill="#3A7CA5" opacity="0.5"/>
+  <rect x="85" y="200" width="30" height="3" rx="1.5" fill="#3A7CA5" opacity="0.4"/>
+  <rect x="85" y="210" width="30" height="3" rx="1.5" fill="#3A7CA5" opacity="0.4"/>
+  <!-- Left arm (raised to chin, thinking pose) -->
+  <rect x="35" y="145" width="20" height="50" rx="10" fill="#4A9FD8" transform="rotate(-15,45,170)"/>
+  <circle cx="38" cy="198" r="12" fill="#5BB5E8"/>
+  <!-- Right arm -->
+  <rect x="145" y="160" width="20" height="50" rx="10" fill="#4A9FD8"/>
+  <circle cx="155" cy="215" r="12" fill="#5BB5E8"/>
+  <!-- Head (tilted slightly) -->
+  <g transform="rotate(-3,100,95)">
+    <rect x="50" y="40" width="100" height="110" rx="20" fill="#2C5F7C"/>
+    <rect x="55" y="45" width="90" height="100" rx="15" fill="#1E4A5F"/>
+    <rect x="60" y="50" width="80" height="90" rx="12" fill="#0A2F3F"/>
+    <!-- Eyes: thinking - left eye squinted, both shifted right (looking to side) -->
+    <rect x="75" y="85" width="22" height="5" rx="2" fill="#00E5FF" filter="url(#glow)"/>
+    <rect x="113" y="83" width="22" height="8" rx="3" fill="#00FFFF" filter="url(#glow)"/>
+    <!-- Thinking dots -->
+    <circle cx="130" cy="65" r="2" fill="#00E5FF" opacity="0.4"/>
+    <circle cx="136" cy="58" r="3" fill="#00E5FF" opacity="0.3"/>
+    <circle cx="140" cy="48" r="4" fill="#00E5FF" opacity="0.2"/>
+  </g>
+  <!-- Antenna -->
+  <line x1="98" y1="38" x2="96" y2="18" stroke="#3A7CA5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="96" cy="13" r="6" fill="#5BB5E8"/>
+  <circle cx="96" cy="13" r="3" fill="#FFFFFF" opacity="0.6"/>
+</svg>

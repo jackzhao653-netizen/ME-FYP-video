@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <!-- Vandi - Sad Pose -->
+  
+  <!-- Base/Wheels -->
+  <ellipse cx="100" cy="260" rx="45" ry="15" fill="#2C5F7C" opacity="0.3"/>
+  <rect x="70" y="240" width="60" height="25" rx="12" fill="#3A7CA5"/>
+  
+  <!-- Body - slightly slumped -->
+  <rect x="60" y="145" width="80" height="95" rx="15" fill="#4A9FD8"/>
+  <rect x="65" y="150" width="70" height="85" rx="12" fill="#5BB5E8"/>
+  
+  <!-- Body Details -->
+  <circle cx="100" cy="185" r="8" fill="#3A7CA5" opacity="0.5"/>
+  <rect x="85" y="205" width="30" height="3" rx="1.5" fill="#3A7CA5" opacity="0.4"/>
+  <rect x="85" y="215" width="30" height="3" rx="1.5" fill="#3A7CA5" opacity="0.4"/>
+  
+  <!-- Arms - drooping -->
+  <rect x="35" y="165" width="20" height="50" rx="10" fill="#4A9FD8" transform="rotate(5 45 165)"/>
+  <circle cx="47" cy="220" r="12" fill="#5BB5E8"/>
+  
+  <rect x="145" y="165" width="20" height="50" rx="10" fill="#4A9FD8" transform="rotate(-5 155 165)"/>
+  <circle cx="153" cy="220" r="12" fill="#5BB5E8"/>
+  
+  <!-- Head/Screen - tilted down -->
+  <rect x="50" y="45" width="100" height="110" rx="20" fill="#2C5F7C" transform="rotate(2 100 100)"/>
+  <rect x="55" y="50" width="90" height="100" rx="15" fill="#1E4A5F" transform="rotate(2 100 100)"/>
+  
+  <!-- Screen Display -->
+  <rect x="60" y="55" width="80" height="90" rx="12" fill="#0A2F3F" transform="rotate(2 100 100)"/>
+  
+  <!-- Eyes - Drooping/half-closed -->
+  <g transform="rotate(2 100 100)">
+    <ellipse cx="80" cy="90" rx="12" ry="10" fill="#5BB5E8"/>
+    <ellipse cx="80" cy="90" rx="8" ry="7" fill="#FFFFFF"/>
+    <circle cx="82" cy="91" r="4" fill="#0A2F3F"/>
+    <circle cx="83" cy="90" r="1.5" fill="#FFFFFF" opacity="0.8"/>
+    
+    <ellipse cx="120" cy="90" rx="12" ry="10" fill="#5BB5E8"/>
+    <ellipse cx="120" cy="90" rx="8" ry="7" fill="#FFFFFF"/>
+    <circle cx="122" cy="91" r="4" fill="#0A2F3F"/>
+    <circle cx="123" cy="90" r="1.5" fill="#FFFFFF" opacity="0.8"/>
+    
+    <!-- Droopy eyelids -->
+    <path d="M 68 85 Q 80 88 92 85" stroke="#1E4A5F" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M 108 85 Q 120 88 132 85" stroke="#1E4A5F" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Antenna - drooping -->
+  <line x1="100" y1="45" x2="102" y2="22" stroke="#3A7CA5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="102" cy="17" r="6" fill="#5BB5E8" opacity="0.7"/>
+  <circle cx="102" cy="17" r="3" fill="#FFFFFF" opacity="0.4"/>
+</svg>

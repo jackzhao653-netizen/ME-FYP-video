@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/><stop offset="50%" stop-color="#1e293b"/><stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="bodySheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08"/><stop offset="40%" stop-color="#ffffff" stop-opacity="0.03"/><stop offset="100%" stop-color="#000000" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="faceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#050e1a"/>
+    </linearGradient>
+    <radialGradient id="eyeGrad" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#a5f3fc"/><stop offset="40%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0891b2"/>
+    </radialGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.7"/><stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.8"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="legGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d3f55"/><stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="eyeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bodyShadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="accentGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <ellipse cx="200" cy="460" rx="90" ry="12" fill="#000" opacity="0.2"/>
+  <!-- Sound waves -->
+  <g id="soundwaves" opacity="0.6">
+    <path d="M 320 180 Q 330 180 335 175" stroke="#06b6d4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 325 195 Q 340 195 348 188" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M 322 165 Q 332 165 338 160" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Base -->
+  <g id="base">
+    <rect x="120" y="420" width="160" height="30" rx="15" fill="url(#baseGrad)"/>
+    <rect x="120" y="420" width="160" height="30" rx="15" fill="none" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.2"/>
+  </g>
+  <!-- Legs -->
+  <g id="legs">
+    <rect x="155" y="380" width="28" height="45" rx="8" fill="url(#legGrad)"/>
+    <rect x="155" y="380" width="28" height="45" rx="8" fill="url(#bodySheen)"/>
+    <rect x="217" y="380" width="28" height="45" rx="8" fill="url(#legGrad)"/>
+    <rect x="217" y="380" width="28" height="45" rx="8" fill="url(#bodySheen)"/>
+  </g>
+  <!-- Body (slight tilt) -->
+  <g id="body" filter="url(#bodyShadow)" transform="rotate(-3 200 285)">
+    <rect x="110" y="180" width="180" height="210" rx="40" fill="url(#bodyGrad)"/>
+    <rect x="110" y="180" width="180" height="210" rx="40" fill="url(#bodySheen)"/>
+    <rect x="112" y="240" width="6" height="70" rx="3" fill="url(#accentGrad)" opacity="0.65"/>
+    <rect x="282" y="240" width="6" height="70" rx="3" fill="url(#accentGrad)" opacity="0.65"/>
+  </g>
+  <!-- Head (slight tilt) -->
+  <g id="head" filter="url(#bodyShadow)" transform="rotate(-3 200 180)">
+    <rect x="100" y="100" width="200" height="160" rx="50" fill="url(#bodyGrad)"/>
+    <rect x="100" y="100" width="200" height="160" rx="50" fill="url(#bodySheen)"/>
+    <path d="M 150 105 Q 200 95 250 105" stroke="#fff" stroke-width="1.5" stroke-opacity="0.12" fill="none"/>
+    <rect x="125" y="130" width="150" height="100" rx="30" fill="url(#faceGrad)"/>
+    <rect x="125" y="130" width="150" height="100" rx="30" fill="none" stroke="#06b6d4" stroke-width="1.2" stroke-opacity="0.35"/>
+  </g>
+  <!-- Eyes (expressive) -->
+  <g id="eyes" transform="rotate(-3 200 180)">
+    <g filter="url(#eyeGlow)">
+      <rect x="145" y="165" width="40" height="22" rx="6" fill="url(#eyeGrad)"/>
+      <rect x="145" y="165" width="40" height="8" rx="4" fill="#050e1a" opacity="0.2"/>
+      <ellipse cx="157" cy="172" rx="5" ry="3" fill="#fff" opacity="0.5"/>
+    </g>
+    <g filter="url(#eyeGlow)">
+      <rect x="215" y="165" width="40" height="22" rx="6" fill="url(#eyeGrad)"/>
+      <rect x="215" y="165" width="40" height="8" rx="4" fill="#050e1a" opacity="0.2"/>
+      <ellipse cx="227" cy="172" rx="5" ry="3" fill="#fff" opacity="0.5"/>
+    </g>
+  </g>
+  <!-- Ears -->
+  <g id="ears" transform="rotate(-3 200 180)">
+    <circle cx="100" cy="180" r="18" fill="url(#bodyGrad)"/>
+    <circle cx="100" cy="180" r="12" fill="#0f172a"/>
+    <circle cx="100" cy="180" r="8" fill="url(#accentGrad)" opacity="0.75" filter="url(#accentGlow)"/>
+    <circle cx="300" cy="180" r="18" fill="url(#bodyGrad)"/>
+    <circle cx="300" cy="180" r="12" fill="#0f172a"/>
+    <circle cx="300" cy="180" r="8" fill="url(#accentGrad)" opacity="0.75" filter="url(#accentGlow)"/>
+  </g>
+</svg>

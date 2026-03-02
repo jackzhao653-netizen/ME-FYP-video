@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="260" rx="45" ry="15" fill="#2C5F7C" opacity="0.3"/>
+  <!-- Base -->
+  <rect x="70" y="240" width="60" height="25" rx="12" fill="#3A7CA5"/>
+  <!-- Body -->
+  <rect x="60" y="140" width="80" height="100" rx="15" fill="#4A9FD8"/>
+  <rect x="65" y="145" width="70" height="90" rx="12" fill="#5BB5E8"/>
+  <circle cx="100" cy="180" r="8" fill="#3A7CA5" opacity="0.5"/>
+  <rect x="85" y="200" width="30" height="3" rx="1.5" fill="#3A7CA5" opacity="0.4"/>
+  <rect x="85" y="210" width="30" height="3" rx="1.5" fill="#3A7CA5" opacity="0.4"/>
+  <!-- Left arm (normal) -->
+  <rect x="35" y="160" width="20" height="50" rx="10" fill="#4A9FD8"/>
+  <circle cx="45" cy="215" r="12" fill="#5BB5E8"/>
+  <!-- Right arm (raised up, waving!) -->
+  <rect x="148" y="110" width="20" height="50" rx="10" fill="#4A9FD8" transform="rotate(-30,158,135)"/>
+  <circle cx="170" cy="105" r="12" fill="#5BB5E8"/>
+  <!-- Wave lines -->
+  <path d="M178,95 Q185,90 182,82" stroke="#5BB5E8" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M183,100 Q192,94 188,84" stroke="#5BB5E8" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.3"/>
+  <!-- Head -->
+  <rect x="50" y="40" width="100" height="110" rx="20" fill="#2C5F7C"/>
+  <rect x="55" y="45" width="90" height="100" rx="15" fill="#1E4A5F"/>
+  <rect x="60" y="50" width="80" height="90" rx="12" fill="#0A2F3F"/>
+  <!-- Eyes: happy upward arcs -->
+  <path d="M70,90 Q81,80 92,90" stroke="#00FFFF" stroke-width="6" stroke-linecap="round" fill="none" filter="url(#glow)"/>
+  <path d="M108,90 Q119,80 130,90" stroke="#00FFFF" stroke-width="6" stroke-linecap="round" fill="none" filter="url(#glow)"/>
+  <!-- Antenna -->
+  <line x1="100" y1="40" x2="100" y2="20" stroke="#3A7CA5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="15" r="6" fill="#5BB5E8"/>
+  <circle cx="100" cy="15" r="3" fill="#FFFFFF" opacity="0.6"/>
+</svg>
