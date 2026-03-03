@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { DragEvent, FormEvent } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { AssetItem, AssetKind, PromptEntry, PromptMap } from './types';
 
 const POLL_MS = 3000;
@@ -298,51 +299,148 @@ const VANDI_EXPRESSIONS: Array<{ key: string; label: string; file: string; color
   { key: 'angry', label: 'Angry', file: 'vandi_front_angry.svg', color: 'red' },
   { key: 'surprised', label: 'Surprised', file: 'vandi_front_surprised.svg', color: 'amber' },
   { key: 'listen', label: 'Listening', file: 'vandi_front_listen.svg', color: 'violet' },
-  { key: 'sleepy', label: 'Sleepy', file: 'vandi_front_sleepy.svg', color: 'indigo' }
+  { key: 'sleepy', label: 'Sleepy', file: 'vandi_front_sleepy.svg', color: 'indigo' },
+  { key: 'waving', label: 'Waving', file: 'vandi_front_waving.svg', color: 'pink' },
+  { key: 'thinking', label: 'Thinking', file: 'vandi_front_thinking.svg', color: 'gray' },
+  { key: 'thinking_two', label: 'Thinking 2', file: 'vandi_front_thinking_two.svg', color: 'indigo' }
 ];
 
 const VANDI_BUTTONS = VANDI_EXPRESSIONS.filter((e) => e.key !== 'default');
 
+// --- Dynamic Vandi Morphing Component (Framer Motion) ---
+const EXPRESSION_PROPS_MOTION: Record<string, any> = {
+  default: {
+    leftAntennaTransform: { rotate: -110, scaleX: 1 }, rightAntennaTransform: { rotate: -70, scaleX: 1 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    rightEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    leftEyeBlink: { d: "M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z; M -7 2 L 7 2 A 4 4 0 0 1 15 2 L 15 2 A 4 4 0 0 1 7 2 L -7 2 A 4 4 0 0 1 -15 2 L -15 2 A 4 4 0 0 1 -7 2 Z; M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z; M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z", keyTimes: "0; 0.05; 0.1; 1", dur: "4s" },
+    rightEyeBlink: { d: "M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z; M -7 2 L 7 2 A 4 4 0 0 1 15 2 L 15 2 A 4 4 0 0 1 7 2 L -7 2 A 4 4 0 0 1 -15 2 L -15 2 A 4 4 0 0 1 -7 2 Z; M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z; M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z", keyTimes: "0; 0.05; 0.1; 1", dur: "4s" },
+    leftEyeTransform: { x: -25, y: 0, rotate: 0 }, rightEyeTransform: { x: 25, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: 0 },
+    radarWaves: false
+  },
+  happy: {
+    leftAntennaTransform: { rotate: -110, scaleX: 1.05 }, rightAntennaTransform: { rotate: -70, scaleX: 1.05 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -15 0 Q 0 -20 15 0',
+    rightEyePath: 'M -15 0 Q 0 -20 15 0',
+    leftEyeTransform: { x: -25, y: 10, rotate: 0 }, rightEyeTransform: { x: 25, y: 10, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: -13 },
+    radarWaves: false
+  },
+  sad: {
+    leftAntennaTransform: { rotate: -15, scaleX: 0.8 }, rightAntennaTransform: { rotate: -165, scaleX: 0.8 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M 15 -8 Q 15 -16 7 -16 L -7 -4 Q -15 -4 -15 4 L -15 8 Q -15 16 -7 16 L 7 16 Q 15 16 15 8 Z',
+    rightEyePath: 'M -15 -8 Q -15 -16 -7 -16 L 7 -4 Q 15 -4 15 4 L 15 8 Q 15 16 7 16 L -7 16 Q -15 16 -15 8 Z',
+    leftEyeTransform: { x: -22, y: 0, rotate: 0 }, rightEyeTransform: { x: 22, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: -3 },
+    radarWaves: false
+  },
+  angry: {
+    leftAntennaTransform: { rotate: -140, scaleX: 0.9 }, rightAntennaTransform: { rotate: -40, scaleX: 0.9 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -14 -4 L 14 -4 A 4 4 0 0 1 18 0 L 18 12 A 4 4 0 0 1 14 16 L -14 16 A 4 4 0 0 1 -18 12 L -18 0 A 4 4 0 0 1 -14 -4 Z',
+    rightEyePath: 'M -14 -4 L 14 -4 A 4 4 0 0 1 18 0 L 18 12 A 4 4 0 0 1 14 16 L -14 16 A 4 4 0 0 1 -18 12 L -18 0 A 4 4 0 0 1 -14 -4 Z',
+    leftEyeTransform: { x: -25, y: 0, rotate: 20 }, rightEyeTransform: { x: 25, y: 0, rotate: -20 },
+    eyesGroupTransform: { x: 0, y: -5 },
+    radarWaves: false
+  },
+  surprised: {
+    leftAntennaTransform: { rotate: -90, scaleX: 0.95 }, rightAntennaTransform: { rotate: -90, scaleX: 0.95 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -16 0 A 16 16 0 1 1 16 0 A 16 16 0 1 1 -16 0',
+    rightEyePath: 'M -16 0 A 16 16 0 1 1 16 0 A 16 16 0 1 1 -16 0',
+    leftEyeTransform: { x: -25, y: 0, rotate: 0 }, rightEyeTransform: { x: 25, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: -5 },
+    radarWaves: false
+  },
+  listen: {
+    leftAntennaTransform: { rotate: -90, scaleX: 1.1 }, rightAntennaTransform: { rotate: -70, scaleX: 1.1 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    rightEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    leftEyeTransform: { x: -22, y: 0, rotate: 0 }, rightEyeTransform: { x: 22, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: -8, y: -5 },
+    radarWaves: true
+  },
+  sleepy: {
+    leftAntennaTransform: { rotate: -10, scaleX: 0.7 }, rightAntennaTransform: { rotate: -170, scaleX: 0.7 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -11 -4 L 11 -4 A 4 4 0 0 1 15 0 A 4 4 0 0 1 11 4 L -11 4 A 4 4 0 0 1 -15 0 A 4 4 0 0 1 -11 -4 Z',
+    rightEyePath: 'M -11 -4 L 11 -4 A 4 4 0 0 1 15 0 A 4 4 0 0 1 11 4 L -11 4 A 4 4 0 0 1 -15 0 A 4 4 0 0 1 -11 -4 Z',
+    leftEyeTransform: { x: -22, y: 0, rotate: 0 }, rightEyeTransform: { x: 22, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: 10 },
+    radarWaves: false
+  },
+  waving: {
+    leftAntennaTransform: { rotate: -110, scaleX: 1.1 }, rightAntennaTransform: { rotate: -70, scaleX: 1.1 },
+    leftAntennaWobble: { values: "0; 50; -10; 50; 0", keyTimes: "0; 0.25; 0.5; 0.75; 1", dur: "0.5s" },
+    rightAntennaWobble: { values: "0; -50; 10; -50; 0", keyTimes: "0; 0.25; 0.5; 0.75; 1", dur: "0.5s" },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 -2 A 4 4 0 0 1 11 2 L -11 2 A 4 4 0 0 1 -15 -2 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    rightEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 -2 A 4 4 0 0 1 11 2 L -11 2 A 4 4 0 0 1 -15 -2 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    leftEyeTransform: { x: -25, y: 0, rotate: 0 }, rightEyeTransform: { x: 25, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: 0 },
+    radarWaves: false
+  },
+  thinking: {
+    leftAntennaTransform: { rotate: -120, scaleX: 1 }, rightAntennaTransform: { rotate: -60, scaleX: 1 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 -8 A 8 8 0 0 1 7 0 L -7 0 A 8 8 0 0 1 -15 -8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    rightEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    leftEyeTransform: { x: -25, y: 18, rotate: 0 }, rightEyeTransform: { x: 25, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: -10 },
+    radarWaves: false
+  },
+  thinking_two: {
+    leftAntennaTransform: { rotate: -110, scaleX: 1.05 }, rightAntennaTransform: { rotate: -70, scaleX: 1.05 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -15 0 Q 0 -20 15 0',
+    rightEyePath: 'M -15 0 Q 0 -20 15 0',
+    leftEyeTransform: { x: -25, y: 10, rotate: 0 }, rightEyeTransform: { x: 25, y: 10, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: -13 },
+    radarWaves: false
+  }
+};
 function VandiExpressionViewer() {
   const [activeExpression, setActiveExpression] = useState('default');
-  const [svgMarkup, setSvgMarkup] = useState<Record<string, string>>({});
+  const [zoom, setZoom] = useState(1);
+  const [isEyeTracking, setIsEyeTracking] = useState(false);
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const loadAll = async () => {
-      const entries: Record<string, string> = {};
-      await Promise.all(
-        VANDI_EXPRESSIONS.map(async (expr) => {
-          try {
-            const res = await fetch(`/api/asset/${encodeURIComponent('../vandi profile/' + expr.file)}`);
-            if (res.ok) {
-              const text = await res.text();
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(text, 'image/svg+xml');
-              const headGroup = doc.getElementById('head-group');
-              if (headGroup) {
-                Array.from(headGroup.children).forEach(child => {
-                  const isStatic =
-                    (child.tagName === 'rect' && ['-80', '-70', '-67'].includes(child.getAttribute('x') || '')) ||
-                    (child.tagName === 'path' && (child.getAttribute('d') || '').startsWith('M -50 -50'));
-                  if (isStatic) {
-                    child.classList.add('vandi-static-part');
-                  } else {
-                    child.classList.add('vandi-dynamic-part');
-                  }
-                });
-              }
-              entries[expr.key] = new XMLSerializer().serializeToString(doc);
-            }
-          } catch {
-            // skip
-          }
-        })
-      );
-      setSvgMarkup(entries);
-    };
-    loadAll();
-  }, []);
+    if (!isEyeTracking) {
+      setMouseOffset({ x: 0, y: 0 });
+    }
+  }, [isEyeTracking]);
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isEyeTracking) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const normalizedX = (x / rect.width) * 2 - 1; // -1 to 1
+    const normalizedY = (y / rect.height) * 2 - 1; // -1 to 1
+
+    const maxOffsetX = 12;
+    const maxOffsetY = 10;
+
+    setMouseOffset({
+      x: normalizedX * maxOffsetX,
+      y: normalizedY * maxOffsetY
+    });
+  };
+
+  const handlePointerLeave = () => {
+    if (isEyeTracking) {
+      setMouseOffset({ x: 0, y: 0 });
+    }
+  };
 
   // Auto-return to idle after 3 seconds
   useEffect(() => {
@@ -353,7 +451,8 @@ function VandiExpressionViewer() {
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [activeExpression]);
 
-  const allLoaded = Object.keys(svgMarkup).length === VANDI_EXPRESSIONS.length;
+  const props = EXPRESSION_PROPS_MOTION[activeExpression] || EXPRESSION_PROPS_MOTION.default;
+  const springConfig = { type: "spring" as const, stiffness: 260, damping: 20 };
 
   const btnColors: Record<string, { active: string; idle: string }> = {
     emerald: { active: 'border-emerald-300/70 bg-emerald-500/15 text-emerald-200 shadow-[0_0_18px_rgba(52,211,153,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-emerald-300/40 hover:text-emerald-200' },
@@ -361,7 +460,8 @@ function VandiExpressionViewer() {
     red: { active: 'border-red-300/70 bg-red-500/15 text-red-200 shadow-[0_0_18px_rgba(252,165,165,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-red-300/40 hover:text-red-200' },
     amber: { active: 'border-amber-300/70 bg-amber-500/15 text-amber-200 shadow-[0_0_18px_rgba(251,191,36,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-amber-300/40 hover:text-amber-200' },
     violet: { active: 'border-violet-300/70 bg-violet-500/15 text-violet-200 shadow-[0_0_18px_rgba(167,139,250,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-violet-300/40 hover:text-violet-200' },
-    indigo: { active: 'border-indigo-300/70 bg-indigo-500/15 text-indigo-200 shadow-[0_0_18px_rgba(129,140,248,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-indigo-300/40 hover:text-indigo-200' }
+    indigo: { active: 'border-indigo-300/70 bg-indigo-500/15 text-indigo-200 shadow-[0_0_18px_rgba(129,140,248,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-indigo-300/40 hover:text-indigo-200' },
+    pink: { active: 'border-pink-300/70 bg-pink-500/15 text-pink-200 shadow-[0_0_18px_rgba(244,114,182,0.2)]', idle: 'border-slate-600 text-slate-300 hover:border-pink-300/40 hover:text-pink-200' }
   };
 
   return (
@@ -372,44 +472,185 @@ function VandiExpressionViewer() {
       </div>
 
       <div className="flex items-start gap-5">
-        <style>{`
-          .vandi-base-layer .vandi-dynamic-part { display: none !important; }
-          .vandi-dynamic-layer .vandi-static-part { display: none !important; }
-        `}</style>
+        {/* Native Framer Motion SVG area */}
+        <div className="flex flex-1 flex-col gap-4">
+          <div
+            className="relative overflow-hidden rounded-xl border border-slate-700/50 bg-slate-950/40 shadow-inner"
+            style={{ height: '55vh', marginLeft: '-20px' }}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={handlePointerLeave}
+          >
 
-        {/* SVG display area — no background */}
-        <div className="relative flex-1 overflow-hidden rounded-xl" style={{ height: '45vh' }}>
-          {!allLoaded && (
-            <div className="flex h-full items-center justify-center text-sm text-slate-400">Loading expressions...</div>
-          )}
+            <svg className="h-full w-full drop-shadow-2xl" style={{ transform: `scale(${zoom})`, transformOrigin: 'center center', transition: 'transform 0.1s ease-out' }} viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <filter id="cyanGlowDyn" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <linearGradient id="headGradDyn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#4a8b4a" /><stop offset="100%" stopColor="#184718" /></linearGradient>
+                <linearGradient id="screenGradDyn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#1a1a1e" /><stop offset="100%" stopColor="#0a0a0c" /></linearGradient>
+                <linearGradient id="metalGradDyn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#8a8d9b" /><stop offset="100%" stopColor="#4a4c54" /></linearGradient>
+              </defs>
 
-          {/* Permanent Base Layer */}
-          {allLoaded && (
-            <div
-              className="absolute inset-0 flex items-center justify-center p-4 [&_svg]:max-h-full [&_svg]:max-w-full vandi-base-layer"
-              dangerouslySetInnerHTML={{ __html: svgMarkup['default'] ?? '' }}
-            />
-          )}
+              <g transform="translate(250, 250)">
+                {/* Antennas */}
+                <g transform="translate(-32, -75)">
+                  <motion.g animate={props.leftAntennaTransform} transition={springConfig} style={{ originX: "0px", originY: "0px", transformBox: "view-box" }}>
+                    <g>
+                      <animateTransform key={activeExpression + '-left'} attributeName="transform" type="rotate" values={props.leftAntennaWobble?.values || "0; -8; 8; 0"} keyTimes={props.leftAntennaWobble?.keyTimes || "0; 0.3; 0.7; 1"} dur={props.leftAntennaWobble?.dur || (activeExpression === 'happy' ? "2s" : "4s")} repeatCount="indefinite" additive="sum" />
+                      <rect x="0" y="-3" width="60" height="6" rx="3" fill="url(#metalGradDyn)" />
+                      <motion.circle cx="62" cy="0" r="8" animate={{ fill: props.eyeGlow }} filter="url(#cyanGlowDyn)" />
+                    </g>
+                  </motion.g>
+                </g>
 
-          {/* Switching Dynamic Layers with 'Blink' effect */}
-          {VANDI_EXPRESSIONS.map((expr) => {
-            const isActive = expr.key === activeExpression;
-            return (
-              <div
-                key={expr.key}
-                className="absolute inset-0 flex items-center justify-center p-4 [&_svg]:max-h-full [&_svg]:max-w-full vandi-dynamic-layer"
-                style={{
-                  opacity: isActive ? 1 : 0,
-                  transform: `scaleY(${isActive ? 1 : 0})`,
-                  transition: isActive ? 'transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0s' : 'transform 0.1s ease-in, opacity 0s 0.1s',
-                  pointerEvents: isActive ? 'auto' : 'none',
-                  zIndex: isActive ? 10 : 0,
-                  transformOrigin: '50% 45%' // Center it roughly on the eyes
-                }}
-                dangerouslySetInnerHTML={{ __html: svgMarkup[expr.key] ?? '' }}
+                <g transform="translate(32, -75)">
+                  <motion.g animate={props.rightAntennaTransform} transition={springConfig} style={{ originX: "0px", originY: "0px", transformBox: "view-box" }}>
+                    <g>
+                      <animateTransform key={activeExpression + '-right'} attributeName="transform" type="rotate" values={props.rightAntennaWobble?.values || "0; 8; -8; 0"} keyTimes={props.rightAntennaWobble?.keyTimes || "0; 0.3; 0.7; 1"} dur={props.rightAntennaWobble?.dur || (activeExpression === 'happy' ? "2.1s" : "4.3s")} repeatCount="indefinite" additive="sum" />
+                      <rect x="0" y="-3" width="60" height="6" rx="3" fill="url(#metalGradDyn)" />
+                      <motion.circle cx="62" cy="0" r="8" animate={{ fill: props.eyeGlow }} filter="url(#cyanGlowDyn)" />
+                    </g>
+                  </motion.g>
+                </g>
+
+                {/* Head Base */}
+                <rect x="-80" y="-75" width="160" height="150" rx="45" fill="url(#headGradDyn)" stroke="#111" strokeWidth="3" />
+
+                {/* Left Ear */}
+                <g transform="translate(-80, -5)">
+                  <path d="M 0 -22 L -10 -28 L -10 28 L 0 22 Z" fill="#222328" stroke="#111" strokeWidth="2" />
+                  <rect x="-16" y="-35" width="6" height="70" rx="3" fill="url(#metalGradDyn)" stroke="#111" strokeWidth="2" />
+                  <motion.rect height="30" animate={{ y: props.radarWaves ? -20 : -15, height: props.radarWaves ? 40 : 30, fill: props.eyeGlow }} x="-18" width="4" rx="2" filter="url(#cyanGlowDyn)" />
+                  {props.radarWaves ? (
+                    <>
+                      <path d="M -24 -15 Q -30 0 -24 15" fill="none" stroke="#00e5ff" strokeWidth="2" strokeLinecap="round" filter="url(#cyanGlowDyn)"><animate attributeName="opacity" values="0; 0.8; 0" keyTimes="0; 0.2; 1" dur="1.5s" repeatCount="indefinite" /></path>
+                      <path d="M -32 -25 Q -40 0 -32 25" fill="none" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" filter="url(#cyanGlowDyn)"><animate attributeName="opacity" values="0; 0; 0.6; 0" keyTimes="0; 0.2; 0.5; 1" dur="1.5s" repeatCount="indefinite" /></path>
+                    </>
+                  ) : (
+                    <motion.path animate={{ stroke: props.eyeGlow }} d="M -24 -15 Q -30 0 -24 15" fill="none" strokeWidth="2" strokeLinecap="round" filter="url(#cyanGlowDyn)" opacity="0.6" />
+                  )}
+                </g>
+
+                {/* Right Ear */}
+                <g transform="translate(80, -5)">
+                  <path d="M 0 -22 L 10 -28 L 10 28 L 0 22 Z" fill="#222328" stroke="#111" strokeWidth="2" />
+                  <rect x="10" y="-35" width="6" height="70" rx="3" fill="url(#metalGradDyn)" stroke="#111" strokeWidth="2" />
+                  <motion.rect animate={{ fill: props.eyeGlow }} x="14" y="-15" width="4" height="30" rx="2" filter="url(#cyanGlowDyn)" />
+                  <motion.path animate={{ stroke: props.eyeGlow }} d="M 24 -15 Q 30 0 24 15" fill="none" strokeWidth="2" strokeLinecap="round" filter="url(#cyanGlowDyn)" opacity="0.6" />
+                </g>
+
+                {/* Screen */}
+                <rect x="-70" y="-60" width="140" height="120" rx="35" fill="#15161a" stroke="#888c94" strokeWidth="5" />
+                <rect x="-67" y="-57" width="134" height="114" rx="32" fill="url(#screenGradDyn)" />
+                <path d="M -50 -50 Q 0 -40 50 -50 Q 55 -30 50 -10 Q 0 -20 -50 -10 Z" fill="#ffffff" opacity="0.04" />
+
+                {/* Eyes */}
+                <motion.g animate={props.eyesGroupTransform} transition={springConfig}>
+                  <g>
+                    {/* Internal group to hold SVG specific animateTransforms safely decoupled from Framer Motion's inline CSS transforms */}
+                    {activeExpression === 'default' && <animateTransform attributeName="transform" type="translate" values="0,0; 0,2; 0,0" dur="4s" repeatCount="indefinite" />}
+                    {activeExpression === 'happy' && <animateTransform attributeName="transform" type="translate" values="0,0; 0,-2; 0,0.5; 0,-1.5; 0,1; 0,-2; 0,0.5; 0,-1; 0,0" keyTimes="0; 0.1; 0.2; 0.3; 0.4; 0.55; 0.7; 0.85; 1" dur="2s" repeatCount="indefinite" />}
+                    {activeExpression === 'sad' && <animateTransform attributeName="transform" type="translate" values="0,0; 0,2; 0,0" dur="4s" repeatCount="indefinite" />}
+                    {activeExpression === 'angry' && <animateTransform attributeName="transform" type="translate" values="0,0; -2,0; 2,0; -1,0; 1,0; 0,0" keyTimes="0; 0.15; 0.3; 0.5; 0.7; 1" dur="1.5s" repeatCount="indefinite" />}
+
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      <motion.g
+                        key={`${activeExpression}-left`}
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1, ...props.leftEyeTransform, x: (props.leftEyeTransform.x || 0) + mouseOffset.x, y: (props.leftEyeTransform.y || 0) + mouseOffset.y }}
+                        exit={{ scale: 0, opacity: 0, transition: { duration: 0.1 } }}
+                        transition={springConfig}
+                      >
+                        {activeExpression === 'default' ? (
+                          <path d={props.leftEyePath} fill={props.eyeGlow} filter="url(#cyanGlowDyn)">
+                            <animate attributeName="d" values={props.leftEyeBlink.d} keyTimes={props.leftEyeBlink.keyTimes} dur={props.leftEyeBlink.dur} repeatCount="indefinite" />
+                          </path>
+                        ) : (
+                          <motion.path d={props.leftEyePath} fill={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 'none' : props.eyeGlow} filter="url(#cyanGlowDyn)" stroke={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? props.eyeGlow : 'none'} strokeWidth={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 12 : 0} strokeLinecap="round" />
+                        )}
+                      </motion.g>
+                    </AnimatePresence>
+
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      <motion.g
+                        key={`${activeExpression}-right`}
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1, ...props.rightEyeTransform, x: (props.rightEyeTransform.x || 0) + mouseOffset.x, y: (props.rightEyeTransform.y || 0) + mouseOffset.y }}
+                        exit={{ scale: 0, opacity: 0, transition: { duration: 0.1 } }}
+                        transition={springConfig}
+                      >
+                        {activeExpression === 'default' ? (
+                          <path d={props.rightEyePath} fill={props.eyeGlow} filter="url(#cyanGlowDyn)">
+                            <animate attributeName="d" values={props.rightEyeBlink.d} keyTimes={props.rightEyeBlink.keyTimes} dur={props.rightEyeBlink.dur} repeatCount="indefinite" />
+                          </path>
+                        ) : (
+                          <motion.path d={props.rightEyePath} fill={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 'none' : props.eyeGlow} filter="url(#cyanGlowDyn)" stroke={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? props.eyeGlow : 'none'} strokeWidth={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 12 : 0} strokeLinecap="round" />
+                        )}
+                      </motion.g>
+                    </AnimatePresence>
+                  </g>
+                </motion.g>
+
+                {/* Sleepy ZZZs */}
+                <AnimatePresence>
+                  {activeExpression === 'sleepy' && (
+                    <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                      <motion.text x="35" animate={{ y: [-25, -35, -25], opacity: [0, 1, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} fill="#00e5ff" fontFamily="monospace" fontWeight="bold" fontSize="20" filter="url(#cyanGlowDyn)">z</motion.text>
+                      <motion.text x="50" animate={{ y: [-45, -55, -45], opacity: [1, 0, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} fill="#00e5ff" fontFamily="monospace" fontWeight="bold" fontSize="24" filter="url(#cyanGlowDyn)">Z</motion.text>
+                    </motion.g>
+                  )}
+                </AnimatePresence>
+                {/* Internal Scaled Thinking Cloud Overlay */}
+                <AnimatePresence>
+                  {(activeExpression === 'thinking' || activeExpression === 'thinking_two') && (
+                    <motion.image
+                      href={activeExpression === 'thinking_two' ? "/api/asset/thought_cloud_idea.svg" : "/api/asset/thought_cloud.svg"}
+                      initial={{ opacity: 0, scale: 0.5, y: -200, x: 50 }}
+                      animate={{ opacity: 1, scale: 0.8, y: [-210, -220, -210], x: 50 }}
+                      exit={{ opacity: 0, scale: 0.5, y: -200 }}
+                      transition={{
+                        opacity: { duration: 0.3 },
+                        scale: { type: "spring", stiffness: 200, damping: 15 },
+                        y: { duration: 4, repeat: Infinity, ease: 'easeInOut' }
+                      }}
+                      width="250"
+                      height="200"
+                      className="drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]"
+                    />
+                  )}
+                </AnimatePresence>
+              </g>
+            </svg>
+          </div>
+
+          {/* Zoom & Tracking Controls */}
+          <div className="flex items-center gap-6 px-4" style={{ marginLeft: '-20px' }}>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-slate-400">Eye Tracking</span>
+              <button
+                onClick={() => setIsEyeTracking(!isEyeTracking)}
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent outline-none transition-colors duration-200 ease-in-out ${isEyeTracking ? 'bg-cyan-500' : 'bg-slate-700'}`}
+              >
+                <span className={`pointer-events-none inline-block h-4 w-4 transform rounded-full shadow ring-0 transition duration-200 ease-in-out ${isEyeTracking ? 'translate-x-4 bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]' : 'translate-x-0 bg-slate-400'}`} />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-3 flex-1">
+              <span className="text-xs font-medium text-slate-400">Zoom</span>
+              <input
+                type="range"
+                min="0.5"
+                max="2.5"
+                step="0.05"
+                value={zoom}
+                onChange={(e) => setZoom(parseFloat(e.target.value))}
+                className="h-1.5 flex-1 cursor-ew-resize appearance-none rounded-full bg-slate-700 outline-none hover:bg-slate-600 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-cyan-400 [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(34,211,238,0.5)]"
               />
-            );
-          })}
+              <span className="w-8 text-right text-xs font-medium text-cyan-100">{Math.round(zoom * 100)}%</span>
+              <button type="button" onClick={() => setZoom(1)} className="rounded-md border border-slate-600 px-2 py-1 text-xs text-slate-300 transition hover:bg-slate-800">Reset</button>
+            </div>
+          </div>
         </div>
 
         {/* Expression trigger buttons — side grid */}
