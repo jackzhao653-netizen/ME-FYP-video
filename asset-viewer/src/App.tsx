@@ -302,7 +302,9 @@ const VANDI_EXPRESSIONS: Array<{ key: string; label: string; file: string; color
   { key: 'sleepy', label: 'Sleepy', file: 'vandi_front_sleepy.svg', color: 'indigo' },
   { key: 'waving', label: 'Waving', file: 'vandi_front_waving.svg', color: 'pink' },
   { key: 'thinking', label: 'Thinking', file: 'vandi_front_thinking.svg', color: 'gray' },
-  { key: 'thinking_two', label: 'Thinking 2', file: 'vandi_front_thinking_two.svg', color: 'indigo' }
+  { key: 'thinking_two', label: 'Thinking 2', file: 'vandi_front_thinking_two.svg', color: 'indigo' },
+  { key: 'searching', label: 'Searching', file: 'vandi_front_searching.svg', color: 'cyan' },
+  { key: 'sending', label: 'Sending', file: 'vandi_front_sending.svg', color: 'violet' }
 ];
 
 const VANDI_BUTTONS = VANDI_EXPRESSIONS.filter((e) => e.key !== 'default');
@@ -402,6 +404,24 @@ const EXPRESSION_PROPS_MOTION: Record<string, any> = {
     leftEyeTransform: { x: -25, y: 10, rotate: 0 }, rightEyeTransform: { x: 25, y: 10, rotate: 0 },
     eyesGroupTransform: { x: 0, y: -13 },
     radarWaves: false
+  },
+  searching: {
+    leftAntennaTransform: { rotate: -120, scaleX: 1 }, rightAntennaTransform: { rotate: -60, scaleX: 1 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 -8 A 8 8 0 0 1 7 0 L -7 0 A 8 8 0 0 1 -15 -8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    rightEyePath: 'M -7 -16 L 7 -16 A 8 8 0 0 1 15 -8 L 15 8 A 8 8 0 0 1 7 16 L -7 16 A 8 8 0 0 1 -15 8 L -15 -8 A 8 8 0 0 1 -7 -16 Z',
+    leftEyeTransform: { x: -25, y: 18, rotate: 0 }, rightEyeTransform: { x: 25, y: 0, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: -10 },
+    radarWaves: false
+  },
+  sending: {
+    leftAntennaTransform: { rotate: -150, scaleX: 1.1 }, rightAntennaTransform: { rotate: -30, scaleX: 1.1 },
+    eyeGlow: '#00e5ff',
+    leftEyePath: 'M -8 -10 L 8 0 L -8 10',
+    rightEyePath: 'M 8 -10 L -8 0 L 8 10',
+    leftEyeTransform: { x: -25, y: 5, rotate: 0 }, rightEyeTransform: { x: 25, y: 5, rotate: 0 },
+    eyesGroupTransform: { x: 0, y: -5 },
+    radarWaves: false
   }
 };
 function VandiExpressionViewer() {
@@ -500,6 +520,16 @@ function VandiExpressionViewer() {
                       <animateTransform key={activeExpression + '-left'} attributeName="transform" type="rotate" values={props.leftAntennaWobble?.values || "0; -8; 8; 0"} keyTimes={props.leftAntennaWobble?.keyTimes || "0; 0.3; 0.7; 1"} dur={props.leftAntennaWobble?.dur || (activeExpression === 'happy' ? "2s" : "4s")} repeatCount="indefinite" additive="sum" />
                       <rect x="0" y="-3" width="60" height="6" rx="3" fill="url(#metalGradDyn)" />
                       <motion.circle cx="62" cy="0" r="8" animate={{ fill: props.eyeGlow }} filter="url(#cyanGlowDyn)" />
+
+                      {/* Sending Wave Overlay Left */}
+                      <AnimatePresence>
+                        {activeExpression === 'sending' && (
+                          <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                            <motion.circle cx="62" cy="0" r="10" fill="none" stroke="#00e5ff" strokeWidth="2" filter="url(#cyanGlowDyn)" initial={{ scale: 0.8, opacity: 1 }} animate={{ scale: 3, opacity: 0 }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }} />
+                            <motion.circle cx="62" cy="0" r="10" fill="none" stroke="#00e5ff" strokeWidth="2" filter="url(#cyanGlowDyn)" initial={{ scale: 0.8, opacity: 1 }} animate={{ scale: 3, opacity: 0 }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut", delay: 0.75 }} />
+                          </motion.g>
+                        )}
+                      </AnimatePresence>
                     </g>
                   </motion.g>
                 </g>
@@ -510,6 +540,16 @@ function VandiExpressionViewer() {
                       <animateTransform key={activeExpression + '-right'} attributeName="transform" type="rotate" values={props.rightAntennaWobble?.values || "0; 8; -8; 0"} keyTimes={props.rightAntennaWobble?.keyTimes || "0; 0.3; 0.7; 1"} dur={props.rightAntennaWobble?.dur || (activeExpression === 'happy' ? "2.1s" : "4.3s")} repeatCount="indefinite" additive="sum" />
                       <rect x="0" y="-3" width="60" height="6" rx="3" fill="url(#metalGradDyn)" />
                       <motion.circle cx="62" cy="0" r="8" animate={{ fill: props.eyeGlow }} filter="url(#cyanGlowDyn)" />
+
+                      {/* Sending Wave Overlay Right */}
+                      <AnimatePresence>
+                        {activeExpression === 'sending' && (
+                          <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                            <motion.circle cx="62" cy="0" r="10" fill="none" stroke="#00e5ff" strokeWidth="2" filter="url(#cyanGlowDyn)" initial={{ scale: 0.8, opacity: 1 }} animate={{ scale: 3, opacity: 0 }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }} />
+                            <motion.circle cx="62" cy="0" r="10" fill="none" stroke="#00e5ff" strokeWidth="2" filter="url(#cyanGlowDyn)" initial={{ scale: 0.8, opacity: 1 }} animate={{ scale: 3, opacity: 0 }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut", delay: 0.75 }} />
+                          </motion.g>
+                        )}
+                      </AnimatePresence>
                     </g>
                   </motion.g>
                 </g>
@@ -567,7 +607,7 @@ function VandiExpressionViewer() {
                             <animate attributeName="d" values={props.leftEyeBlink.d} keyTimes={props.leftEyeBlink.keyTimes} dur={props.leftEyeBlink.dur} repeatCount="indefinite" />
                           </path>
                         ) : (
-                          <motion.path d={props.leftEyePath} fill={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 'none' : props.eyeGlow} filter="url(#cyanGlowDyn)" stroke={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? props.eyeGlow : 'none'} strokeWidth={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 12 : 0} strokeLinecap="round" />
+                          <motion.path d={props.leftEyePath} fill={(activeExpression === 'happy' || activeExpression === 'thinking_two' || activeExpression === 'sending') ? 'none' : props.eyeGlow} filter="url(#cyanGlowDyn)" stroke={(activeExpression === 'happy' || activeExpression === 'thinking_two' || activeExpression === 'sending') ? props.eyeGlow : 'none'} strokeWidth={(activeExpression === 'happy' || activeExpression === 'thinking_two' || activeExpression === 'sending') ? 12 : 0} strokeLinecap="round" strokeLinejoin="round" />
                         )}
                       </motion.g>
                     </AnimatePresence>
@@ -585,7 +625,7 @@ function VandiExpressionViewer() {
                             <animate attributeName="d" values={props.rightEyeBlink.d} keyTimes={props.rightEyeBlink.keyTimes} dur={props.rightEyeBlink.dur} repeatCount="indefinite" />
                           </path>
                         ) : (
-                          <motion.path d={props.rightEyePath} fill={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 'none' : props.eyeGlow} filter="url(#cyanGlowDyn)" stroke={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? props.eyeGlow : 'none'} strokeWidth={(activeExpression === 'happy' || activeExpression === 'thinking_two') ? 12 : 0} strokeLinecap="round" />
+                          <motion.path d={props.rightEyePath} fill={(activeExpression === 'happy' || activeExpression === 'thinking_two' || activeExpression === 'sending') ? 'none' : props.eyeGlow} filter="url(#cyanGlowDyn)" stroke={(activeExpression === 'happy' || activeExpression === 'thinking_two' || activeExpression === 'sending') ? props.eyeGlow : 'none'} strokeWidth={(activeExpression === 'happy' || activeExpression === 'thinking_two' || activeExpression === 'sending') ? 12 : 0} strokeLinecap="round" strokeLinejoin="round" />
                         )}
                       </motion.g>
                     </AnimatePresence>
@@ -601,11 +641,18 @@ function VandiExpressionViewer() {
                     </motion.g>
                   )}
                 </AnimatePresence>
+
                 {/* Internal Scaled Thinking Cloud Overlay */}
                 <AnimatePresence>
-                  {(activeExpression === 'thinking' || activeExpression === 'thinking_two') && (
+                  {(activeExpression === 'thinking' || activeExpression === 'thinking_two' || activeExpression === 'searching') && (
                     <motion.image
-                      href={activeExpression === 'thinking_two' ? "/api/asset/thought_cloud_idea.svg" : "/api/asset/thought_cloud.svg"}
+                      href={
+                        activeExpression === 'thinking_two'
+                          ? "/api/asset/thought_cloud_idea.svg"
+                          : activeExpression === 'searching'
+                            ? "/api/asset/thought_cloud_empty.svg"
+                            : "/api/asset/thought_cloud.svg"
+                      }
                       initial={{ opacity: 0, scale: 0.5, y: -200, x: 50 }}
                       animate={{ opacity: 1, scale: 0.8, y: [-210, -220, -210], x: 50 }}
                       exit={{ opacity: 0, scale: 0.5, y: -200 }}
@@ -617,6 +664,34 @@ function VandiExpressionViewer() {
                       width="250"
                       height="200"
                       className="drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]"
+                    />
+                  )}
+                </AnimatePresence>
+
+                {/* Searching Magnifying Glass Overlay */}
+                <AnimatePresence>
+                  {activeExpression === 'searching' && (
+                    <motion.image
+                      href="/api/asset/magnifying_glass.svg"
+                      initial={{ opacity: 0, scale: 0.5, y: -180, x: 90 }}
+                      animate={{
+                        opacity: 1,
+                        scale: 0.7,
+                        y: [-195, -205, -195],
+                        x: [90, 130, 90],
+                        rotate: [-15, 15, -15]
+                      }}
+                      exit={{ opacity: 0, scale: 0.5, y: -180 }}
+                      transition={{
+                        opacity: { duration: 0.3 },
+                        scale: { type: "spring", stiffness: 200, damping: 15 },
+                        y: { duration: 4, repeat: Infinity, ease: 'easeInOut' },
+                        x: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
+                        rotate: { duration: 5, repeat: Infinity, ease: 'easeInOut' }
+                      }}
+                      width="120"
+                      height="120"
+                      className="drop-shadow-[0_0_15px_rgba(0,229,255,0.6)]"
                     />
                   )}
                 </AnimatePresence>
