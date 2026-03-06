@@ -1,0 +1,1140 @@
+ME Inter-departmental FYP Interim Report
+
+THE HONG KONG POLYTECHNIC UNIVERSITY
+
+BEng (Hons) in ME
+
+Individual Interim Report
+Design and Development of a Passive Vanadium Redox Flow
+Battery-Powered Autonomous Toy Car
+By
+ZHAO Xuecen (22014303D)
+
+Chief Supervisor: Prof. AN Linag
+Second Supervisor: Prof. WU Maochun
+Date of Submission: 18/1/2026
+
+Table of Contents
+1.Introduction ............................................................................................................................ 4
+1.1 Global Energy and Environmental Challenges ................................................................. 4
+1.2 Limitations of Current Electric Vehicle Technology.......................................................... 4
+1.3 The Vanadium Fuel Cell Solution ..................................................................................... 4
+1.4 Project Overview: The "Vandi" Autonomous Vehicle ...................................................... 4
+1.5 Report Structure .............................................................................................................. 4
+2.Background and Literature Review ......................................................................................... 5
+2.1 Overview of Fuel Cell Technologies ................................................................................. 5
+2.2 Vanadium Redox Flow Batteries (VRFB) ........................................................................... 5
+2.3 The "E-Fuel" Concept and Passive Fuel Cells ................................................................... 6
+2.4 Autonomous Navigation in Small-Scale Vehicles ............................................................. 6
+3.Design and Working Principle ................................................................................................. 6
+3.1 Vehicle Mechanics............................................................................................................ 6
+3.1.1 Chassis and Drive System......................................................................................... 6
+3.1.2 Kinematics ................................................................................................................ 6
+3.2 Fuel Cell Stack Design....................................................................................................... 7
+3.2.1 Electrochemical Reactions ........................................................................................ 7
+3.2.2 Stack Design ............................................................................................................. 8
+3.3 AI Integration and Control Architecture .......................................................................... 9
+3.3.1 Hardware Architecture .............................................................................................. 9
+3.3.2 Object Detection Algorithm (YOLO) ..................................................................... 10
+3.3.3 Interactive control through an external frontend .................................................... 10
+4. System Implementation and Testing .................................................................................... 10
+4.1 Car Body Assembly......................................................................................................... 11
+4.1.1 The drive base ......................................................................................................... 11
+4.1.2 The sensors and control unit ................................................................................... 12
+4.2 Vanadium Fuel................................................................................................................ 12
+4.3 Fuel Cell and Fuel Cell Stack Design ............................................................................... 13
+4.3.1 Fuel cell iteration process ....................................................................................... 13
+4.3.2 Choosing the final fuel cell design.......................................................................... 15
+4.4 YOLO Model Training...................................................................................................... 15
+4.4.1 Sample data collection ............................................................................................ 16
+4.4.2 Data refinement ....................................................................................................... 17
+4.4.3 Training the visual model........................................................................................ 17
+2
+
+4.4.4 Trained model testing .............................................................................................. 18
+4.4.5 HSV tuning for traffic light state detection ............................................................. 19
+4.5 Computer program for the remote-control driving system ........................................... 20
+4.5.1 Remote control theories for mecanum drive system............................................... 20
+4.5.2 Implementing the code for remote control.............................................................. 20
+4.5.3 Remote control testing ............................................................................................ 22
+4.6 Interactive Chatbot ........................................................................................................ 22
+4.6.1 Interactive chatbot logic flow ................................................................................. 23
+4.6.2 Implementation ....................................................................................................... 24
+4.7 Professional Development & Preparation ..................................................................... 25
+4.7.1 Work experience during winter ............................................................................... 25
+4.7.2 Personal project ....................................................................................................... 26
+4.7.3 Practice with professional editing software (DaVinci Resolve) ............................. 27
+4.7.4 Practice in drone photography ................................................................................ 28
+5. Future Work ......................................................................................................................... 28
+5.1 Cell Manufacture............................................................................................................ 28
+5.2 Final Assembly (cell and car) .......................................................................................... 29
+5.3 Auto Driving Program Implementation .......................................................................... 29
+5.4 Interactive Interface Implementation ............................................................................ 29
+5.5 Full Testing...................................................................................................................... 29
+5.6 Final Presentation and Video Taking .............................................................................. 29
+5.7 Acceptance Criteria ........................................................................................................ 30
+6. Schedule and Timeline ......................................................................................................... 30
+7. Resources ............................................................................................................................. 31
+7.1 Instruments and Equipment .......................................................................................... 31
+7.2 Materials ........................................................................................................................ 32
+7.3 Budget ............................................................................................................................ 32
+8.Conclusion ............................................................................................................................. 32
+Reference ................................................................................................................................. 33
+
+3
+
+1.INTRODUCTION
+1.1 Global Energy and Environmental Challenges
+The rise in global population has triggered a surge in energy demand, especially in
+transportation. Currently, transportations rely heavily on fossil fuels, which contribute to
+greenhouse gas emissions and global warming.
+To reduce emissions, we need to find alternative to internal combustion engine (ICE) fuel.
+Renewable energy sources like wind and solar but they can only generate energy and cannot
+act as energy storage.
+
+1.2 Limitations of Current Electric Vehicle Technology
+Currently electric vehicles (EVs) powered by lithium-ion batteries is the primary alternative
+to fossil fuel vehicles. However, there are several limitations that slows down the adoption of
+EVs. Traditional charging methods are time-consuming. Lithium-ion batteries also suffer
+from degradation and have limited life cycles. There is also concerns about the safety risk of
+EVs, including battery overheating and ignition upon impact. These challenges make many
+users hesitant to swap their ICE vehicles to EVs, we need an alternative solution that
+combines the low-emission benefits of EVs with the rapid refuelling and safe to drive.
+
+1.3 The Vanadium Fuel Cell Solution
+To address these limitations, this project explores the application of Vanadium Redox Flow
+Battery (VRFB) adapted into a passive direct liquid fuel cell stack. Unlike conventional
+batteries, vanadium fuel cells have a liquid electrolyte that allows for rapid refuelling.
+Furthermore, vanadium electrolytes are non-flammable, offering safety advantages over
+lithium battery. The system also has long cycle life and high recyclability, making it a
+sustainable candidate for future mobility solutions.
+
+1.4 Project Overview: The "Vandi" Autonomous Vehicle
+The objective of this project is to design, and fabricate a electric toy car, named "Vandi,"
+powered by passive vanadium fuel cell stack.
+This interim report covers the initial design and fabrication phases:
+Power System: Design and prototyped a vanadium fuel cell stack with modular design.
+Mechanical Integration: Assembly of a mecanum-wheel chassis designed to carry the fuel
+cell stack, control system, and sensor.
+Intelligent Control: AI navigation systems, depth cameras utilizing YOLO (You Only Look
+Once) algorithms for object detection, alongside a prototype for a Large Language Model
+(LLM) interface for user interaction.
+
+1.5 Report Structure
+This report records the progress during the first semester of the project.
+Section 2 the battery technologies, vanadium fuel cell principles, and autonomous navigation
+strategies.
+Section 3 the mechanical design, fuel cell stack prototype, and AI control systems.
+Section 4 the implementation details, including the car body assembly, electrolyte
+optimization experiments, and YOLO model training results.
+Section 5 the future work required to finalize the "Vandi" prototype.
+4
+
+Section 6 the project schedule and timeline.
+Section 7 the necessary resources and budget.
+Section 8 concludes the report.
+
+2.BACKGROUND AND LITERATURE REVIEW
+2.1 Overview of Fuel Cell Technologies
+Fuel cells convert chemical energy directly into electricity. They are classified by their
+electrolyte and operating temperature.
+Fuel Cell Type
+
+Operating
+Temperature
+
+Advantages
+
+Disadvantages
+
+Proton Exchange 60–80°C (low
+Membrane Fuel temperature)
+Cells (PEMFCs)
+
+High-power
+density, quick
+start-up
+
+Expensive platinum
+catalysts, requires pure
+hydrogen fuel
+
+Direct Liquid
+Fuel Cells
+(DLFCs)
+
+Uses liquid fuels
+(e.g., methanol),
+supports portable
+applications
+
+Fuel crossover, slow
+reaction kinetics, methanol
+toxicity
+
+Can use flexible
+fuels
+
+Brittleness, long start-up
+times, limited use in mobile
+applications
+
+Not specified
+
+Solid Oxide Fuel 600–1000°C (high
+Cells (SOFCs)
+temperature)
+
+2.2 Vanadium Redox Flow Batteries (VRFB)
+Vanadium Redox Flow Batteries (VRFBs) is great for large-scale energy storage. A VRFB
+uses vanadium ions in four different oxidation states 𝑉 2+ , 𝑉 3+ at the negative electrode and
+VO2+ , VO2+ at the positive electrode.
+Ion Formula
+
+Oxidation State
+
+Role in VRFB
+
+Colour
+
+V²⁺
+
++2
+
+Negative electrolyte (charged)
+
+Purple
+
+V³⁺
+
++3
+
+Negative electrolyte (discharged)
+
+Green
+
+VO²⁺
+
++4
+
+Positive electrolyte (discharged)
+
+Blue
+
+VO₂⁺
+
++5
+
+Positive electrolyte (charged)
+
+Yellow
+
+Positive Electrode (Cathode) Reaction:
+VO₂⁺ + 2H⁺ + e⁻ ⇌ VO²⁺ + H₂O
+Negative Electrode (Anode) Reaction:
+V²⁺ ⇌ V³⁺ + e⁻
+Overall Cell Reaction:
+VO₂⁺ + V²⁺ + 2H⁺ ⇌ VO²⁺ + V³⁺ + H₂O
+The key advantage of VRFBs:
+
+5
+
+Power is determined by the stack size, and energy capacity is determined by the volume of
+electrolyte stored in fuel tanks and the activity of electrodes.
+This allows VRFBs to have easy scalability and long cycle life (>10,000 cycles).
+However, traditional VRFBs requires pumps and flow management, which make it hard to
+apply into small devices.
+
+2.3 The "E-Fuel" Concept and Passive Fuel Cells
+Recent innovations have allowed VRFB technology for portable use. Shi et al. introduced the
+concept of "electrically rechargeable liquid fuel" (e-fuel), where the charged vanadium
+electrolyte 𝑉 2+ serves as a liquid fuel that can refill instantly.
+Using this for small-scale design, researchers developed passive direct liquid fuel cells.
+Unlike active systems, passive cells do not need pumps and blowers. Instead, it relies on
+diffusion and natural convection.
+
+2.4 Autonomous Navigation in Small-Scale Vehicles
+To demonstrate a small-scale smart vehicle, we decide to include intelligent navigation.
+Modern autonomous navigation relies on object detection models like YOLO that collaborate
+with an algorithm for path planning.
+YOLO (You Only Look Once): The YOLO algorithm is a real-time object detection model
+with high speed and accuracy. For devices like small toy cars, there is also a lightweight
+version such as YOLOv11-Nano. These models can process inputs from cameras with high
+inference speeds, suitable for computing devices like the Jetson Nano.
+Sensor: Effective navigation requires collecting data from depth cameras and LiDAR. This
+combination allows the vehicle to map its environment (SLAM) and execute path planning.
+
+3.DESIGN AND WORKING PRINCIPLE
+3.1 Vehicle Mechanics
+3.1.1 Chassis and Drive System
+We purchased a car wheelbase equipped with DC motor, UART (Universal Asynchronous
+Receiver-Transmitter) wheels and chassis. The manufacturer provided us with CAD drawing
+and dimensions for custom modification.
+The propulsion is provided by four 12V DC brushless motors equipped with magnetic
+encoders for closed-loop speed control. The motors drive 60mm diameter mecanum wheels.
+The relationship between the motor RPM (N) and the linear velocity of the wheel (v) is given
+by Equation (1):
+𝜋⋅𝐷⋅𝑁
+(1)
+𝑣=
+60
+Where D is the wheel diameter (0.06 m).
+
+3.1.2 Kinematics
+Kinematic modelling from ME31002 Linear Systems and Control was applied to derive the
+kinematic relationship of a four-wheel mecanum drive, relating the platform velocity to
+individual wheel angular speeds. Let vx and vy be the linear velocities in the longitudinal and
+
+6
+
+transverse directions, respectively, and be the angular velocity 𝜔𝑧 around the vertical axis.
+The angular velocity of each wheel 𝜔1, 𝜔2 , 𝜔3 , 𝜔4 ) is given by Equation (2):
+1
+𝜔1
+1 1
+𝜔2
+[𝜔 ] =
+3
+𝑟 1
+𝜔4
+[1
+
+−1 −(𝑙𝑥 + 𝑙𝑦 )
+
+𝑣𝑥
+[ 𝑣𝑦 ] (2)
+1 −(𝑙𝑥 + 𝑙𝑦 ) 𝜔𝑧
+−1
+(𝑙𝑥 +𝑙𝑦 ) ]
+1
+
+(𝑙𝑥 +𝑙𝑦 )
+
+Where:
+•
+•
+•
+
+r is the radius of the wheel.
+lx is the half-distance between the front and rear wheels (wheelbase/2).
+ly is the half-distance between the left and right wheels (trackwidth/2).
+
+3.2 Fuel Cell Stack Design
+The core power unit is a custom-designed passive direct liquid fuel cell stack utilizing
+vanadium-based fuel. Unlike active systems, this stack relies on natural convection and
+vibration, eliminating the need for pumps.
+3.2.1 Electrochemical Reactions
+The power subsystem is the main focus of this project because it determines the runtime and
+payload. Utilizing a passive vanadium-based direct liquid fuel cell (DLFC) stack to provide
+sustainable electric power.
+Fuel Performance Analysis
+The performance of the fabricated stack is evaluated by measuring its current and power
+density.
+
+7
+
+Figure 1 Performance analysis graph for different Sulfuric Acid concentration.
+
+Anode Reaction (Oxidation): Vanadium(II) ions are oxidized to Vanadium(III), releasing an
+electron.
+𝑉 2+ → 𝑉 3+ + 𝑒 − (𝐸 0 = −0.26 V)(4)
+Cathode Reaction (Reduction): Vanadium(VO2+) ions combine with protons and electrons
+to form Vanadium(VO2+).
+𝑉𝑂2+ + 2𝐻 + + 𝑒 − → 𝑉𝑂2+ + 𝐻2 𝑂(𝐸 0 = +1.00 V)(5)
+Overall Cell Reaction:
+0
+𝑉𝑂2+ + 𝑉 2+ + 2𝐻 + → 𝑉𝑂2+ + 𝑉 3+ + 𝐻2 𝑂(𝐸𝑐𝑒𝑙𝑙
+= 1.26 V)(6)
+The theoretical open-circuit voltage (OCV) for a single cell is 1.26 V. However, the actual
+operating voltage (Vcell) is lower due to activation losses 𝜂𝑎𝑐𝑡 , ohmic losses 𝜂𝑜ℎ𝑚 , and
+concentration losses 𝜂𝑐𝑜𝑛𝑐 , as described by Equation (7):
+0
+𝑉𝑐𝑒𝑙𝑙 = 𝐸𝑐𝑒𝑙𝑙
+− 𝜂𝑎𝑐𝑡 − 𝜂𝑜ℎ𝑚 − 𝜂𝑐𝑜𝑛𝑐 (7)
+
+3.2.2 Stack Design
+Fuel Cell Design (Single Cell)
+In the ME44002 Engine Technology course, we were introduced to the reaction theory of fuel
+cells.
+8
+
+•
+•
+•
+
+Active Area: A geometric active 𝑎𝑟𝑒𝑎(𝐴𝑐𝑒𝑙𝑙 ) 𝑜𝑓 4.0 cm (2.0 cm × 2.0 cm) was
+selected to balance power output with fuel consumption rates.
+Current Collectors: Graphite plates or gold-plated copper plates
+Membrane Electrode Assembly (MEA):
+• Membrane: Nafion 212
+• Electrodes: Graphite felt.
+
+Stack Configuration:
+The final stack will consist of 6 single cells connected in series. Providing a theoretical opencircuit voltage (OCV) of 7.56 V.
+
+3.3 AI Integration and Control Architecture
+3.3.1 Hardware Architecture
+Main Computer: NVIDIA Jetson Nano (8GB) running ROS (Robot Operating System)
+Melodic.
+Low-Level Controller: Custom controller handling PWM generation for motor drivers and
+PID speed control.
+Sensors:
+• 2D LiDAR (RPLIDAR A1): Provides 360-degree distance data for Simultaneous
+Localization and Mapping (SLAM).
+• RGB-D Camera: Captures visual data for object recognition.
+High-Level Processor (Brain):
+We were first introduced to the NVIDIA Jetson embedded AI platform in ME39003
+Multidisciplinary Manufacturing Project, where we learned how to operate the Jetson
+environment and develop programs directly on the system.
+• Device: NVIDIA Jetson Nano Developer Kit (8GB RAM).
+• Role: Runs the ROS (Robot Operating System) master node, handles image
+processing (YOLOv11), and performs SLAM calculations.
+• Mounting: Placed on the elevated upper deck to ensure the camera has a clear field of
+view and the LiDAR is unobstructed by vehicle components.
+Low-Level Controller (Body):
+Device: Custom Microcontroller.
+Role:
+• Reads encoder data to calculate current wheel speed.
+• Implements a PID (Proportional-Integral-Derivative) control loop to match actual
+wheel speed to the target velocity received from the Jetson Nano.
+• Generates PWM (Pulse Width Modulation) signals for the motor drivers.
+The PID control equation used for motor speed regulation is described as:
+𝑡
+𝑑𝑒(𝑡)
+(9)
+𝑢(𝑡) = 𝐾𝑝 𝑒(𝑡) + 𝐾𝑖 ∫ 𝑒(𝜏)𝑑𝜏 + 𝐾𝑑
+𝑑𝑡
+0
+Where:
+• u(t) is the control output (PWM duty cycle).
+• e(t) is the error (Target Speed - Actual Speed).
+• Kp, Ki, Kd are the proportional, integral, and derivative gain coefficients, tuned
+experimentally.
+9
+
+Basic movements via controller input
+Manual driving is implemented as a controller-to-motor pipeline, allowing basic actions
+(forward, reverse, strafe, rotate, stop) to validate chassis motion before autonomous driving is
+enabled.
+Sensor Integration:
+• LiDAR (RPLIDAR A1): Mounted at the highest point of the vehicle (approx. 20cm
+from ground) to provide a 360° scan of the environment for obstacle avoidance.
+• Depth Camera: Mounted at the front chassis bumper, angled slightly upwards to
+detect traffic signs and traffic lights.
+3.3.2 Object Detection Algorithm (YOLO)
+Real-time object detection is achieved using YOLO (You Only Look Once), learned in
+ME41600 Perceptual Robotics, enabling the vehicle to identify traffic signals and road
+features. Visual detection for this project is implemented using a YOLO-based object
+detection model, with the project target of achieving detection confidence above 80% for the
+relevant objects (road signs / traffic elements used on the demo track). Training data is
+collected from the demonstration environment (track images and traffic signal/sign samples),
+and the trained model is validated on held-out test data before deployment.
+To detect traffic signs and obstacles, we utilize the YOLOv11 (You Only Look Once) neural
+network architecture. YOLO treats object detection as a single regression problem, predicting
+bounding boxes (B) and class probabilities (C) directly from full images in one evaluation.
+The loss function (L) for the model combines localization loss, classification loss, and
+confidence loss:
+𝑆2
+
+𝐵
+
+𝐿 = 𝜆𝑐𝑜𝑜𝑟𝑑 ∑
+𝑆2
+
++∑
+𝑖=0
+
+∑
+
+𝑖=0
+𝐵
+
+∑
+𝑗=0
+
+𝑗=0
+
+𝑜𝑏𝑗
+
+𝟙𝑖𝑗 [(𝑥𝑖 − 𝑥̂𝑖 )2 + (𝑦𝑖 − 𝑦̂𝑖 )2 ]
+
+𝑜𝑏𝑗
+
+𝟙𝑖𝑗 (√𝑤𝑖 − √𝑤
+̂ 𝑖 )2 + ⋯ (10)
+
+The YOLO loss function combines localization, classification, and confidence loss terms. For
+this project, the training was performed using the ultralytics framework, which automatically
+computes these losses during the training process.
+For this project, a lightweight version, YOLO v11-Nano, was selected to ensure real-time
+inference (>15 FPS) on the edge computing hardware, balancing accuracy with power
+consumption. The model is trained on a custom dataset of traffic signs (Stop, Go, Left, Right)
+to enable autonomous decision-making.
+3.3.3 Interactive control through an external frontend
+An external user-facing frontend is implemented as an interactive chat interface that supports
+command execution and Q&A during demonstration
+
+4. SYSTEM IMPLEMENTATION AND TESTING
+This section describes the individual subsystems fabricated and tested, including mechanical
+assembly, fuel cell optimization, AI vision systems, and remote-control implementation.
+Mechanical part:
+10
+
+car selection, assembly, are done together as a team. I am also fully responsible of car tray
+design.
+Fuel testing:
+Multiple lab sessions were conducted to understand the charge/discharge behavior of the
+vanadium electrolyte.
+Fuel cell design:
+I am fully in charge of the iteration and design of the fuel cell, while fuel cell testing was
+done in collaboration with BME teammate.
+YOLO sample data collection:
+Done in IC lab as a team.
+AI training, remote control programming, and interactive interface:
+YOLO training and interactive interface were performed individually.
+
+4.1 Car Body Assembly
+
+Figure 2 Fully assembled Vandi.
+
+The physical construction of the autonomous vehicle, named "Vandi," has two primary
+subsystems: the mechanical drive base and the electronic control integration. The assembly
+process aimed to create a stable platform capable and enable further integration of a tray for
+carrying the fuel cell stack while maintaining agility for the demonstration track.
+4.1.1 The drive base
+The drive base is built upon a purchased chassis kit modified to accommodate our specific
+power and control requirements.
+
+11
+
+•
+•
+•
+
+Chassis Structure: The main body utilizes a rigid sheet metal. The chassis
+dimensions (approximately 23 cm × 15 cm).
+Motion System: To enable omnidirectional movement, the car is equipped with four
+mecanum wheels. Each wheel is independently driven by a brushless DC motor.
+Suspension: A suspension system was integrated for front wheels to ensure consistent
+ground contact.
+
+4.1.2 The sensors and control unit
+The "brain" of the vehicle and its perception system were integrated onto the upper deck of
+the chassis to ensure an unobstructed field of view.
+Control Unit: An NVIDIA Jetson Nano (8GB) was installed as the central processing unit.
+This board was chosen for its ability to run the YOLO object detection model and ROS
+(Robot Operating System) nodes locally with low latency.
+Sensor Integration:
+•
+•
+
+Depth Camera: Binocular depth camera. This sensor provides RGB video feeds for the AI
+vision model (traffic sign detection) and obstacle distance measurement.
+LiDAR: LiDAR to scan the environment, enabling localization, mapping (SLAM) and
+precise obstacle avoidance.
+
+Power & Connectivity: A Wi-Fi module is connected to the Jetson Nano board to facilitate
+communication with the external server. The car is current running on lithium battery so we
+can work on both the fuel cell stack and the car in parallel, we will also use the lithium
+battery as a backup energy source for our final product.
+
+4.2 Vanadium Fuel
+The performance of the vanadium redox flow battery is critically dependent on the chemical
+composition of the electrolyte. To optimize the power output for the toy car, a series of
+experiments were conducted to determine the ideal concentration of sulfuric acid (𝐻2 𝑆𝑂4 )
+and vanadyl sulfate (𝑉𝑂𝑆𝑂4 ) in the vanadium electrolyte solution.
+The preparation and testing process involved generating the active vanadium species
+(𝑉 2+ 𝑎𝑛𝑑 𝑉 5+ ) from an initial vanadyl sulfate (𝑉𝑂𝑆𝑂4 ) precursor through a specific charging
+protocol.
+
+12
+
+Figure 3 web-based solution calculator.
+
+Solution Preparation: The base electrolyte was prepared by dissolving vanadyl sulfate in
+varying concentrations of sulfuric acid. Four distinct test sets were created to analyse the
+effect of acid concentration: 1 M, 2 M, 3 M, and 4 M 𝐻2 𝑆𝑂4 , each mixed with a 1 M vanadyl
+sulfate solution.
+Charging Mechanism:
+•
+•
+•
+
+First Charge (50 mins): The solution was charged from 𝑉 4+ to 𝑉 5+
+Electrolyte Replacement: The generated 𝑉 5+ solution was removed. The negative reservoir
+refilled with 𝑉 4+ solution.
+Second Charge (70 mins): The system was charged again to convert the new 𝑉 4+ to 𝑉 5+ at
+the positive side and oxidize the previously generated 𝑉 3+ into 𝑉 2+.
+
+Testing: The resulting 𝑉 2+ and 𝑉 5+ solutions were then used as the anolyte and catholyte,
+respectively, in a passive fuel cell setup. Discharge curves (voltage vs. current density) were
+recorded to evaluate performance.
+
+4.3 Fuel Cell and Fuel Cell Stack Design
+The core power unit of the vehicle is a custom-designed passive vanadium redox fuel cell
+stack. Unlike active systems that require pumps, this passive design relies on gravity and
+vehicle motion for mass transport, necessitating a specialized geometry to maximize energy
+density and minimize weight.
+4.3.1 Fuel cell iteration process
+The design process followed a "Rapid Prototyping" methodology involving iterative Build,
+Review, and Refine cycles there were multiple iteration in the development of the fuel cell,
+however, I will only show the designs with big difference in this part.
+Initial Analysis: The project began by analyzing a standard laboratory fuel cell. While
+functional, it was deemed unsuitable for the vehicle due to its excessive weight, large
+footprint, and difficult refueling process (small openings causing spillage).
+13
+
+Figure 4 3D printed and CAD design of prototype 1
+
+Prototype 1 (First Iteration): The first custom design was 3D printed to test basic fit and
+assembly. It featured a split-part design for easier printing. However, it suffered from several
+manufacturing defects: the gap between cell is very wide due to the placement of current
+collector, the screw holes were too small for standard M3 fasteners, and the current collector
+positioning was unstable.
+
+Figure 5 CAD for prototype 2
+
+Prototype 2 (Refinement): The second prototype has bigger fuel tank and screw holes. Testing
+confirmed that this design was watertight with water, achieved a capacity of approximately
+18 mL per side, and fit standard M3 screws perfectly.
+
+Figure 6 Leak and corrosion test for prototype 1
+
+14
+
+Material Testing: A critical discovery during the testing of Prototype 1 was material
+incompatibility. The Polylactic Acid (PLA) filament used for printing cracked immediately
+upon contact with the acidic vanadium electrolyte. This necessitated a shift to chemically
+resistant materials like Polypropylene (PP) for the final production.
+4.3.2 Choosing the final fuel cell design
+Several conceptual architectures were evaluated to select the most efficient design for an
+autonomous vehicle.
+
+Figure 7 3D printed for prototype 2
+
+Final Selection: The final chosen design is a modular, shorter laid down architecture. It
+prioritizes:
+• Refuelling Accessibility: Integrating dedicated refuelling tubes and a second
+openings to allow easier refuelling without disassembly.
+• Space efficiency: Compared to design 1, design 2 have much better shape and can be
+closely packed as shown as the image above.
+• Utilising horizontal movement: when the car accelerates, there will be a horizontal
+movement inside the tank, which will induce convection and improve cell
+performance.
+
+4.4 YOLO Model Training
+To enable autonomous navigation, the vehicle employs a computer vision system powered by
+a YOLO (You Only Look Once) neural network.
+
+15
+
+4.4.1 Sample data collection
+
+Figure 8 Collected data set for the forward sign
+
+Figure 9 Collected data set for traffic light
+
+Data Sources: We took many pictures of the item we want the model to track (sign and traffic
+light
+Target Classes: The dataset includes samples of the traffic light and forward signs.
+Volume: around 100 pictures of each object was collected to improve the model's accuracy.
+
+16
+
+4.4.2 Data refinement
+
+Figure 10 Manually annotated sample picture
+
+Annotation: Images were manually annotated to define bounding boxes for the target objects.
+Preprocessing: The dataset was organized into training and validation splits.
+This all make our data set have higher quality and will help improve model’s accuracy.
+4.4.3 Training the visual model.
+We utilized a pre-trained YOLOv11 nano model as the starting point. We fine tuned the
+model by importing our refined data set and we have received a great result:
+
+Figure 11 training result for forward sign.
+
+17
+
+Figure 12 Training result for traffic light.
+
+Training Loss Trends
+Box loss drops from ~0.85 to ~0.2, meaning the model learned to position boxes accurately
+around objects.
+Class loss falls from ~2.8 to near 0.5, showing the model learned to distinguish between
+traffic, sign/object classes.
+DFL loss decreases from ~1.3 to ~0.9, indicating improved edge prediction.
+The validation losses mirror the training curves closely and stabilize at similar values, which
+confirms the model is not overfitting.
+Precision reaches ~1.0, meaning nearly every bounding box the model predicts is correct.
+Recall reaches ~1.0, meaning the model detects almost all objects in the image.
+mAP50 and mAP50-95 both approach 1.0, showing the model achieves graeat detection
+accuracy across different overlap thresholds (IoU = 0.5 and IoU = 0.5:0.95).
+4.4.4 Trained model testing
+
+Figure 13 Testing the trained visual model for both traffic light and sign detection.
+
+The model successfully detected target objects with confidence scores consistently above the
+set threshold of 0.5 in real time.
+18
+
+4.4.5 HSV tuning for traffic light state detection
+
+Figure 14 Testing the HSV value inside a live HSV tuner.
+
+YOLO is great at object detection, but to determining the state of the light, we need to use
+traditional computer vision techniques to achieve higher accuracy.
+Once YOLO identifies the bounding box of a traffic light, that region of interest (ROI) is
+processed using HSV (Hue, Saturation, Value) colour filtering.
+By counting the number of pixels falling into each colour mask, the system deterministically
+identifies the signal state. This hybrid approach combines the robust localization of deep
+learning with the computationally efficient colour discrimination of classical computer
+vision.
+
+Figure 15 Traffic light state detection result after HSV tunning.
+
+19
+
+4.5 Computer program for the remote-control driving system
+To enable manual testing and fail-safe operation, a remote-control driving system was
+implemented. This system translates user inputs into precise motor commands, serving as the
+foundational movement layer for the autonomous stack.
+4.5.1 Remote control theories for mecanum drive system.
+The vehicle utilizes a mecanum wheel drivetrain, which allows for holonomic motion
+(movement in any direction without changing orientation). The control logic is based on the
+𝑇
+kinematic relationship between the chassis velocity target (𝑞̇ = [𝑣𝑥 , 𝑣𝑦 , 𝜃̇] ) and the
+individual angular velocities of the four wheels (𝜑̇ = [𝜑1̇ , 𝜑2̇ , 𝜑3̇ , 𝜑4̇ ]𝑇 ).
+The transformation is governed by the inverse kinematic equation:
+1 −1 −(𝑙𝑥 + 𝑙𝑦 )
+𝜑̇ 1
+𝑣𝑥
+(𝑙𝑥 +𝑙𝑦 )
+1 1 1
+𝜑̇ 2
+[ ]=
+[𝑣𝑦 ] (11)
+𝜑̇ 3
+𝑟 1 1 −(𝑙𝑥 + 𝑙𝑦 )
+𝜃̇
+𝜑̇ 4
+(𝑙𝑥 +𝑙𝑦 ) ]
+[1 −1
+where 𝑟 is the wheel radius, and 𝑙𝑥 , 𝑙𝑦 represent the distances from the robot's center to the
+wheel axes. This matrix allows the software to decompose a simple joystick vector into the
+complex counter-rotations required for strafing and diagonal movement.
+There are, many open-source projects related to mecanum wheel control that is capable of
+converting individual wheel speed into overall car velocity just by inputting our car’s
+dimension, by measuring 𝑙𝑥 , 𝑙𝑦 , 𝑟 and the system is successfully implemented the wheel
+control into our project.
+4.5.2 Implementing the code for remote control.
+The control software is hosted on the NVIDIA Jetson Nano, functioning as the central "brain"
+that bridges high-level commands with low-level actuation.
+
+20
+
+Figure 16 Code defining the input from the joystick.
+
+Input Handling: A Python script captures inputs from a connected gamepad. Which is then
+handled by a script that convert that into wheel speeds signal.
+
+Figure 17 Linear and angular velocity checking function, V_z is used here because I cannot type 𝜔 in python.
+
+Kinematic Processing: These normalized values (𝑣𝑥 , 𝑣𝑦 , 𝜔) are passed through the
+kinematic matrix function implemented in Python. The function outputs the target RPM for
+each of the four motors.
+
+Figure 18 PID parameter selected after tunning.
+
+PID control: I need to implement a set of PID parameters to control its acceleration. The PID
+tuning is done manually and will be adjusted when the fuel cell tray is made to prevent
+spilling.
+Motor Driver Communication: The calculated wheel speeds are converted into Pulse Width
+Modulation (PWM) duty cycles. The Jetson transmits these signals to the motor driver board,
+which then regulates the voltage supplied to the four brushless DC motors.
+21
+
+4.5.3 Remote control testing
+Verification of the driving system was conducted in phases to ensure safety and accuracy.
+• Bench Testing: The chassis was first elevated to test wheel rotation directions.
+• Ground Testing: The vehicle was placed on the ground to tune the PID parameters.
+The movement was initially too aggressive, so a scaling factor (gain) was applied to
+the 𝑣𝑦 component in the code to smooth out the lateral movements.
+
+4.6 Interactive Chatbot
+
+Figure 19 AI chat interface demo.
+
+To enhance the demonstration and user engagement, an interactive chatbot interface was
+developed. This system serves as a natural language frontend, allowing users to query project
+details, detect and issue commands to the vehicle using voice or text when the catchphrase
+Vandi is mentioned in the input. It supports both speech input and output and will be running
+on a LLM hosted locally on a PC.
+
+22
+
+4.6.1 Interactive chatbot logic flow
+
+Figure 20 AI chat bot logic flow.
+
+The system architecture is designed to decouple the heavy AI processing from the real-time
+vehicle control. The logic flow operates as follows:
+Input Acquisition: The user provides input via a web interface, which supports both text entry
+and voice recording (using the Web Speech API for Speech-to-Text conversion).
+Intent Processing (LLM Backend): The raw text is sent to a backend server running a Large
+Language Model (LLM) via Ollama. This model is prompted to classify the user's intent into
+two categories: "Informational Query" or "Vehicle Command."
+Informational Queries (e.g., "What is vanadium e-fuel?") are answered directly by the LLM
+using a retrieval-augmented generation (RAG) approach with project-specific context.
+
+Figure 21 Logic for detecting the command.
+
+Vehicle Commands (e.g., "Vandi, drive forward") are parsed into structured JSON instruction
+sets and will be triggered only when the phase “Vandi” is detected.
+
+23
+
+Figure 22 List of save command.
+
+Figure 23 List of dangerous commands.
+
+Safety check: The command input will be checked whether it is safe to execute, for example:
+“Vandi, crush on the wall” will be classify as unsafe command which will not be proceed and
+will respond to the user as “Please input a safer command”.
+Command Execution: Validated safe command instructions are forwarded to the Jetson Nano
+via a WebSocket connection, where the ROS control node translates them into physical motor
+actions this is yet to be implemented as the robot still lack the program that support
+autonomous driving.
+4.6.2 Implementation
+The implementation leverages a containerized microservices architecture to ensure portability
+and ease of deployment.
+
+24
+
+Frontend: A responsive web-based chat interface was built using HTML/JavaScript, hosted
+locally. It serves as the control panel for the demonstration.
+Backend Processing: The core logic is managed by a python-based flask server that operates
+the data flow between the speech services and the LLM (Ollama). This visual programming
+approach allows for easy adjustment of the conversation logic without rewriting the
+underlying codebase.
+Deployment: The entire interactive stack runs inside a Docker container on an external PC
+connected on the same Wi-Fi network as the Jetson Nano. This off-board processing strategy
+ensures that the computationally intensive language tasks do not interfere with the critical
+real-time navigation tasks running on the vehicle's onboard Jetson Nano or introduce more
+power draw.
+
+4.7 Professional Development & Preparation
+The current AI driving and chat interface is still at early stage of development and lack
+features. Since it is difficult to gain firsthand experience on IoT from school course.
+Therefore, during the winer break, I have signed up for IoT related internships and have
+conducted a personal project to enhance my web and app development skills.
+I managed to receive multiple offers from different companies offering both IoT and web
+development internship. I selected 2 of which I find most relevant to both the FYP and my
+personal interests. One of the companies (Hong Kong Dianya Technology Co. Ltd.) agreed
+with a part time partnership so I can work with both companies at the same time.
+4.7.1 Work experience during winter
+FunMa app development under Inspire Education HK (Full time, 1st DEC 2025- 9th Jan 2026)
+
+Figure 24 The user interface I developed for the company
+
+The experience at Inspire Education showed me a new way to analyse user experience. This
+will improve the interactive interface with Vandi. The current interface lacks guidance, the
+users are often lost and cannot operate the interface effectively, which defeat the purpose of
+the interactive interface. After the internship for developing an app for FunMA, a IOS
+application for student to learn math effectively, I have acquired the skill needed for
+developing a more intuitive and user-friendly interface.
+Flight simulator design engineer under Hong Kong Dianya Technology Co. Ltd. (Part time,
+18th DEC- Now)
+25
+
+This work experience is a good opportunity to see how to connect interface like applications
+or website to physical product. However, the project is still at an early stage of development,
+and we are still brainstorming about the ideas. Therefore, there is minimal information for the
+time being.
+4.7.2 Personal project
+Inspired by the internships, I created a web-based application that generates animated stepby-step mathematical solution videos using Manim. Users can input complex LaTeX
+equations, customize styling, and create interactive educational content with synchronized
+audio. with features such as
+•
+•
+•
+•
+•
+•
+•
+
+Multi-Row Steps: Create complex steps with multiple rows of content.
+Deep Customization: Individual row styling (colours, highlights, alignment).
+Real-time LaTeX Preview: Instant feedback using KaTeX before rendering.
+AI Powered: Generate content automatically using DeepSeek API or local hosted models.
+Interactive Projects: Synchronize video segments with audio library assets.
+Flexible Export: Export projects as self-contained interactive ZIP toolkits.
+Batch Management: Efficiently manage your media and projects with batch selection.
+
+Figure 25 One of the applications I designed for cone volume exploration.
+
+Link to the cone volume explorer demo can be found here:
+https://zhao255.github.io/ZHAOpersonal-website/cone%20interactive/interactive.html
+
+26
+
+Figure 26 An example solution from my fully automated step by step answer generator.
+
+Link to the step-by-step question solution with voice over generated fully automatically using
+AI can be found here:
+https://zhao255.github.io/ZHAOpersonalwebsite/step%20by%20step%20with%20voice/index.html
+This personal project not only help me perform better during one of the internships, but it is
+also a task with a clear goal that help me understand how to use AI effectively. It is a great
+practice to prepare myself for the final chat interface in this project, as I also collect the
+feedback from the co-workers who can provide me with insight into creating professional
+user web interface integrated with AI features. Skills acquired during the project will be
+applied to the chatbot.
+4.7.3 Practice with professional editing software (DaVinci Resolve)
+I have gone through a online tutorial on how to use video editing software to produce
+professional and informative videos. I decided to use DaVinci Resolve as the main editing
+software as it is free and powerful. There is also an option where we will outsource the video
+making to professional video editors. Even in that case, learning the popular video editing
+software can help us understand more on the clips we want to include in the video.
+
+27
+
+4.7.4 Practice in drone photography
+
+Figure 27 One of the pictures I took using my drone during the winter break.
+
+I have a plan to use drone to record the video for Vandi’s demonstration, so I can show the
+whole track from a bird eye view. The drone can also be useful for taking video with unique
+angles and will boost the quality of our final video.
+
+5. FUTURE WORK
+While great progress has been made in validating the individual subsystems (fuel cell
+chemistry, vehicle mechanics, and AI vision), in the next semester, we will focus on the final
+manufacturing, integration, and full-system validation.
+
+5.1 Cell Manufacture
+The priority is to transition from the current PLA prototypes to a chemically robust final
+stack .
+Material upgrade: The final fuel cell stack will be manufactured using Polypropylene (PP) to
+ensure long-term resistance to the highly acidic vanadium electrolyte, addressing the cracking
+issues observed with PLA. Me and our BME teammate have already contacted one of the
+manufacturers for the fuel cell tank in China, and we will conduct test on the manufactured
+parts once it arrives.
+Current collector fabrication process: I am still in the process of designing the current
+collector and will contact manufacturer that can produce gold plated copper current collector
+once I finish designing.
+Final assembly: The stack will be assembled with the optimized Nafion N212 membrane and
+sealed with PTFE gaskets to prevent cross-contamination and external leakage.
+
+28
+
+5.2 Final Assembly (cell and car)
+This phase involves the physical integration of the power plant into the vehicle chassis.
+Component Layout: The fuel cell stack will be mounted on to tray connected to the main car
+body the tray will be designed once the cell stack design is settled.
+Power Distribution: The electrical system will be wired to manage the dual power sources. A
+lithium back up battery will be connected in parallel to ensure if the fuel cell is out of power,
+the board would not immediately shut down and crash the system. So, we will implement a
+power management system to ensure stable power input.
+Refilling: The fuel refill will be finalized with chemically resistant tubing.
+
+5.3 Auto Driving Program Implementation
+The autonomous capabilities will be refined from basic detection to full closed-loop
+navigation.
+ROS Navigation Stack: The current object detection logic will be integrated into a complete
+ROS navigation stack. The Jetson Nano will process LiDAR data for SLAM (Simultaneous
+Localization and Mapping) and fuse it with the camera's visual data to make real-time path
+planning decisions, we will adjust this plan based on the performance of the camera and
+LiDAR.
+Obstacle Avoidance: The control logic will be updated to actively react to traffic signals we
+put on our track. There will be walls around the road that will be detected by the LiDAR, so
+rather than just basic visual reactions, we want to enable dynamic navigation on the demo
+track, but this will be further evaluated based on the performance and progress.
+
+5.4 Interactive Interface Implementation
+The chatbot frontend will be fully connected to the vehicle's control backend.
+The voice-to-text, LLM processing, and command execution will be tested for latency and
+accuracy to ensure the car responds to voice commands like "Stop," "Go to parking".
+The LLM's context retrieval system will be updated with the latest project data, so it answers
+all the technical questions about the project during the demo.
+
+5.5 Full Testing
+The vehicle will be tested on the full demonstration track, starting from voice command,
+navigating autonomously through different sign and traffic lights, then park at the designated
+zone.
+Key metrics will be measured, including the fuel cell's runtime, YOLO model accuracy, and
+the response time of the interactive interface.
+
+5.6 Final Presentation and Video Taking
+A video that showcase the vehicle's functions, with transition between “bird eye view from
+the drone” and the "driver's eye" view from the onboard camera, and the interactive voice
+control.
+29
+
+The team will also prepare a structured presentation telling the complete "story" of the
+project—from the initial vanadium chemistry research to the final autonomous drive.
+
+5.7 Acceptance Criteria
+The project will be considered successful if the integrated “Vandi” prototype meets the
+following measurable criteria during final integration and full-track testing.
+Power system (vanadium fuel cell + power management)
+Deliver ≥5 W continuous electrical output for ≥10 minutes while the car is driving on the
+demo track (aligned with the stated ~5–7 W peak load requirement).
+Provide a stable regulated 5 V rail to the Jetson/control electronics during motion, with no
+unexpected resets when switching between fuel cell supply and the parallel lithium backup.
+Pass a leak test with the final electrolyte (3 M sulfuric acid baseline) showing no visible
+leakage at gaskets/tubing and no structural damage to the final chemically resistant stack
+materials.
+Mobility and manual fail-safe
+Demonstrate full basic mecanum motions (forward/reverse/strafe/rotate/stop) under
+remote/manual control, with emergency stop causing immediate halt (PWM → 0) reliably.
+Operate with the fuel-cell tray installed without electrolyte spillage under normal
+acceleration/braking used in the demo.
+Perception (vision + traffic light state)
+Achieve ≥80% correct detection for required demo objects (traffic lights + road signs) in the
+demo environment, consistent with the stated target.
+Run real-time perception on the onboard platform at ≥15 FPS end-to-end (YOLO + postprocessing), ensuring sufficient responsiveness for low-speed navigation.
+Correctly classify traffic light state (red/green) using the YOLO + HSV pipeline in ≥90% of
+trials at typical demo distances/lighting.
+Autonomous navigation (mission-level)
+Complete a full mission profile on the demo track: start from command → navigate through
+traffic lights/obstacles → stop/park at designated zone, with ≥80% success rate over at least 5
+consecutive trials.
+Maintain safe obstacle behavior: if a wall/obstacle is detected (LiDAR/camera), the vehicle
+slows/stops without contact in ≥90% of encounters during testing runs.
+Interactive interface (chat/voice control)
+Respond to at least 5 predefined voice/text commands (e.g., “Stop”, “Go to parking”) with
+end-to-end latency ≤5 seconds from user input to vehicle action during live demo conditions
+(same Wi‑Fi network).
+Block “unsafe” commands consistently (as described in the safety-check logic) and provide a
+clear rejection response instead of executing motion.
+
+6. SCHEDULE AND TIMELINE
+The project plan for the upcoming semester (January – April) is structured into three
+overlapping phases: fabrication, integration, and validation. The timeline below outlines the
+key milestones and individual responsibilities for the final stages of the project.
+30
+
+Figure 28 Scheduled timeline for next semester.
+
+Detailed timeline for next semester:
+January: Component Fabrication & System Refinement
+Fuel Cell Fabrication: Manufacturing of the final fuel cell stack.
+Software Refinement: Optimize the latency of the voice command and improve the ROS
+navigation stack.
+Mid-February: System Integration
+Stack Assembly: Assemble the final stack configuration, sealed with gaskets, and perform
+leak-test.
+Vehicle Integration: Put the assembled cell stack onto a trolly that is connected to the car
+March: Testing & Content Creation
+Testing and Debugging: testing the navigation and the fuel cell's power output
+Video Production: Videos will be recorded to showcase the vehicle for the final presentation.
+April: Final Deliverables
+Final Testing: A final round of system checks will be performed to ensure reliability.
+Presentation Preparation: The team will consolidate all test data, design documentation to
+finalize the project report and prepare for the final presentation.
+
+7. RESOURCES
+7.1 Instruments and Equipment
+Fabrication Tools:
+3D Printers: Bambu Lab X1-Carbon (used for rapid prototyping of fuel cell stacks and
+chassis mounts).
+CNC Machining & Laser Cutting: Utilized at the IC Maker’s Lab for manufacturing car
+frames.
+Testing Equipment:
+Electrochemical Station: Used for charging/discharging cycles and recording polarization
+curves of the vanadium fuel
+Electronic Testing: Oscilloscopes and multimeters for debugging the motor driver circuits and
+sensor signals.
+Computing Hardware:
+Onboard Controller: NVIDIA Jetson Nano (8GB) serving as the vehicle's main computer.
+AI Training Station: My personal high-performance PC equipped with an NVIDIA RTX 4070
+Ti Super GPU is used for training the YOLO models and hosting the local LLM (Ollama)
+backend.
+
+31
+
+7.2 Materials
+Chemicals:
+Vanadyl Sulfate (𝑉𝑂𝑆𝑂4 ) and Sulfuric Acid (𝐻2 𝑆𝑂4 ) for electrolyte preparation.
+Deionized water for solution dilution and membrane soaking.
+Fuel Cell Components:
+Membranes: Nafion N212
+Electrodes: Carbon felt/cloth treated for high surface area.
+Structural: Polypropylene filament for chemically resistant final stack printing.
+Vehicle Components:
+Mecanum wheels, brushless DC motors, and motor driver boards.
+Sensors: Binocular depth camera and LiDAR unit.
+
+7.3 Budget
+•
+•
+•
+•
+•
+
+Total budget: HK$ 60,000
+Fuel cell materials: ≈ HK$ 4,000
+Electronics: HK$ 2,936 (Paid)
+Vehicle parts: HK$ 6,476 (Paid)
+Software/Contingency: ≈ HK$ 8000
+
+The project budget is allocated primarily towards high-value electronic components and
+specialized chemical materials. Major expenditures to date include the purchase of the Jetson
+Nano computing unit, the binocular depth camera, and the car body. The remaining budget is
+reserved for the final stack manufacturing, computers for hosting the LLM and power system
+integration accessories.
+
+8.CONCLUSION
+This semester, the electrolyte was optimized to 3 M H₂SO₄ and Prototype 2 achieved leakfree operation with water, we assemble the main body and is ready for program
+implementation.
+In the power system domain, we have successfully characterized the vanadium electrolyte,
+determining that a 3 M sulfuric acid concentration provides the optimal balance of power
+density (~95 mWcm−2) and stability
+On the mechanical and control front, the mecanum-wheel drive base has been assembled with
+kinematic control algorithm running on the Jetson Nano. The computer vision system,
+powered by a tuned YOLOv11 model, has reliable real-time detection of traffic lights and
+signs. The interactive chatbot frontend has been prototyped.
+Moving forward, I will first focus on the fabrication of the final fuel cell stack, and the
+refinement of the autonomous navigation.
+
+32
+
+REFERENCE
+Chemours. (n.d.). Powering fuel cells with Nafion™ membranes and dispersions.
+https://www.nafion.com/en/applications/fuel-cells
+ECAM Eurobot. (2018). Mecanum wheels. https://ecameurobot.github.io/Tutorials/mechanical/mecanum.html
+Energy.gov. (2012). Fact sheet: Vanadium redox flow batteries. U.S. Department of Energy.
+https://www.energy.gov/sites/prod/files/VRB.pdf
+Gfrerrer, A., & Lang, J. (2008). Geometry and kinematics of the Mecanum wheel. Computer
+Aided Geometric Design, 25(9), 784–791.
+https://www.geometrie.tugraz.at/gfrerrer/publications/mecanum.pdf
+Gu, X., Li, J., & Zhang, L. (2025). Early warning of thermal runaway based on state of safety
+for lithium-ion batteries. Communications Engineering, 4, Article 442.
+https://doi.org/10.1038/s44172-025-00442-1
+Hiwonder. (n.d.). Mecanum wheel robot basic lesson.
+https://docs.hiwonder.com/projects/TurboPi/en/advanced/docs/3.mecanum_wheel_control.ht
+ml
+Khan, M. A., Wang, W., & Liu, H. (2024). YOLOv11 for vehicle detection: Advancements,
+performance, and applications in intelligent transportation systems. arXiv preprint.
+https://arxiv.org/abs/2410.22898
+Kim, S. H., Kwak, S. Y., & Suzuki, T. (2006). Mass transport through a proton exchange
+membrane (Nafion) in microbial fuel cells. Energy & Fuels, 21(6), 3348–3352.
+https://doi.org/10.1021/ef700308u
+Lee, J., Park, S., & Kim, D. (2022). Nafion composite membranes impregnated with
+polydopamine-based polymers for proton exchange membrane applications. ACS Omega,
+7(14), 11745–11760. https://doi.org/10.1021/acsomega.1c06399
+Shi, X., Wu, C., Wu, Y., Zhao, X., & Ma, T. (2021). A passive fuel cell fed with an
+electrically rechargeable liquid fuel. ACS Applied Materials & Interfaces, 13(41), 49485–
+49493. https://doi.org/10.1021/acsami.1c14505
+Shi, X., Zhao, X., & Ma, T. (2025). Operation of a passive fuel cell under sub-zero
+temperatures. Electrochemical Energy Reviews, 8, Article 391.
+https://doi.org/10.1007/s42154-025-00391-7
+Sumitomo Electric Industries. (2021). How VRFB technology works.
+https://sumitomoelectric.com/products/flow-batteries/overview
+Taheri, H., Zhao, C. X., & Qiao, B. (2015). Kinematic model of a four Mecanum wheeled
+mobile robot. International Journal of Computer Applications, 113(3), 6–9.
+https://research.ijcaonline.org/volume113/number3/pxc3901586.pdf
+
+33
+
+

@@ -1,0 +1,384 @@
+Design and Development of an Electric Toy Car Powered by a Fuel Cell
+Stack 
+
+Student Name: ZHAO Xuecen
+
+Student ID: 22014303d
+
+Department: Mechanical Engineering
+
+Team members: YIP Tsz Yeung Oscar BME, SEN Bijoy EEE
+
+Supervisor: Prof. AN Liang
+
+Second Supervisor: Prof. Wu Maochun
+
+Teaching assistant: Mr. Xin LONG
+
+Date: September 2025
+
+Abstract
+
+This individual project proposal focuses on my primary role in the
+inter-departmental Final Year Project: the design and fabrication of
+components for a passive direct liquid fuel cell stack powered by
+vanadium-based electrically rechargeable liquid fuel (e-fuel).
+
+As a Mechanical Engineering student, I will lead the development of the
+fuel cell's core elements, including the anode, cathode, membrane,
+current collectors, and overall stack assembly, to enable efficient
+power generation for an electric toy car prototype. This addresses
+limitations of traditional batteries and fuel cells, such as long
+charging times and high costs, by leveraging e-fuel's rechargeability
+and catalyst-free operation. My contributions will integrate with team
+efforts on performance evaluation and toy car prototyping. The
+methodology emphasizes mechanical design using SolidWorks, AI training
+using Python, and toy car fabrication using sheet metal and 3D print.
+
+1. Introduction
+
+In this inter-departmental FYP, the overall project aims to prototype an
+electric toy car powered by a passive vanadium e-fuel cell stack,
+demonstrating sustainable energy solutions. My individual role, as a
+Mechanical Engineering student, centers on the fuel cell design and
+components fabrication, the foundational aspect enabling the system's
+functionality. This involves creating a passive stack that operates
+without pumps or blowers, relying on diffusion and natural convection
+for fuel delivery.
+
+Traditional lithium-ion batteries limit range and require hours to
+charge, while hydrogen fuel cells pose handling challenges. Vanadium
+e-fuel offers advantages like quick refueling (~5 minutes), no noble
+metal catalysts, and high reactivity, as highlighted in the project
+proposal. By focusing on design and fabrication, I will ensure the
+stack's mechanical integrity, electrochemical compatibility, and
+scalability, contributing to the project's innovation in portable power
+systems.
+
+2. Literature Review
+
+Fuel cells convert chemical energy directly into electricity through
+electrochemical reactions, offering high efficiency and low
+environmental impact compared to internal combustion engines. A
+comparative study of fuel cell technologies highlights that direct
+liquid fuel cells (DLFCs) provide ease of fuel handling and high energy
+density, surpassing gaseous hydrogen systems in portability. However,
+traditional DLFCs using methanol or ethanol require noble catalysts and
+yield limited performance.
+
+Vanadium-based systems, particularly vanadium redox flow batteries
+(VRFBs), have emerged as promising due to their scalability and long
+cycle life. A comprehensive review of VRFBs emphasizes design
+considerations like electrode compression (optimal at 25%) and
+electrolyte flow rates (37.5-150 cm³/min), which enhance energy
+efficiency up to 85% while addressing limitations such as capacity
+fading through thermal treatments at 390-415°C. Operational conditions
+in VRFBs, including electrolyte flow and membrane type, significantly
+impact performance; for instance, anion exchange membranes yield higher
+efficiency than Nafion but with greater fading.
+
+Recent advancements focus on electrically rechargeable liquid fuels
+(e-fuels) for DLFCs. A 2020 study demonstrated an e-fuel cell with a
+catalyst-free graphite-felt anode and air cathode, achieving a peak
+power density of 293 mW/cm² and 42.3% energy efficiency at room
+temperature. This system uses vanadium ions in sulfuric acid, enabling
+rechargeability and superior reactivity over alcohol. Passive designs
+further simplify the system. A 2021 passive e-fuel cell reported 116.2
+mW/cm² with over 350 hours of stability.
+
+Key components include thermally treated graphite anodes, cathodes,
+Nafion membranes, and vanadium electrolytes (1.0-1.6M V in 2-4M H₂SO₄).
+Fabrication involves MEA assembly, and current collectors with optimized
+open ratios. These insights guide my role in addressing fabrication
+challenges like electrolyte stability and mechanical durability.
+
+3. Objectives
+
+As a team, the objective of our project is:
+
+Design, fabricate, and integrate fuel cell components for a passive DLFC
+stack using vanadium e-fuel. The stack is expected to be capable of
+attaining an OCV of 1.4 V, a maximum current of 2.5 A, and a peak power
+of 2.0 W at room temperature, running time for a minimum of 10 minutes
+under normal operating conditions.
+
+Evaluate and optimize fuel cell performance through experiments
+(polarization curves, impedance spectroscopy) and numerical modeling
+(for flow and efficiency).
+
+Prototype an electric toy car integrating the fuel cell stack with
+powertrain, electronic controls, and AI navigation features for
+demonstration.
+
+My focused objectives, and my ME expertise, are:
+
+1.  Design the passive fuel cell stack, including anode, cathode,
+    membrane, current collectors, and flow fields, using CAD tools for
+    mechanical optimization communicate closely with our BME teammate to
+    calculate suitable size and reaction area of the cell.
+
+2.  Fabricate fuel cell components through processes like CAD design,
+    CNC, and assembly, ensuring use of suitable materials.
+
+3.  Integrate fabricated components into a stack prototype, supporting
+    team efforts in evaluation and toy car assembly.
+
+4.  Train the AI model with our EEE teammate.
+
+4. Methodology
+
+4.1 Fuel Cell Design [Operation of a Passive Fuel Cell Under Sub-Zero
+Environment Conditions | Automotive Innovation]
+
+Use SolidWorks/AutoCAD to model a passive vanadium e-fuel cell stack
+
+Incorporate serpentine or perforated flow fields in current collectors
+(graphite, open ratio 50-70% for optimal diffusion).
+
+Design the e-fuel tank from acrylic/PVC for safe storage (at least 20 mL
+capacity for each cell), with injection ports. Ensure passive operation
+via natural convection, utilize the vibration when driving to increase
+convection.
+
+The other factor I need to take into consideration when designing the
+battery is the refilling process, the battery stack we will make will
+require relatively high voltage and power, so to make sure every refill
+only takes reasonable amount of time, we must take it into consideration
+when designing the stack.
+
+*Power for the cell is directly tied to active area, as it determines
+the electrochemical reaction sites; voltage losses are minimized through
+electrode treatments, but area scaling requires careful design. Larger
+areas can indirectly reduce voltage due to increased ohmic losses
+(resistance to ion/electron flow) or mass transport limitations if flow
+distribution is uneven.
+
+[A person holding a small device AI-generated content may be incorrect.]
+
+We are provided with a design done by previous FYP student for
+reference; there were a few rooms for improvement with this design that
+I notice:
+
+1.  The refuelling is extremely difficult on this design as the opening
+    are very small. Affecting its scalability as it will become very
+    difficult to refuel it after we increase the stack.
+
+2.  The tank for the design is small, since e-fuel already have poor
+    power density, the battery will not be able to last very long.
+
+3.  It is easy to mess up the refuelling as the fuel filler are all at
+    one side of the battery.
+
+4.  It is also difficult to remove used fuel on this design.
+
+5.  The fuel filler does not have a cover, which means the fuel may
+    spill and corrode our parts.
+
+So, for our design I will make sure the battery has an easy refuel
+process, larger fuel tank combined with better utilization of car motion
+for better convection. Fuel filler covers to prevent leakage, with clear
+indication of cathode and anode.
+
+4.2 Components Fabrication
+
+Fuel cell (Fuel cell stack):
+
++------------+----------------------------------+------------------------------+
+| Component  | Method of fabrication, material, | Picture                      |
+| name       | obtainment                       |                              |
++============+==================================+==============================+
+| Electrodes | Provided by department, graphite | []                           |
+|            | felt, we can modify the size and |                              |
+|            | punch holes to increase surface  |                              |
+|            | area.                            |                              |
++------------+----------------------------------+------------------------------+
+| Membrane   | Provided by department, Nafion   | [A hand in blue glove        |
+|            | 212                              | holding a plastic bag with   |
+|            |                                  | writing on it AI-generated   |
+|            |                                  | content may be incorrect.]   |
++------------+----------------------------------+------------------------------+
+| Current    | Graphite plates with             | []                           |
+| Collectors | perforations/channels. We need   |                              |
+|            | to design the shape, size and    |                              |
+|            | reaction area, then custom made  |                              |
+|            | the component with a company.    |                              |
++------------+----------------------------------+                              |
+| Gasket     | PTFE plate, provided by          |                              |
+|            | department, can be modified to   |                              |
+|            | fit the current collector.       |                              |
++------------+----------------------------------+------------------------------+
+| e-fuel     | Design through solid work,       | []                           |
+| tank       | fabricated through laser cut     |                              |
+|            | acrylic/3D print PVC.            |                              |
++------------+----------------------------------+------------------------------+
+| Assembly   | Fabricate MEA by pressing anode, membrane, and cathode; embed   |
+|            | in gaskets, using bolts for compression. Test for leaks.        |
+|            |                                                                 |
+|            | I will make a stackable design so we can connect multiple       |
+|            | batteries in series for higher current                          |
++------------+-----------------------------------------------------------------+
+
+Electrolyte(e-fuel) Preparation/ analysis:
+
++------+-----------------------------------+----------------------------+
+| Step | Description                       | Picture                    |
++======+===================================+============================+
+| 1    | The concentration of Vanadium and | []                         |
+|      | sulfuric acid will be the main    |                            |
+|      | variable in this experiment.      |                            |
+|      |                                   |                            |
+|      | Using 1 L of 1.0 M VOSO4 + 3.0 M  |                            |
+|      | H2SO4 for example:                |                            |
+|      |                                   |                            |
+|      | Place a 1L large beaker on the    |                            |
+|      | scale and tare the weight. Weigh  |                            |
+|      | 246.416g of vanadium. Pour        |                            |
+|      | approximately 300-400 mL of DI    |                            |
+|      | water into the large beaker. Fill |                            |
+|      | a 200 mL cylinder with 160 mL of  |                            |
+|      | 98% sulfuric acid. Slowly pour    |                            |
+|      | the sulfuric acid into the 1L     |                            |
+|      | beaker, while stirring            |                            |
+|      | continuously.                     |                            |
++------+-----------------------------------+----------------------------+
+| 2    | V³⁺and V⁵⁺:                       | []                         |
+|      |                                   |                            |
+|      | Place 2 portion of equal amount   |                            |
+|      | electrolyte into 2 beakers and    |                            |
+|      | connect it to the active pump     |                            |
+|      | charging unit, after charging, we |                            |
+|      | will get V³⁺ at the Cathode and   |                            |
+|      | V⁵⁺ at the Anode.                 |                            |
++------+-----------------------------------+----------------------------+
+| 3    | V²⁺and V⁵⁺:                       | []                         |
+|      |                                   |                            |
+|      | Remove the beaker at the Anode    |                            |
+|      | and replace with fresh            |                            |
+|      | electrolyte from step 1, and      |                            |
+|      | start the charging process, after |                            |
+|      | charging we will have V²⁺ at the  |                            |
+|      | Cathode and V⁵⁺ at the Anode.     |                            |
++------+-----------------------------------+----------------------------+
+| 4    | Discharge the electrolyte and     | []                         |
+|      | analyze the resulted IV graph and |                            |
+|      | general performance of the fuel.  |                            |
++------+-----------------------------------+----------------------------+
+
+4.3 Toy Car Prototyping
+
+Integrate cell stack with DC motor, wheels, and Jetson nano-based
+electronics for remote control and smart obstacles detection. The system
+will be supported with imbedded AI, ran locally that’s able to detect
+different items. Toy car parts design through SolidWorks and fabricated
+with 3D printing and sheet metal, wheel/tire DC motor purchased online.
+
+Test system for operation and refueling duration.
+
+Provide fabricated stack for team-led testing and toy car prototyping
+(motor/AI integration).
+
+We will have a backup lithium battery in case the fuel cell cannot
+supply enough energy to the Ai system, and the e-fuel battery will power
+the mechanical part while the lithium battery powers the software.
+
+[]4.5 Ai training
+
+Use a locally trained AI model running on Docker from a PC, received
+through the ROS on Jetson nano on the toy car. Using YOLO, we can train
+the AI to detect obstacles on the road and react accordingly. Combined
+with depth camera and radar to achieve tracking and obstacle detection.
+
+4.5 Product demonstration
+
+[A map of a town with many icons AI-generated content may be incorrect.]
+
+Simple automatic drive track that can demonstrate the car’s Ai features,
+as shown on the picture above, we will make a map with interactive
+traffic lights, parking and zebra crossings with passing pedestrians,
+the car will drive around a blueprint or 3D print of Polyu if there is
+sufficient time. We will also add the working principle of the e fuel
+and simple demonstration with color water to show the process of
+charging and discharging, also emphasizing the positive environmental
+impact of the fuel.
+
+[A screenshot of a computer AI-generated content may be incorrect.]
+
+If time allow, we can even add voice control and run an open source LLM
+on Ollama to reply to people’s questions, like “Tell me more about the
+future of Vanadium batteries.” “Who designed this project.” “Please go
+back to the parking station.” etc using ComfyUi.
+
+General idea for how to achieve this:
+
+To achieve this, we will have a microphone at the stand, and the input
+will be processed through the PC and then let the toy car react
+accordingly.
+
+5. Work Plan and Timeline
+
+Semester 1 (Sep-Dec 2025): Literature review and experiment (Sep),
+experiment and design modeling (Oct), fuel cell components fabrication
+and initial assembly (Nov-Dec); mid-term report(Sep-Dec).
+
+Winter Break (Dec 2025-Jan 2026): Initial testing and optimization,
+refine fabrication based on preliminary tests.
+
+Semester 2 (Jan-May 2026): Stack assembly, toy car integration, full
+testing, final report, Demonstration stand.
+
+  -----------------------------------------------------------------------
+  Phase             Timeline      Tasks
+  ----------------- ------------- ---------------------------------------
+  Research & Design Sep-Oct 2025  Literature review, CAD modeling,
+                                  experiment
+
+  Fabrication       Nov-Dec 2025  Electrode treatment, MEA assembly, AI
+                                  training
+
+  Assembly &        Jan-Apr 2026  Stack build, team collaboration,
+  Support                         demonstration stand
+
+  Reporting         May 2026      Final deliverables
+  -----------------------------------------------------------------------
+
+6. Resources and Budget
+
+Facilities: ME labs for cell fabrication/testing. Inter-departmental
+access (EEE lab for circuits, IC for assembly and 3D print).
+
+Total funding of HKD 60,000 from department
+
+Software: SolidWorks, MATLAB, Adobe Illustrate, VS Code (university
+licensed).
+
+Ai system(Jetson nano)(~HKD 4000).
+
+Car body (~HKD 5000).
+
+Battery manufacturing(HKD 10000).
+
+Demonstration stand (HKD 2000-5000).
+
+7. References
+
+Shi et al. (2020). Energizing Fuel Cells with an Electrically
+Rechargeable Liquid Fuel. Cell Reports Physical Science.
+
+Shi et al. (2021). A Passive Fuel Cell Fed with an Electrically
+Rechargeable Liquid Fuel. ACS Applied Materials & Interfaces.
+
+Monteiro et al. (2018). Insights into all-vanadium redox flow battery: A
+case study on components and operational conditions. Electrochemical
+Acta.
+
+Shi et al. (2025). Operation of a Passive Fuel Cell Under Sub-Zero
+Environment Conditions. Automotive Innovation.
+
+Mekhilef et al. (2012). Comparative study of different fuel cell
+technologies. Renewable and Sustainable Energy Reviews.
+
+Lourenssen et al. (2019). Vanadium redox flow batteries: A comprehensive
+review. Journal of Energy Storage.
+
+Larminie and Dicks (2003). Fuel Cell Systems Explained (2nd Edition).
+John Wiley & Sons.

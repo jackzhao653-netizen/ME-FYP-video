@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, Suspense } from 'react';
 import type { DragEvent, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { AssetItem, AssetKind, PromptEntry, PromptMap } from './types';
+import { FLIPBOOK_VERSIONS } from './flipbook-versions';
+import { Canvas, useLoader, useThree } from '@react-three/fiber';
+import { OrbitControls, PerspectiveCamera, TrackballControls } from '@react-three/drei';
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
+import * as THREE from 'three';
 
 const POLL_MS = 3000;
 const GROUPS: Array<{ kind: AssetKind; title: string }> = [
@@ -25,13 +30,15 @@ type NetworkInfo = {
   url: string | null;
 };
 
-type TabKey = AssetKind | 'upload' | 'flipbook' | 'vandi-interactive';
+type TabKey = AssetKind | 'upload' | 'flipbook' | 'vandi-interactive' | 'vandi-3d';
 
 type FlipbookScene = {
   key: string;
   relativePath: string;
   caption: string;
   audioPath?: string;
+  script?: string;
+  filmingNotes?: string;
 };
 
 const FLIPBOOK_SCENES: FlipbookScene[] = [
@@ -235,6 +242,16 @@ function App() {
             >
               Vandi
             </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('vandi-3d')}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${activeTab === 'vandi-3d'
+                ? 'border border-cyan-300/70 bg-cyan-500/15 text-cyan-200 shadow-[0_0_18px_rgba(34,211,238,0.2)]'
+                : 'border border-slate-700 text-slate-300 hover:border-cyan-300/40 hover:text-cyan-200'
+                }`}
+            >
+              Vandi 3D
+            </button>
           </div>
         </nav>
 
@@ -256,6 +273,8 @@ function App() {
           <AudioFlipbook scenes={FLIPBOOK_SCENES} />
         ) : activeTab === 'vandi-interactive' ? (
           <VandiExpressionViewer />
+        ) : activeTab === 'vandi-3d' ? (
+          <Vandi3DViewer />
         ) : (
           <section>
             <div className="mb-4 flex items-center justify-between">
@@ -605,7 +624,7 @@ function VandiExpressionViewer() {
                 <AnimatePresence>
                   {(activeExpression === 'thinking' || activeExpression === 'thinking_two') && (
                     <motion.image
-                      href={activeExpression === 'thinking_two' ? "/api/asset/thought_cloud_idea.svg" : "/api/asset/thought_cloud.svg"}
+                      href={activeExpression === 'thinking_two' ? "/api/asset/vandi%20profile/thought_cloud_idea.svg" : "/api/asset/vandi%20profile/thought_cloud.svg"}
                       initial={{ opacity: 0, scale: 0.5, y: -200, x: 50 }}
                       animate={{ opacity: 1, scale: 0.8, y: [-210, -220, -210], x: 50 }}
                       exit={{ opacity: 0, scale: 0.5, y: -200 }}
@@ -675,13 +694,149 @@ function VandiExpressionViewer() {
   );
 }
 
+function STLModel({ url }: { url: string }) {
+  const geometry = useLoader(STLLoader, url);
+  
+  // Center the geometry for better viewing
+  geometry.center();
+  
+  return (
+    <mesh geometry={geometry} rotation={[-Math.PI / 2, Math.PI / 2, 0]}>
+      <meshStandardMaterial color="#4a8b4a" metalness={0.3} roughness={0.4} />
+    </mesh>
+  );
+}
+
+function CameraController({ view }: { view: string }) {
+  const { camera } = useThree();
+  const controlsRef = useRef<any>(null);
+  
+  useEffect(() => {
+    const positions: Record<string, [number, number, number]> = {
+      front: [400, 0, 0],
+      top: [0, 400, 0],
+      left: [0, 0, -400],
+      right: [0, 0, 400],
+      iso: [300, 300, 300]
+    };
+    
+    const position = positions[view];
+    if (position && controlsRef.current) {
+      camera.position.set(...position);
+      controlsRef.current.target.set(0, 0, 0);
+      controlsRef.current.update();
+    }
+  }, [view, camera]);
+  
+  return (
+    <TrackballControls 
+      ref={controlsRef}
+      staticMoving={false}
+      dynamicDampingFactor={0.1}
+    />
+  );
+}
+
+function Vandi3DViewer() {
+  const [view, setView] = useState('iso');
+
+  return (
+    <section className="rounded-2xl border border-cyan-300/25 bg-slate-900/60 p-5 shadow-xl shadow-cyan-500/10">
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-cyan-200">Vandi 3D Model</h2>
+        <p className="mt-1 text-sm text-slate-300">
+          Interactive 3D view of Vandi assembly (Assem5.STL). Use mouse to rotate, scroll to zoom.
+        </p>
+        <div className="mt-3 flex gap-2">
+          <button
+            onClick={() => setView('front')}
+            className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
+              view === 'front'
+                ? 'border-cyan-400 bg-cyan-500/20 text-cyan-200'
+                : 'border-slate-600 text-slate-300 hover:border-cyan-400/50 hover:text-cyan-200'
+            }`}
+          >
+            Front
+          </button>
+          <button
+            onClick={() => setView('top')}
+            className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
+              view === 'top'
+                ? 'border-cyan-400 bg-cyan-500/20 text-cyan-200'
+                : 'border-slate-600 text-slate-300 hover:border-cyan-400/50 hover:text-cyan-200'
+            }`}
+          >
+            Top
+          </button>
+          <button
+            onClick={() => setView('left')}
+            className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
+              view === 'left'
+                ? 'border-cyan-400 bg-cyan-500/20 text-cyan-200'
+                : 'border-slate-600 text-slate-300 hover:border-cyan-400/50 hover:text-cyan-200'
+            }`}
+          >
+            Left
+          </button>
+          <button
+            onClick={() => setView('right')}
+            className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
+              view === 'right'
+                ? 'border-cyan-400 bg-cyan-500/20 text-cyan-200'
+                : 'border-slate-600 text-slate-300 hover:border-cyan-400/50 hover:text-cyan-200'
+            }`}
+          >
+            Right
+          </button>
+          <button
+            onClick={() => setView('iso')}
+            className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
+              view === 'iso'
+                ? 'border-cyan-400 bg-cyan-500/20 text-cyan-200'
+                : 'border-slate-600 text-slate-300 hover:border-cyan-400/50 hover:text-cyan-200'
+            }`}
+          >
+            3D
+          </button>
+        </div>
+      </div>
+
+      <div className="overflow-hidden rounded-xl border border-slate-700/80 bg-white" style={{ height: '70vh' }}>
+        <Canvas>
+          <color attach="background" args={['white']} />
+          <PerspectiveCamera makeDefault position={[300, 300, 300]} />
+          <CameraController view={view} />
+          
+          <ambientLight intensity={0.6} />
+          <directionalLight position={[10, 10, 5]} intensity={1.2} castShadow />
+          <directionalLight position={[-10, -10, -5]} intensity={0.6} />
+          <directionalLight position={[0, 10, 0]} intensity={0.4} />
+          
+          <Suspense fallback={null}>
+            <STLModel url="/api/asset/Vandi3D/Assem5.STL" />
+          </Suspense>
+        </Canvas>
+      </div>
+
+      <div className="mt-4 rounded-lg border border-cyan-200/20 bg-cyan-500/5 px-4 py-3">
+        <p className="text-sm text-cyan-100">
+          <strong>Controls:</strong> Left-click + drag to rotate • Right-click + drag to pan • Scroll to zoom • Double-click to reset view
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
   const [currentScene, setCurrentScene] = useState(0);
   const [secondsPerScene, setSecondsPerScene] = useState(4);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [activeVersion, setActiveVersion] = useState<string>('v0');
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const total = scenes.length;
-  const active = scenes[currentScene];
+  
+  const currentScenes = activeVersion === 'v0' ? scenes : (FLIPBOOK_VERSIONS.find(v => v.id === activeVersion)?.scenes || scenes);
+  const total = currentScenes.length;
+  const active = currentScenes[currentScene];
   const msPerScene = secondsPerScene * 1000;
 
   // Play audio when scene changes
@@ -781,6 +936,27 @@ function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
         </div>
       </div>
 
+      {/* Version tabs */}
+      <div className="mb-4 flex flex-wrap gap-2 rounded-lg border border-slate-700/50 bg-slate-950/40 p-2">
+        <button
+          type="button"
+          onClick={() => { setActiveVersion('v0'); setCurrentScene(0); }}
+          className={`rounded-md px-3 py-1.5 text-xs font-medium transition ${activeVersion === 'v0' ? 'bg-amber-500/20 text-amber-200 border border-amber-400/50' : 'text-slate-400 hover:text-slate-200'}`}
+        >
+          V0: Original
+        </button>
+        {FLIPBOOK_VERSIONS.map((version) => (
+          <button
+            key={version.id}
+            type="button"
+            onClick={() => { setActiveVersion(version.id); setCurrentScene(0); }}
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition ${activeVersion === version.id ? 'bg-amber-500/20 text-amber-200 border border-amber-400/50' : 'text-slate-400 hover:text-slate-200'}`}
+          >
+            {version.label}
+          </button>
+        ))}
+      </div>
+
       <div className="mb-4 overflow-hidden rounded-xl border border-slate-700/80 bg-slate-950/70">
         <div className="aspect-video w-full">
           <img
@@ -792,6 +968,22 @@ function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
       </div>
 
       <p className="mb-4 rounded-lg border border-amber-200/20 bg-amber-500/5 px-4 py-3 text-base text-amber-100">{active.caption}</p>
+
+      {/* Script display */}
+      {active.script && (
+        <div className="mb-4 rounded-lg border-l-4 border-cyan-400 bg-slate-950/60 px-4 py-3">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">Narration Script</p>
+          <p className="text-sm leading-relaxed text-slate-200">{active.script}</p>
+        </div>
+      )}
+
+      {/* Filming notes */}
+      {active.filmingNotes && (
+        <div className="mb-4 rounded-lg border border-slate-700/50 bg-slate-900/40 px-4 py-2">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">Filming Notes</p>
+          <p className="text-xs text-slate-400">{active.filmingNotes}</p>
+        </div>
+      )}
 
       <div className="mb-4">
         <div className="mb-2 flex items-center justify-between text-xs text-slate-300">
@@ -816,7 +1008,7 @@ function AudioFlipbook({ scenes }: { scenes: FlipbookScene[] }) {
       <audio ref={audioRef} className="hidden" />
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
-        {scenes.map((scene, index) => {
+        {currentScenes.map((scene, index) => {
           const isActive = index === currentScene;
           return (
             <button
@@ -973,6 +1165,7 @@ function UploadPanel({ onUploaded }: { onUploaded: (fileName: string) => Promise
   const [audioDestination, setAudioDestination] = useState<AudioDestination | ''>('');
   const [networkInfo, setNetworkInfo] = useState<NetworkInfo>({ ip: null, url: null });
   const [progress, setProgress] = useState<number | null>(null);
+  const [description, setDescription] = useState('');
   const [message, setMessage] = useState('Drop or pick one file to exchange into ../fyp-assets/.');
 
   const fetchNetworkInfo = useCallback(async (): Promise<void> => {
@@ -1061,8 +1254,24 @@ function UploadPanel({ onUploaded }: { onUploaded: (fileName: string) => Promise
         if (xhr.status >= 200 && xhr.status < 300) {
           setProgress(100);
           setMessage(`Uploaded ${selectedFile.name}`);
+          
+          // Save description to prompts if provided
+          if (description.trim()) {
+            const uploadResult = JSON.parse(xhr.responseText);
+            const relativePath = uploadResult.relativePath;
+            await fetch('/api/prompts', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                path: relativePath,
+                entry: { type: 'asset', prompt: description.trim() }
+              })
+            });
+          }
+          
           setSelectedFile(null);
           setAudioDestination('');
+          setDescription('');
           await onUploaded(selectedFile.name);
         } else {
           setProgress(null);
@@ -1149,6 +1358,19 @@ function UploadPanel({ onUploaded }: { onUploaded: (fileName: string) => Promise
             </select>
           </div>
         )}
+        <div className="space-y-1">
+          <label htmlFor="asset-description" className="text-sm font-medium text-emerald-100">
+            Description (optional, helps agents find this asset)
+          </label>
+          <input
+            id="asset-description"
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="e.g. Fuel cell assembly photo showing Nafion membrane"
+            className="w-full rounded-md border border-emerald-200/40 bg-slate-950/80 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500"
+          />
+        </div>
         {progress !== null && (
           <div className="overflow-hidden rounded-full bg-slate-800">
             <div className="h-2 bg-emerald-400 transition-all" style={{ width: `${progress}%` }} />

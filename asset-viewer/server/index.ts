@@ -187,7 +187,7 @@ app.get('/api/network-info', (_req, res) => {
   res.json({
     ip,
     port: 5179,
-    url: ip ? `http://${ip}:5178` : null
+    url: ip ? `http://${ip}:5179` : null
   });
 });
 
@@ -281,6 +281,37 @@ app.post('/api/upload', express.raw({ type: '*/*', limit: '500mb' }), async (req
     });
   } catch (error) {
     res.status(500).json({ error: 'Failed to upload file', details: String(error) });
+  }
+});
+
+app.get('/api/asset-catalog', async (req, res) => {
+  try {
+    const catalogPath = path.join(ASSET_ROOT, 'extracted-docs', 'ASSET-CATALOG.md');
+    const content = await fs.readFile(catalogPath, 'utf8');
+    const query = (String(req.query.q || '')).toLowerCase().trim();
+    
+    if (!query) {
+      res.type('text/markdown').send(content);
+      return;
+    }
+    
+    // Filter catalog lines matching query
+    const lines = content.split('\n');
+    const matches: string[] = [];
+    let currentHeader = '';
+    for (const line of lines) {
+      if (line.startsWith('#')) { currentHeader = line; continue; }
+      if (line.toLowerCase().includes(query)) {
+        if (currentHeader && !matches.includes(currentHeader)) {
+          matches.push(currentHeader);
+        }
+        matches.push(line);
+      }
+    }
+    
+    res.type('text/markdown').send(matches.length > 0 ? matches.join('\n') : `No assets matching "${query}"`);
+  } catch {
+    res.status(404).json({ error: 'Asset catalog not found' });
   }
 });
 
