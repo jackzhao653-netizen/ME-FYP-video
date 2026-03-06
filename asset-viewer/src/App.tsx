@@ -622,9 +622,15 @@ function VandiExpressionViewer() {
                 </AnimatePresence>
                 {/* Internal Scaled Thinking Cloud Overlay */}
                 <AnimatePresence>
-                  {(activeExpression === 'thinking' || activeExpression === 'thinking_two') && (
+                  {(activeExpression === 'thinking' || activeExpression === 'thinking_two' || activeExpression === 'searching') && (
                     <motion.image
-                      href={activeExpression === 'thinking_two' ? "/api/asset/vandi%20profile/thought_cloud_idea.svg" : "/api/asset/vandi%20profile/thought_cloud.svg"}
+                      href={
+                        activeExpression === 'thinking_two'
+                          ? "/api/asset/thought_cloud_idea.svg"
+                          : activeExpression === 'searching'
+                            ? "/api/asset/thought_cloud_empty.svg"
+                            : "/api/asset/thought_cloud.svg"
+                      }
                       initial={{ opacity: 0, scale: 0.5, y: -200, x: 50 }}
                       animate={{ opacity: 1, scale: 0.8, y: [-210, -220, -210], x: 50 }}
                       exit={{ opacity: 0, scale: 0.5, y: -200 }}

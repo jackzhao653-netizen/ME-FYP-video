@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 140" width="180" height="140">
+  <defs>
+    <filter id="cyanGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g transform="translate(45, 80)">
+    <!-- The main cloud body -->
+    <path d="M 0 0 Q -15 -10 -5 -30 Q -5 -50 15 -50 Q 25 -70 50 -60 Q 75 -70 85 -50 Q 105 -50 105 -30 Q 115 -10 100 0 Z" fill="none" stroke="#00e5ff" stroke-width="3" filter="url(#cyanGlow)" />
+    
+    <!-- Floating bubbles leading up to the cloud from the bottom left -->
+    <circle cx="-15" cy="20" r="8" fill="#00e5ff" filter="url(#cyanGlow)">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="-35" cy="40" r="4" fill="#00e5ff" filter="url(#cyanGlow)">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="0.5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg>
