@@ -149,7 +149,7 @@ app.get('/api/network-info', (_req, res) => {
     res.json({
         ip,
         port: 5179,
-        url: ip ? `http://${ip}:5178` : null
+        url: ip ? `http://${ip}:5179` : null
     });
 });
 app.get('/api/prompts', async (_req, res) => {

@@ -24,3 +24,73 @@
 [web] 4:54:59 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
 [web] 4:57:37 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
 [web] 5:01:02 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
+[web] 7:39:19 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
+[web] 7:39:19 AM [vite] Internal server error: /Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/src/App.tsx: Unexpected token (668:0)
+[web] 
+[web]   666 |                   {(activeExpression === 'thinking' || activeExpression === 'thinking_two' || activeExpression === 'searching') && (
+[web]   667 |                     <motion.image
+[web] > 668 | <<<<<<< HEAD
+[web]       | ^
+[web]   669 |                       href={activeExpression === 'thinking_two' ? "/api/asset/vandi%20profile/thought_cloud_idea.svg" : "/api/asset/vandi%20profile/thought_cloud.svg"}
+[web]   670 | =======
+[web]   671 |                       href={
+[web]   Plugin: vite:react-babel
+[web]   File: /Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/src/App.tsx:668:0
+[web]   666|                    {(activeExpression === 'thinking' || activeExpression === 'thinking_two' || activeExpression === 'searching') && (
+[web]   667|                      <motion.image
+[web]   668|  <<<<<<< HEAD
+[web]      |  ^
+[web]   669|                        href={activeExpression === 'thinking_two' ? "/api/asset/vandi%20profile/thought_cloud_idea.svg" : "/api/asset/vandi%20profile/thought_cloud.svg"}
+[web]   670|  =======
+[web]       at constructor (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:365:19)
+[web]       at TypeScriptParserMixin.raise (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:6599:19)
+[web]       at TypeScriptParserMixin.unexpected (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:6619:16)
+[web]       at TypeScriptParserMixin.jsxParseIdentifier (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4569:12)
+[web]       at TypeScriptParserMixin.jsxParseNamespacedName (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4576:23)
+[web]       at TypeScriptParserMixin.jsxParseAttribute (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4652:22)
+[web]       at TypeScriptParserMixin.jsxParseOpeningElementAfterName (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4667:28)
+[web]       at TypeScriptParserMixin.jsxParseOpeningElementAfterName (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10043:18)
+[web]       at TypeScriptParserMixin.jsxParseOpeningElementAt (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4662:17)
+[web]       at TypeScriptParserMixin.jsxParseElementAt (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4686:33)
+[web]       at TypeScriptParserMixin.jsxParseElement (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4749:17)
+[web]       at TypeScriptParserMixin.parseExprAtom (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4759:19)
+[web]       at TypeScriptParserMixin.parseExprSubscripts (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11081:23)
+[web]       at TypeScriptParserMixin.parseUpdate (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11066:21)
+[web]       at TypeScriptParserMixin.parseMaybeUnary (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11046:23)
+[web]       at TypeScriptParserMixin.parseMaybeUnary (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:9837:18)
+[web]       at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10899:61)
+[web]       at TypeScriptParserMixin.parseExprOps (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10904:23)
+[web]       at TypeScriptParserMixin.parseMaybeConditional (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10881:23)
+[web]       at TypeScriptParserMixin.parseMaybeAssign (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10831:21)
+[web]       at /Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:9775:39
+[web]       at TypeScriptParserMixin.tryParse (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:6907:20)
+[web]       at TypeScriptParserMixin.parseMaybeAssign (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:9775:18)
+[web]       at /Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10800:39
+[web]       at TypeScriptParserMixin.allowInAnd (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:12426:12)
+[web]       at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10800:17)
+[web]       at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:12493:17)
+[web]       at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11675:28)
+[web]       at TypeScriptParserMixin.parseExprAtom (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11331:23)
+[web]       at TypeScriptParserMixin.parseExprAtom (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4764:20)
+[web]       at TypeScriptParserMixin.parseExprSubscripts (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11081:23)
+[web]       at TypeScriptParserMixin.parseUpdate (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11066:21)
+[web]       at TypeScriptParserMixin.parseMaybeUnary (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:11046:23)
+[web]       at TypeScriptParserMixin.parseMaybeUnary (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:9837:18)
+[web]       at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10899:61)
+[web]       at TypeScriptParserMixin.parseExprOpBaseRightExpr (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10986:34)
+[web]       at TypeScriptParserMixin.parseExprOpRightExpr (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10981:21)
+[web]       at TypeScriptParserMixin.parseExprOp (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10947:27)
+[web]       at TypeScriptParserMixin.parseExprOp (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:9306:18)
+[web]       at TypeScriptParserMixin.parseExprOps (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10908:17)
+[web]       at TypeScriptParserMixin.parseMaybeConditional (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10881:23)
+[web]       at TypeScriptParserMixin.parseMaybeAssign (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10831:21)
+[web]       at TypeScriptParserMixin.parseMaybeAssign (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:9786:20)
+[web]       at TypeScriptParserMixin.parseExpressionBase (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10784:23)
+[web]       at /Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10780:39
+[web]       at TypeScriptParserMixin.allowInAnd (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:12426:12)
+[web]       at TypeScriptParserMixin.parseExpression (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:10780:17)
+[web]       at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4632:31)
+[web]       at TypeScriptParserMixin.jsxParseElementAt (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4711:36)
+[web]       at TypeScriptParserMixin.jsxParseElementAt (/Users/jack/Documents/GitHub/ME-FYP-video/asset-viewer/node_modules/@babel/parser/lib/index.js:4698:32)
+[web] 7:42:24 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
+[web] 7:42:39 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
