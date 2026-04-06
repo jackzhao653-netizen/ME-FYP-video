@@ -666,10 +666,10 @@ function VandiExpressionViewer() {
                     <motion.image
                       href={
                         activeExpression === 'thinking_two'
-                          ? "/api/asset/thought_cloud_idea.svg"
+                          ? "/api/asset/vandi%20profile/thought_cloud_idea.svg"
                           : activeExpression === 'searching'
                             ? "/api/asset/thought_cloud_empty.svg"
-                            : "/api/asset/thought_cloud.svg"
+                            : "/api/asset/vandi%20profile/thought_cloud.svg"
                       }
                       initial={{ opacity: 0, scale: 0.5, y: -200, x: 50 }}
                       animate={{ opacity: 1, scale: 0.8, y: [-210, -220, -210], x: 50 }}
@@ -782,9 +782,9 @@ function STLModel({ url }: { url: string }) {
 }
 
 function CameraController({ view }: { view: string }) {
-  const { camera } = useThree();
+  const { camera, gl, invalidate } = useThree();
   const controlsRef = useRef<any>(null);
-  
+
   useEffect(() => {
     const positions: Record<string, [number, number, number]> = {
       front: [400, 0, 0],
@@ -793,17 +793,40 @@ function CameraController({ view }: { view: string }) {
       right: [0, 0, 400],
       iso: [300, 300, 300]
     };
-    
+
     const position = positions[view];
     if (position && controlsRef.current) {
       camera.position.set(...position);
       controlsRef.current.target.set(0, 0, 0);
       controlsRef.current.update();
+      invalidate();
     }
-  }, [view, camera]);
-  
+  }, [view, camera, invalidate]);
+
+  useEffect(() => {
+    const canvas = gl.domElement;
+
+    const handleContextLost = (event: Event) => {
+      event.preventDefault();
+      console.warn('THREE.WebGLRenderer: Context Lost');
+    };
+
+    const handleContextRestored = () => {
+      console.info('THREE.WebGLRenderer: Context Restored');
+      invalidate();
+    };
+
+    canvas.addEventListener('webglcontextlost', handleContextLost, false);
+    canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+
+    return () => {
+      canvas.removeEventListener('webglcontextlost', handleContextLost, false);
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored, false);
+    };
+  }, [gl, invalidate]);
+
   return (
-    <TrackballControls 
+    <TrackballControls
       ref={controlsRef}
       staticMoving={false}
       dynamicDampingFactor={0.1}
@@ -876,7 +899,13 @@ function Vandi3DViewer() {
       </div>
 
       <div className="overflow-hidden rounded-xl border border-slate-700/80 bg-white" style={{ height: '70vh' }}>
-        <Canvas>
+        <Canvas
+          dpr={[1, 1.5]}
+          gl={{ antialias: true, powerPreference: 'low-power', preserveDrawingBuffer: false }}
+          onCreated={({ gl }) => {
+            gl.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+          }}
+        >
           <color attach="background" args={['white']} />
           <PerspectiveCamera makeDefault position={[300, 300, 300]} />
           <CameraController view={view} />
