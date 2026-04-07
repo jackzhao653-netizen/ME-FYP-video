@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
+    <defs>
+        <!-- Text Glow Filters -->
+        <filter id="glowYellow" x="-50%" y="-50%" width="200%" height="200%">
+            <feFlood flood-color="#FFF500" result="yellowColor"/>
+            <feComposite in="yellowColor" in2="SourceAlpha" operator="in" result="yellowGlow"/>
+            <feGaussianBlur in="yellowGlow" stdDeviation="6" result="blurredYellow"/>
+            <feMerge>
+                <feMergeNode in="blurredYellow"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="glowViolet" x="-50%" y="-50%" width="200%" height="200%">
+            <feFlood flood-color="#E286FF" result="violetColor"/>
+            <feComposite in="violetColor" in2="SourceAlpha" operator="in" result="violetGlow"/>
+            <feGaussianBlur in="violetGlow" stdDeviation="6" result="blurredViolet"/>
+            <feMerge>
+                <feMergeNode in="blurredViolet"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        
+        <!-- Blueprint Grid Pattern -->
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        </pattern>
+        
+        <!-- Reusable Pump Component -->
+        <g id="pump">
+            <rect x="-25" y="-60" width="50" height="90" rx="4" fill="#292929" stroke="#1A1A1A" stroke-width="6" />
+            <rect x="-25" y="-45" width="50" height="40" fill="#3D3D3D" />
+            <line x1="-25" y1="-40" x2="25" y2="-40" stroke="#1A1A1A" stroke-width="4"/>
+            <line x1="-25" y1="-30" x2="25" y2="-30" stroke="#1A1A1A" stroke-width="4"/>
+            <line x1="-25" y1="-20" x2="25" y2="-20" stroke="#1A1A1A" stroke-width="4"/>
+            <line x1="-25" y1="-10" x2="25" y2="-10" stroke="#1A1A1A" stroke-width="4"/>
+            
+            <rect x="-15" y="0" width="30" height="25" rx="2" fill="#3D3D3D" stroke="#1A1A1A" stroke-width="4" />
+            <rect x="-5" y="5" width="10" height="15" fill="#222" />
+            
+            <text x="0" y="-70" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#2b2b2b" text-anchor="middle">Pump</text>
+        </g>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1000" height="600" fill="#4AA2DF"/>
+    <rect width="1000" height="600" fill="url(#grid)"/>
+
+    <!-- 1. Background Black outlines / Solid Shadows -->
+    <rect id="left-tank-bg" x="80" y="150" width="250" height="300" rx="24" fill="#1a1a1a" />
+    <rect id="right-tank-bg" x="670" y="150" width="250" height="300" rx="24" fill="#1a1a1a" />
+    <rect id="central-bg" x="360" y="180" width="280" height="340" fill="#1a1a1a" />
+
+    <!-- Center side nubs Outlines -->
+    <path d="M 360 320 H 340 V 360 H 360" fill="#1a1a1a"/>
+    <circle cx="340" cy="340" r="20" fill="#1a1a1a"/>
+    <path d="M 640 320 H 660 V 360 H 640" fill="#1a1a1a"/>
+    <circle cx="660" cy="340" r="20" fill="#1a1a1a"/>
+
+    <!-- Inside portions of the Center side nubs -->
+    <path d="M 368 328 H 345 V 352 H 368" fill="#4B4B4B" />
+    <circle cx="345" cy="340" r="12" fill="#4B4B4B" />
+    <path d="M 632 328 H 655 V 352 H 632" fill="#4B4B4B" />
+    <circle cx="655" cy="340" r="12" fill="#4B4B4B" />
+
+    <!-- 2. Background outlines of pipes -->
+    <path d="M 190 180 L 190 110 Q 190 80 220 80 L 400 80 Q 430 80 430 110 L 430 200" fill="none" stroke="#1a1a1a" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" />
+    <path d="M 430 500 L 430 560 Q 430 590 400 590 L 220 590 Q 190 590 190 560 L 190 420" fill="none" stroke="#1a1a1a" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" />
+    <path d="M 810 180 L 810 110 Q 810 80 780 80 L 600 80 Q 570 80 570 110 L 570 200" fill="none" stroke="#1a1a1a" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 570 500 L 570 560 Q 570 590 600 590 L 780 590 Q 810 590 810 560 L 810 420" fill="none" stroke="#1a1a1a" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round"/>
+
+    <!-- Central structure internal structural columns -->
+    <rect x="368" y="186" width="22" height="328" fill="#4B4B4B"/>
+    <rect x="610" y="186" width="22" height="328" fill="#4B4B4B"/>
+
+    <!-- 3. Pipe Color Fills -->
+    <!-- Left #D4AC0D (Yellow) Pipes -->
+    <path d="M 190 180 L 190 110 Q 190 80 220 80 L 400 80 Q 430 80 430 110 L 430 200" fill="none" stroke="#D4AC0D" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 430 500 L 430 560 Q 430 590 400 590 L 220 590 Q 190 590 190 560 L 190 420" fill="none" stroke="#D4AC0D" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+
+    <!-- Right #7B3BC9 (Violet) Pipes -->
+    <path d="M 810 180 L 810 110 Q 810 80 780 80 L 600 80 Q 570 80 570 110 L 570 200" fill="none" stroke="#7B3BC9" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 570 500 L 570 560 Q 570 590 600 590 L 780 590 Q 810 590 810 560 L 810 420" fill="none" stroke="#7B3BC9" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+
+    <!-- 4. Tank/Central Color Fills -->
+    <rect id="left-tank-fluid" x="88" y="158" width="234" height="284" rx="16" fill="#D4AC0D" />
+    <rect id="right-tank-fluid" x="678" y="158" width="234" height="284" rx="16" fill="#7B3BC9" />
+
+    <rect id="central-left-fluid" x="390" y="186" width="110" height="328" fill="#D4AC0D" />
+    <rect id="central-right-fluid" x="500" y="186" width="110" height="328" fill="#7B3BC9" />
+
+    <!-- Membrane dashed separator line -->
+    <line x1="500" y1="184" x2="500" y2="516" stroke="#2B2B2B" stroke-width="4" stroke-dasharray="10, 8" />
+
+    <!-- 5. Pumps Overlays -->
+    <use href="#pump" x="310" y="80" />
+    <use href="#pump" x="690" y="80" />
+
+    <!-- 6. Glowing Text -->
+    <text x="205" y="300" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="url(#glowYellow)">V<tspan baseline-shift="super" font-size="20">5+</tspan></text>
+    <text x="445" y="340" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="url(#glowYellow)">V<tspan baseline-shift="super" font-size="14">5+</tspan></text>
+
+    <text x="795" y="300" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="url(#glowViolet)">V<tspan baseline-shift="super" font-size="20">2+</tspan></text>
+    <text x="555" y="340" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="url(#glowViolet)">V<tspan baseline-shift="super" font-size="14">2+</tspan></text>
+
+    <!-- 7. Subtitles Output-->
+    <text x="205" y="420" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#FFFFFF" text-anchor="middle">Positive Fluid Tank</text>
+    <text x="795" y="420" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#FFFFFF" text-anchor="middle">Negative Fluid Tank</text>
+
+</svg>
