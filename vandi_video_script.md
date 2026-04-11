@@ -12,7 +12,7 @@ This version puts more focus on the project itself:
 ## Scene 1 (0:00-0:15)
 
 **Narration**  
-We all know renewable energy is the future. But in Hong Kong, even if we have strong sunlight, solar power alone is not enough. The real challenge is storage. If we cannot store clean energy well, we cannot use it when we need it most.
+Climate change is one of the biggest challenges of this century, and renewable energy is part of the solution. But generating clean power is not enough. The real challenge is storing it safely and reliably, so we can use it whenever we need it most.
 
 **Visual Description**  
 Show bright sunlight over the Hong Kong skyline, rooftop solar panels, then a fast transition to sunset and night. Add a simple text question: "Clean energy is easy to generate. But how do we keep it?"
